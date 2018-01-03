@@ -1,0 +1,19 @@
+{
+  "name": "ixo-module",
+  "version": "1.0.0",
+  "description": "This is a node module that defines the functions that can be performed by the ixo protocol.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ixofoundation/ixo-module.git"
+  },
+  "author": "ixo.foundation",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ixofoundation/ixo-module/issues"
+  },
+  "homepage": "https://github.com/ixofoundation/ixo-module#readme"
+}
