@@ -1,15 +1,13 @@
 const bip39 = require('bip39');
 const sovrin = require('sovrin-did');
+const crypto = require('crypto');
+const base58 = require('bs58');
 
-exports.pingIxo = function () {
-    console.log("ixo function call successful!!!");
-}
-
-exports.generateMnemonic = function () {
+var generateMnemonic = function () {
     return bip39.generateMnemonic();
-}
+};
 
-exports.generateSovrinDID = function (mnemonic) {
+var generateSovrinDID = function (mnemonic) {
     const seed = crypto.createHash('sha256').update(mnemonic).digest("hex");
 
     // Convert SHA256 hash to Uint8Array
@@ -20,4 +18,14 @@ exports.generateSovrinDID = function (mnemonic) {
 
     // Create the Sovrin DID
     return sovrin.fromSeed(didSeed);
-}
+};
+
+var getDocumentSignature = function (privateKey, publicKey, inputFile) {
+    return base58.encode(sovrin.signMessage(new Buffer(JSON.stringify(inputFile)), privateKey, publicKey));
+};
+
+module.exports = {
+    generateSovrinDID: generateSovrinDID,
+    generateMnemonic: generateMnemonic,
+    getDocumentSignature: getDocumentSignature
+};

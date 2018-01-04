@@ -8,12 +8,6 @@ Note. This is still a WIP. We are planning an official release early 2018.
 
 ![nodei.co](https://nodei.co/npm/ixo-module.png?downloads=true&downloadRank=true&stars=true)
 
-![travis-status](https://img.shields.io/travis/ixofoundation/ixo-module.svg)
-![stars](https://img.shields.io/github/stars/ixofoundation/ixo-module.svg)
-![forks](https://img.shields.io/github/forks/ixofoundation/ixo-module.svg)
-
-![forks](https://img.shields.io/github/forks/ixofoundation/ixo-module.svg)
-
 ![](https://david-dm.org/ixofoundation/ixo-module/status.svg)
 ![](https://david-dm.org/ixofoundation/ixo-module/dev-status.svg)
 
