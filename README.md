@@ -18,16 +18,19 @@ Note. This is still a WIP. We are planning an official release early 2018.
 
 `npm install --save ixo-module`
 
+## Usage
+
+
+```js
+var ixo = require("ixo-module");
+var mnemonic = ixo.generateMnemonic();
+console.log("Mnemonic: " + mnemonic);
+```
+
 
 ## Scripts
 
  - **npm run test** : `npm test`
-
-## Dependencies
-
-Package | Version | Dev
---- |:---:|:---:
-[node-readme](https://www.npmjs.com/package/node-readme) | ^0.1.9 | ✔
 
 
 ## Contributing
