@@ -1,10 +1,11 @@
 {
   "name": "ixo-module",
-  "version": "1.0.0",
+  "version": "1.0.6",
   "description": "This is a node module that defines the functions that can be performed by the ixo protocol.",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "readme": "node ./node_modules/.bin/node-readme"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/ixofoundation/ixo-module/issues"
   },
-  "homepage": "https://github.com/ixofoundation/ixo-module#readme"
+  "homepage": "https://github.com/ixofoundation/ixo-module#readme",
+  "peerDependencies": {
+    "bip39": "2.4.0",
+    "sovrin-did": "1.2.0"
+  },
+  "devDependencies": {
+    "node-readme": "^0.1.9"
+  }
 }
