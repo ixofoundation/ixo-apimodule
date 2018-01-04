@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "npm test",
-    "readme": "node ./node_modules/.bin/node-readme"
+    "readme": "node ./node_modules/.bin/node-readme",
+    "test-publish": "npm pack && mv ixo-module-* test/ && mkdir ../test && cp -R test/ ../test && cd ../test && npm install ixo-module-* && node test.js && cd .. && rm -Rf test/"
   },
   "repository": {
     "type": "git",

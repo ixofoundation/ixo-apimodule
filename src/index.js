@@ -24,8 +24,13 @@ var getDocumentSignature = function (privateKey, publicKey, inputFile) {
     return base58.encode(sovrin.signMessage(new Buffer(JSON.stringify(inputFile)), privateKey, publicKey));
 };
 
+var verifyDocumentSignature = function (signature, publicKey) {
+    return !(sovrin.verifySignedMessage(base58.decode(signature), publicKey) === false);
+};
+
 module.exports = {
     generateSovrinDID: generateSovrinDID,
     generateMnemonic: generateMnemonic,
-    getDocumentSignature: getDocumentSignature
+    getDocumentSignature: getDocumentSignature,
+    verifyDocumentSignature: verifyDocumentSignature
 };
