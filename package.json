@@ -2,7 +2,7 @@
   "name": "ixo-module",
   "version": "1.0.8",
   "description": "This is a node module that defines the functions that can be performed by the ixo protocol.",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "npm test",
     "readme": "node ./node_modules/.bin/node-readme",

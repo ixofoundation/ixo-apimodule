@@ -22,8 +22,10 @@ Note. This is still a WIP. We are planning an official release early 2018.
 
 
 ```js
-var ixo = require("ixo-module");
-var mnemonic = ixo.generateMnemonic();
+var Ixo = require('ixo-module');
+var ixo = new Ixo();
+
+var mnemonic = ixo.cryptoUtil.generateMnemonic();
 console.log("Mnemonic: " + mnemonic);
 ```
 
