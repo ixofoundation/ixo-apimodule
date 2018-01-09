@@ -26,5 +26,10 @@ console.log("Document signature: " + signature);
 //Test verifyDocumentSignature()
 console.log("Is valid signature: " + ixo.cryptoUtil.verifyDocumentSignature(signature, sdid.verifyKey));
 
-console.log('Server response: ' + ixo.network.pingIxoNode());
+ixo.network.pingIxoNode().then(function (responses) {
+    if (responses[0].error) console.log('error');
+    console.log('Server response: ' + responses[0].result);
+});
+
+
 
