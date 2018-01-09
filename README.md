@@ -1,6 +1,6 @@
 <div align="center">
   <a href="http://ixo.foundation/">
-    <img width="200" height="200" src="">
+    <img width="200" height="200" src="https://raw.githubusercontent.com/ixofoundation/ixo-module/master/assets/ixo_logo.png">
   </a>
 </div>
 
