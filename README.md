@@ -1,3 +1,9 @@
+<div align="center">
+  <a href="http://ixo.foundation/">
+    <img width="200" height="200" src="">
+  </a>
+</div>
+
 # ixo-module
 
 ![npm](https://img.shields.io/npm/v/ixo-module.svg) ![license](https://img.shields.io/npm/l/ixo-module.svg) ![github-issues](https://img.shields.io/github/issues/ixofoundation/ixo-module.svg)  ![Circle CI build status](https://circleci.com/gh/ixofoundation/ixo-module.svg?style=svg)

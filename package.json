@@ -1,6 +1,6 @@
 {
   "name": "ixo-module",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "This is a node module that defines the functions that can be performed by the ixo protocol.",
   "main": "lib/index.js",
   "scripts": {
@@ -22,7 +22,9 @@
     "base58": "1.0.1",
     "bip39": "2.4.0",
     "jayson": "^2.0.5",
-    "sovrin-did": "1.2.0"
+    "node": "^9.3.0",
+    "sovrin-did": "1.2.0",
+    "tls": "0.0.1"
   },
   "devDependencies": {
     "node-readme": "^0.1.9"
