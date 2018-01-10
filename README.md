@@ -26,13 +26,67 @@ Note. This is still a WIP. We are planning an official release early 2018.
 
 ## Usage
 
-
+**Generate Mnemonic**
 ```js
 import * as ixo from 'ixo-module';
 var cryptoUtil = new ixo.CryptoUtil();
 
-console.log(cryptoUtil.generateMnemonic())
+console.log('Mnemonic: ' + cryptoUtil.generateMnemonic())
 ```
+
+> Mnemonic: dilemma allow swamp hedgehog client reject mistake spell involve index panda course
+
+
+**Generate SovrinDID**
+   ```js
+   import * as ixo from 'ixo-module';
+   var cryptoUtil = new ixo.CryptoUtil();
+   
+   console.log('SovrinDID: ' + cryptoUtil.generateSovrinDID(mnemonic))
+   ```
+   > SovrinDID: {
+             "did": "LuEoT1EkTVT7vaYP1ibvfw",
+             "verifyKey": "Br6jjwiPNBgDod4hHAKNP5AfA6ViV39eVX3UV4t9uADC",
+             "secret": {
+                     "seed": "b3cad338b23d0e58583ca243481262ee5f8632b14d713245e8b91be87daff073",
+                     "signKey": "D6qMjQCdjB8gHkEPyxXoyJTxkk5WK9egYQAEtJ6RX5fx"
+             }
+     }
+
+**Sign Document**
+```js
+import * as ixo from 'ixo-module';
+var cryptoUtil = new ixo.CryptoUtil();
+
+console.log('Document Signature:' + cryptoUtil.cryptoUtil.getDocumentSignature(sdid.secret.signKey, sdid.verifyKey, JSON.stringify(testJson)))
+```
+> Document Signature: DjoT6XqQ53J2kR4zd1shB17qFuM9DM5A2DAxQ3jjtgacvvpafWefHx54kkHewMVMTAsZm61wDCtzMV2TwkL7Fc5YdTc898X4tQ8SepthqyFBdMVs8fAt3fWDGD1fiVe5cymPCDcHwB6hP34DpQB3UAcfZSoPP2wxCbCLhTAF25RywqEWmcMDqF42pEqa9RonpF6AYGxYQt2tUKT9383HR6RhCkkbrkJSBwYQ6b4jsnysz23p4TPfahPKGWinGahXFwtZKD69SSjipzQNHWFXb5YuoqQcCToTFcEteQ3dtkDQdCcWFZ9N1
+
+**Validate Signature**
+```js
+import * as ixo from 'ixo-module';
+var cryptoUtil = new ixo.CryptoUtil();
+
+console.log('Document Signature:' + cryptoUtil.verifyDocumentSignature(signature, sdid.verifyKey))
+```
+> Document Signature: DjoT6XqQ53J2kR4zd1shB17qFuM9DM5A2DAxQ3jjtgacvvpafWefHx54kkHewMVMTAsZm61wDCtzMV2TwkL7Fc5YdTc898X4tQ8SepthqyFBdMVs8fAt3fWDGD1fiVe5cymPCDcHwB6hP34DpQB3UAcfZSoPP2wxCbCLhTAF25RywqEWmcMDqF42pEqa9RonpF6AYGxYQt2tUKT9383HR6RhCkkbrkJSBwYQ6b4jsnysz23p4TPfahPKGWinGahXFwtZKD69SSjipzQNHWFXb5YuoqQcCToTFcEteQ3dtkDQdCcWFZ9N1
+
+
+**Ping ixo Server Node**
+```js
+import * as ixo from 'ixo-module';
+var network = new ixo.Network();
+
+network.pingIxoServerNode('hostname').then((result) => {
+    console.log('Ping Results: ' + result)
+})
+
+```
+> Ping Results: {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": "pong"
+  }
 
 
 ## Scripts

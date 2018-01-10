@@ -1,11 +1,11 @@
 {
   "name": "ixo-module",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "This is a node module that defines the functions that can be performed by the ixo protocol.",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "test": "mocha -r ts-node/register src/**/*.spec.ts",
+    "test": "mocha -r ts-node/register test/**/*.spec.ts",
     "readme": "node ./node_modules/.bin/node-readme"
   },
   "repository": {
@@ -21,6 +21,9 @@
   "dependencies": {
     "base58": "1.0.1",
     "bip39": "2.4.0",
+    "es6-promise": "^4.2.2",
+    "immutable": "^3.8.2",
+    "isomorphic-fetch": "^2.2.1",
     "jayson": "^2.0.5",
     "node": "^9.3.0",
     "sovrin-did": "1.2.0",

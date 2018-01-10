@@ -1,7 +1,7 @@
-import {CryptoUtil} from '../../utils/cryptoUtil';
+import {CryptoUtil} from '../../src/utils/cryptoUtil';
 import {expect} from 'chai';
 import 'mocha';
-import {ISovrinDidModel} from "../../models";
+import {ISovrinDidModel} from "../../src/models";
 
 const chalk = require('chalk');
 const logger = chalk.bold.green;
@@ -23,7 +23,7 @@ describe('CryptoUtil functions', () => {
 
     it('should return mnemonic', () => {
         mnemonic = cryptoUtil.generateMnemonic();
-        console.log('Mnemonic: : ' + logger(mnemonic));
+        console.log('Mnemonic: ' + logger(mnemonic));
         expect(mnemonic).to.be.a('string');
     });
 
