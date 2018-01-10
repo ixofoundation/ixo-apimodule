@@ -6,7 +6,6 @@ import * as Immutable from 'immutable';
 /** Utility method for sending a POST request to the specified URL */
 export function sendPostJSON<T>(url: string, body: IDictionary<any>, extraHeaders?: IDictionary<string>): Promise<T> {
     return fetch(url, {
-        mode       : 'no-cors',
         method     : 'POST',
         body       : JSON.stringify(body),
         headers    : getJSONRequestHeaders(extraHeaders),

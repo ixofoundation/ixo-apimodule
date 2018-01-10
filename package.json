@@ -1,11 +1,11 @@
 {
   "name": "ixo-module",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "This is a node module that defines the functions that can be performed by the ixo protocol.",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "test": "mocha -r ts-node/register test/**/*.spec.ts",
+    "test": "mocha -r ts-node/register 'test/**/*.spec.ts'",
     "readme": "node ./node_modules/.bin/node-readme"
   },
   "repository": {
