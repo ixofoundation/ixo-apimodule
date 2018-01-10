@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "test": "npm test",
+    "test": "mocha -r ts-node/register src/**/*.spec.ts",
     "readme": "node ./node_modules/.bin/node-readme"
   },
   "repository": {
@@ -27,8 +27,14 @@
     "tls": "0.0.1"
   },
   "devDependencies": {
+    "@types/chai": "^4.1.0",
+    "@types/mocha": "^2.2.46",
     "@types/node": "^9.3.0",
+    "chai": "^4.1.2",
+    "chalk": "^2.3.0",
+    "mocha": "^4.1.0",
     "node-readme": "^0.1.9",
+    "ts-node": "^4.1.0",
     "typescript": "^2.6.2"
   }
 }

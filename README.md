@@ -1,6 +1,6 @@
 <div align="center">
   <a href="http://ixo.foundation/">
-    <img width="280" height="200" src="https://raw.githubusercontent.com/ixofoundation/ixo-module/master/assets/ixo_logo.png">
+    <img width="300" height="200" src="https://raw.githubusercontent.com/ixofoundation/ixo-module/master/assets/ixo_logo.png">
   </a>
 </div>
 
@@ -37,7 +37,7 @@ console.log(cryptoUtil.generateMnemonic())
 
 ## Scripts
 
- - **npm run test** : `npm test`
+ -  `npm test` - **run mocha unit tests**
 
 
 ## Contributing
