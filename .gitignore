@@ -66,4 +66,5 @@ typings/
 # User-specific stuff:
 .idea/**
 
-
+# Dist folder
+dist/**
