@@ -13,7 +13,6 @@ const network = new Network();
 describe('Network functions', () => {
 
     it('should return network status', () => {
-
         network.pingIxoServerNode('https://arcane-stream-64697.herokuapp.com/api/network').then((response: IPingResult) => {
             console.log('Ping Results: ' + success(JSON.stringify(response, null, '\t')));
             expect(response.result).equals('pong');
