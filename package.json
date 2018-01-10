@@ -1,12 +1,12 @@
 {
   "name": "ixo-module",
-  "version": "1.1.3",
+  "version": "1.1.6",
   "description": "This is a node module that defines the functions that can be performed by the ixo protocol.",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "scripts": {
+    "build": "tsc",
     "test": "npm test",
-    "readme": "node ./node_modules/.bin/node-readme",
-    "test-publish": "npm pack && mv ixo-module-* test/ && mkdir ../test && cp -R test/ ../test && cd ../test && npm install ixo-module-* && node test.js && cd .. && rm -Rf test/"
+    "readme": "node ./node_modules/.bin/node-readme"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,8 @@
     "tls": "0.0.1"
   },
   "devDependencies": {
-    "node-readme": "^0.1.9"
+    "@types/node": "^9.3.0",
+    "node-readme": "^0.1.9",
+    "typescript": "^2.6.2"
   }
 }

@@ -28,11 +28,10 @@ Note. This is still a WIP. We are planning an official release early 2018.
 
 
 ```js
-var Ixo = require('ixo-module');
-var ixo = new Ixo();
+import * as ixo from 'ixo-module';
+var cryptoUtil = new ixo.CryptoUtil();
 
-var mnemonic = ixo.cryptoUtil.generateMnemonic();
-console.log("Mnemonic: " + mnemonic);
+console.log(cryptoUtil.generateMnemonic())
 ```
 
 
