@@ -1,6 +1,6 @@
 <div align="center">
   <a href="http://ixo.foundation/">
-    <img width="300" height="200" src="https://raw.githubusercontent.com/ixofoundation/ixo-module/master/assets/ixo_logo.png">
+    <img width="310" height="200" src="https://raw.githubusercontent.com/ixofoundation/ixo-module/master/assets/ixo_logo.png">
   </a>
 </div>
 
@@ -26,24 +26,26 @@ Note. This is still a WIP. We are planning an official release early 2018.
 
 ## Usage
 
-**Generate Mnemonic**
+### CryptoUtil
+
+**Create new CryptoUtil Object**
 ```js
 import * as ixo from 'ixo-module';
 var cryptoUtil = new ixo.CryptoUtil();
 
-console.log('Mnemonic: ' + cryptoUtil.generateMnemonic())
 ```
 
+**Generate Mnemonic**
+```js
+console.log('Mnemonic: ' + cryptoUtil.generateMnemonic())
+```
 > Mnemonic: dilemma allow swamp hedgehog client reject mistake spell involve index panda course
 
 
 **Generate SovrinDID**
-   ```js
-   import * as ixo from 'ixo-module';
-   var cryptoUtil = new ixo.CryptoUtil();
-   
-   console.log('SovrinDID: ' + cryptoUtil.generateSovrinDID(mnemonic))
-   ```
+```js
+console.log('SovrinDID: ' + cryptoUtil.generateSovrinDID(mnemonic))
+```
    > SovrinDID: {
              "did": "LuEoT1EkTVT7vaYP1ibvfw",
              "verifyKey": "Br6jjwiPNBgDod4hHAKNP5AfA6ViV39eVX3UV4t9uADC",
@@ -55,27 +57,27 @@ console.log('Mnemonic: ' + cryptoUtil.generateMnemonic())
 
 **Sign Document**
 ```js
-import * as ixo from 'ixo-module';
-var cryptoUtil = new ixo.CryptoUtil();
-
 console.log('Document Signature:' + cryptoUtil.cryptoUtil.getDocumentSignature(sdid.secret.signKey, sdid.verifyKey, JSON.stringify(testJson)))
 ```
 > Document Signature: DjoT6XqQ53J2kR4zd1shB17qFuM9DM5A2DAxQ3jjtgacvvpafWefHx54kkHewMVMTAsZm61wDCtzMV2TwkL7Fc5YdTc898X4tQ8SepthqyFBdMVs8fAt3fWDGD1fiVe5cymPCDcHwB6hP34DpQB3UAcfZSoPP2wxCbCLhTAF25RywqEWmcMDqF42pEqa9RonpF6AYGxYQt2tUKT9383HR6RhCkkbrkJSBwYQ6b4jsnysz23p4TPfahPKGWinGahXFwtZKD69SSjipzQNHWFXb5YuoqQcCToTFcEteQ3dtkDQdCcWFZ9N1
 
 **Validate Signature**
 ```js
-import * as ixo from 'ixo-module';
-var cryptoUtil = new ixo.CryptoUtil();
-
 console.log('Document Signature:' + cryptoUtil.verifyDocumentSignature(signature, sdid.verifyKey))
 ```
 > Document Signature: DjoT6XqQ53J2kR4zd1shB17qFuM9DM5A2DAxQ3jjtgacvvpafWefHx54kkHewMVMTAsZm61wDCtzMV2TwkL7Fc5YdTc898X4tQ8SepthqyFBdMVs8fAt3fWDGD1fiVe5cymPCDcHwB6hP34DpQB3UAcfZSoPP2wxCbCLhTAF25RywqEWmcMDqF42pEqa9RonpF6AYGxYQt2tUKT9383HR6RhCkkbrkJSBwYQ6b4jsnysz23p4TPfahPKGWinGahXFwtZKD69SSjipzQNHWFXb5YuoqQcCToTFcEteQ3dtkDQdCcWFZ9N1
 
+### Network
 
-**Ping ixo Server Node**
+**Create new Network Object**
 ```js
 import * as ixo from 'ixo-module';
 var network = new ixo.Network();
+
+```
+**Ping ixo Server Node**
+
+```js
 
 network.pingIxoServerNode('hostname').then((result) => {
     console.log('Ping Results: ' + result)
@@ -92,6 +94,7 @@ network.pingIxoServerNode('hostname').then((result) => {
 ## Scripts
 
  -  `npm test` - **run mocha unit tests**
+ -  `npm run build` - **complies ts files to js and creates dist/ folder**
 
 
 ## Contributing
