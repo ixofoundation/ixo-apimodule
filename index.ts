@@ -1,2 +1,4 @@
-export {CryptoUtil} from './src/utils/cryptoUtil'
-export {Network} from './src/utils/network'
+export {CryptoUtil} from './src/cryptoUtil'
+export {Network} from './src/network'
+export {Auth} from './src/auth'
+export {Project} from './src/project'

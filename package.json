@@ -1,6 +1,6 @@
 {
   "name": "ixo-module",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "This is a node module that defines the functions that can be performed by the ixo protocol.",
   "main": "dist/index.js",
   "scripts": {
@@ -25,6 +25,7 @@
     "immutable": "^3.8.2",
     "isomorphic-fetch": "^2.2.1",
     "jayson": "^2.0.5",
+    "loadjs": "^3.5.2",
     "node": "^9.3.0",
     "sovrin-did": "1.2.0",
     "tls": "0.0.1"

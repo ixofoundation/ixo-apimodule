@@ -1,4 +1,4 @@
-import {CryptoUtil} from '../../src/utils/cryptoUtil';
+import {CryptoUtil} from '../../src/cryptoUtil';
 import {expect} from 'chai';
 import 'mocha';
 import {ISovrinDidModel} from "../../src/models";

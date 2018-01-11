@@ -1,4 +1,4 @@
-import {Network} from '../../src/utils/network';
+import {Network} from '../../src/network';
 import {expect} from 'chai';
 import 'mocha';
 import {IPingResult} from "../../src/models";
