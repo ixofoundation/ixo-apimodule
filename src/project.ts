@@ -1,7 +1,8 @@
+class Project {
 
-export class Project {
-    
-    createProject(){
-    
+    createProject() {
+
     }
 }
+
+export default Project;

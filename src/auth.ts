@@ -1,8 +1,9 @@
-import {getWeb3FromBrowser} from "./utils/authUtil";
+import {getWeb3Instance} from "./utils/authUtil";
 
-export class Auth {
-    
-    getWeb3Instance() : Promise<any> {
-        return getWeb3FromBrowser();
+class Auth {
+    getCredentialProvider(provider: any): any {
+        return getWeb3Instance(provider);
     }
 }
+
+export default Auth;

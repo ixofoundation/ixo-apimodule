@@ -28,23 +28,23 @@ Note. This is still a WIP. We are planning an official release early 2018.
 
 ### CryptoUtil
 
-**Create new CryptoUtil Object**
+**Create new Ixo Object**
 ```js
-import * as ixo from 'ixo-module';
-var cryptoUtil = new ixo.CryptoUtil();
-
+import Ixo from 'ixo-module';
+var ixo = new Ixo('ixo_node_url')
 ```
 
 **Generate Mnemonic**
 ```js
-console.log('Mnemonic: ' + cryptoUtil.generateMnemonic())
+
+console.log('Mnemonic: ' + ixo.cryptoUtil.generateMnemonic())
 ```
 > Mnemonic: dilemma allow swamp hedgehog client reject mistake spell involve index panda course
 
 
 **Generate SovrinDID**
 ```js
-console.log('SovrinDID: ' + cryptoUtil.generateSovrinDID(mnemonic))
+console.log('SovrinDID: ' + ixo.cryptoUtil.generateSovrinDID(mnemonic))
 ```
    > SovrinDID: {
              "did": "LuEoT1EkTVT7vaYP1ibvfw",
@@ -57,29 +57,23 @@ console.log('SovrinDID: ' + cryptoUtil.generateSovrinDID(mnemonic))
 
 **Sign Document**
 ```js
-console.log('Document Signature:' + cryptoUtil.cryptoUtil.getDocumentSignature(sdid.secret.signKey, sdid.verifyKey, JSON.stringify(testJson)))
+console.log('Document Signature:' + ixo.cryptoUtil.getDocumentSignature(sdid.secret.signKey, sdid.verifyKey, JSON.stringify(testJson)))
 ```
 > Document Signature: DjoT6XqQ53J2kR4zd1shB17qFuM9DM5A2DAxQ3jjtgacvvpafWefHx54kkHewMVMTAsZm61wDCtzMV2TwkL7Fc5YdTc898X4tQ8SepthqyFBdMVs8fAt3fWDGD1fiVe5cymPCDcHwB6hP34DpQB3UAcfZSoPP2wxCbCLhTAF25RywqEWmcMDqF42pEqa9RonpF6AYGxYQt2tUKT9383HR6RhCkkbrkJSBwYQ6b4jsnysz23p4TPfahPKGWinGahXFwtZKD69SSjipzQNHWFXb5YuoqQcCToTFcEteQ3dtkDQdCcWFZ9N1
 
 **Validate Signature**
 ```js
-console.log('Document Signature:' + cryptoUtil.verifyDocumentSignature(signature, sdid.verifyKey))
+console.log('Document Signature:' + ixo.cryptoUtil.verifyDocumentSignature(signature, sdid.verifyKey))
 ```
 > Document Signature: DjoT6XqQ53J2kR4zd1shB17qFuM9DM5A2DAxQ3jjtgacvvpafWefHx54kkHewMVMTAsZm61wDCtzMV2TwkL7Fc5YdTc898X4tQ8SepthqyFBdMVs8fAt3fWDGD1fiVe5cymPCDcHwB6hP34DpQB3UAcfZSoPP2wxCbCLhTAF25RywqEWmcMDqF42pEqa9RonpF6AYGxYQt2tUKT9383HR6RhCkkbrkJSBwYQ6b4jsnysz23p4TPfahPKGWinGahXFwtZKD69SSjipzQNHWFXb5YuoqQcCToTFcEteQ3dtkDQdCcWFZ9N1
 
 ### Network
 
-**Create new Network Object**
-```js
-import * as ixo from 'ixo-module';
-var network = new ixo.Network();
-
-```
 **Ping ixo Server Node**
 
 ```js
 
-network.pingIxoServerNode('hostname').then((result) => {
+ixo.network.pingIxoServerNode('hostname').then((result) => {
     console.log('Ping Results: ' + result)
 })
 

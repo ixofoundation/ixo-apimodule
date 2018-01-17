@@ -3,7 +3,7 @@ const sovrin = require('sovrin-did');
 const crypto = require('crypto');
 const base58 = require('bs58');
 
-export class CryptoUtil {
+class CryptoUtil {
     generateMnemonic() {
         return bip39.generateMnemonic();
     }
@@ -30,5 +30,5 @@ export class CryptoUtil {
     }
 }
 
-
+export default CryptoUtil;
 
