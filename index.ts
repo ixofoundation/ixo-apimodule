@@ -15,7 +15,7 @@ export default class Ixo {
         this.network = new Network(hostname);
         this.cryptoUtil = new CryptoUtil();
         this.auth = new Auth();
-        this.project = new Project();
+        this.project = new Project(hostname);
     }
 
 }

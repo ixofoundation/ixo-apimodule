@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import 'mocha';
-import {ISovrinDidModel} from "../../src/models";
-import Ixo from "../../";
+import {ISovrinDidModel} from "../src/models";
+import Ixo from "../";
 
 const chalk = require('chalk');
 const logger = chalk.bold.green;

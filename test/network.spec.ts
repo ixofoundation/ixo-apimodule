@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import 'mocha';
-import {IPingResult} from "../../src/models";
-import Ixo from "../../";
+import {IPingResult} from "../src/models";
+import Ixo from "../";
 
 const chalk = require('chalk');
 const success = chalk.bold.green;

@@ -68,21 +68,92 @@ console.log('Document Signature:' + ixo.cryptoUtil.verifyDocumentSignature(signa
 > Document Signature: DjoT6XqQ53J2kR4zd1shB17qFuM9DM5A2DAxQ3jjtgacvvpafWefHx54kkHewMVMTAsZm61wDCtzMV2TwkL7Fc5YdTc898X4tQ8SepthqyFBdMVs8fAt3fWDGD1fiVe5cymPCDcHwB6hP34DpQB3UAcfZSoPP2wxCbCLhTAF25RywqEWmcMDqF42pEqa9RonpF6AYGxYQt2tUKT9383HR6RhCkkbrkJSBwYQ6b4jsnysz23p4TPfahPKGWinGahXFwtZKD69SSjipzQNHWFXb5YuoqQcCToTFcEteQ3dtkDQdCcWFZ9N1
 
 ### Network
+   
+   **Ping ixo Server Node**
+   
+   ```js
+   
+   ixo.network.pingIxoServerNode().then((result) => {
+       console.log('Ping Results: ' + result)
+   })
+   
+   ```
+   > Ping Results: {
+             "jsonrpc": "2.0",
+             "id": 1,
+             "result": "pong"
+     }
+     
+### Projects
+   
+   **Ping ixo Server Node**
+   
+   ```js
+   
+   ixo.project.getProjectTemplate().then((result) => {
+       console.log('Project Template: ' + result)
+   })
+   
+   ```
+   > Project Template: {
+                           "jsonrpc": "2.0",
+                           "id": 1,
+                           "result": {
+                                   "template": {
+                                           "@context": "http://ixo.foundation/schema",
+                                           "@type": "Project",
+                                           "so": "http://schema.org/",
+                                           "name": "so:name",
+                                           "about": "so:about",
+                                           "country": "so:country",
+                                           "thumbnail": {
+                                                   "@type": "ImageObject",
+                                                   "contentUrl": "so:contentUrl"
+                                           },
+                                           "owner": {
+                                                   "@type": "Person",
+                                                   "email": "so:email",
+                                                   "name": "so:name"
+                                           }
+                                   },
+                                   "form": {
+                                           "fields": [
+                                                   {
+                                                           "label": "Project Name",
+                                                           "name": "name",
+                                                           "type": "text"
+                                                   },
+                                                   {
+                                                           "label": "About",
+                                                           "name": "about",
+                                                           "type": "textarea"
+                                                   },
+                                                   {
+                                                           "label": "Country",
+                                                           "name": "country",
+                                                           "type": "country"
+                                                   },
+                                                   {
+                                                           "label": "Thumbnail",
+                                                           "name": "thumbnail",
+                                                           "type": "image"
+                                                   },
+                                                   {
+                                                           "label": "Owner Name",
+                                                           "name": "owner.name",
+                                                           "type": "text"
+                                                   },
+                                                   {
+                                                           "label": "Owner email",
+                                                           "name": "owner.email",
+                                                           "type": "text"
+                                                   }
+                                           ]
+                                   }
+                           }
+                   }
 
-**Ping ixo Server Node**
-
-```js
-
-ixo.network.pingIxoServerNode('hostname').then((result) => {
-    console.log('Ping Results: ' + result)
-})
-
-```
-> Ping Results: {
-          "jsonrpc": "2.0",
-          "id": 1,
-          "result": "pong"
-  }
+     
 
 
 ## Scripts
