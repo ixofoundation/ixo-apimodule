@@ -1,5 +1,5 @@
-import {sendPostJSON} from "./utils/http";
-import {IPingResult} from "./models";
+import {sendPostJSON} from './utils/http';
+import {IPingResult}  from './models';
 
 class Project {
     hostname: string;
@@ -10,11 +10,26 @@ class Project {
 
     getProjectTemplate(): Promise<IPingResult> {
         return sendPostJSON(this.hostname + '/api/project', {
-            "jsonrpc": "2.0",
-            "method": "getTemplate",
-            "params": {"type": "project", "name": "default"},
-            "id": 1
-        })
+            'jsonrpc': '2.0',
+            'method' : 'getTemplate',
+            'params' : {
+                'type': 'project',
+                'name': 'default'
+            },
+            'id'     : 1
+        });
+    }
+
+    listProjects(): Promise<IPingResult> {
+        return sendPostJSON(this.hostname + '/api/project', {
+            'jsonrpc': '2.0',
+            'method' : 'list',
+            'params' : {
+                'type': 'project',
+                'name': 'default'
+            },
+            'id'     : 1
+        });
     }
 }
 
