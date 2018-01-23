@@ -18,7 +18,7 @@ var projectData = {
 
 describe('Project functions', () => {
     it('should return project template', () => {
-        ixo.project.getProjectTemplate().then((response: any) => {
+        ixo.project.getProjectTemplate('default').then((response: any) => {
             console.log('Project template: ' + success(JSON.stringify(response.result.template, null, '\t')));
             expect(response.result.template).to.be.an.instanceof(Object);
         }).catch((result: Error) => {

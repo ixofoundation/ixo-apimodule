@@ -1,5 +1,4 @@
 import {sendPostJSON}  from './utils/http';
-import {IPingResult}   from './common/models';
 import {generateTxnId} from './common/util';
 
 class Project {
@@ -9,19 +8,18 @@ class Project {
         this.hostname = hostname;
     }
 
-    getProjectTemplate(): Promise<IPingResult> {
+    getProjectTemplate(templateName: string): Promise<any> {
         return sendPostJSON(this.hostname + '/api/project', {
             'jsonrpc': '2.0',
             'method' : 'getTemplate',
             'params' : {
-                'type': 'project',
-                'name': 'default'
+                'name': templateName
             },
             'id'     : generateTxnId()
         });
     }
 
-    listProjects(): Promise<IPingResult> {
+    listProjects(): Promise<any> {
         return sendPostJSON(this.hostname + '/api/project', {
             'jsonrpc': '2.0',
             'method' : 'list',
@@ -29,7 +27,7 @@ class Project {
         });
     }
 
-    listProjectsByDid(did: string): Promise<IPingResult> {
+    listProjectsByDid(did: string): Promise<any> {
         return sendPostJSON(this.hostname + '/api/project', {
             'jsonrpc': '2.0',
             'method' : 'listForDID',
@@ -38,7 +36,7 @@ class Project {
         });
     }
 
-    createProject(did: string, signature: string, projectData: any, createdDate: Date): Promise<IPingResult> {
+    createProject(did: string, signature: string, projectData: any, createdDate: Date): Promise<any> {
         return sendPostJSON(this.hostname + '/api/project', {
             'jsonrpc': '2.0',
             'method' : 'create',
