@@ -25,10 +25,15 @@ class Project {
         return sendPostJSON(this.hostname + '/api/project', {
             'jsonrpc': '2.0',
             'method' : 'list',
-            'params' : {
-                'type': 'project',
-                'name': 'default'
-            },
+            'id'     : generateTxnId()
+        });
+    }
+
+    listProjectsByDid(did: string): Promise<IPingResult> {
+        return sendPostJSON(this.hostname + '/api/project', {
+            'jsonrpc': '2.0',
+            'method' : 'listForDID',
+            'params' : {'did': did},
             'id'     : generateTxnId()
         });
     }

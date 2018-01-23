@@ -7,7 +7,7 @@ const success = chalk.bold.green;
 const error = chalk.bold.red;
 const ixo = new Ixo('https://ixo-node.herokuapp.com');
 
-var projectData ={
+var projectData = {
     owner  : {
         email: 'peter@noname.com',
         name : 'Peter Piper'
@@ -29,6 +29,15 @@ describe('Project functions', () => {
     it('should return list of projects', () => {
         ixo.project.listProjects().then((response: any) => {
             console.log('Project list: ' + success(JSON.stringify(response.result, null, '\t')));
+            expect(response.result).to.be.an.instanceof(Object);
+        }).catch((result: Error) => {
+            console.log(error(result));
+        });
+
+    });
+    it('should return list of projects by did', () => {
+        ixo.project.listProjectsByDid('0x92928b5135d8dbad88b1e772bf5b8f91bfe41a8d').then((response: any) => {
+            console.log('Projects by did: ' + success(JSON.stringify(response, null, '\t')));
             expect(response.result).to.be.an.instanceof(Object);
         }).catch((result: Error) => {
             console.log(error(result));
