@@ -1,5 +1,6 @@
-import {sendPostJSON} from './utils/http';
-import {IPingResult}  from './models';
+import {sendPostJSON}  from './utils/http';
+import {IPingResult}   from './common/models';
+import {generateTxnId} from './common/util';
 
 class Project {
     hostname: string;
@@ -16,7 +17,7 @@ class Project {
                 'type': 'project',
                 'name': 'default'
             },
-            'id'     : 1
+            'id'     : generateTxnId()
         });
     }
 
@@ -28,7 +29,24 @@ class Project {
                 'type': 'project',
                 'name': 'default'
             },
-            'id'     : 1
+            'id'     : generateTxnId()
+        });
+    }
+
+    createProject(did: string, signature: string, projectData: any, createdDate: Date): Promise<IPingResult> {
+        return sendPostJSON(this.hostname + '/api/project', {
+            'jsonrpc': '2.0',
+            'method' : 'create',
+            'id'     : generateTxnId(),
+            'params' : {
+                'data'     : projectData,
+                'signature': {
+                    'type'     : 'ECDSA',
+                    'created'  : createdDate,
+                    'creator'  : did,
+                    'signature': signature
+                }
+            }
         });
     }
 }

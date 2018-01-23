@@ -1,6 +1,6 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
-import {IDictionary} from "../models";
+import {IDictionary}  from "../common/models";
 import * as Immutable from 'immutable';
 
 /** Utility method for sending a POST request to the specified URL */

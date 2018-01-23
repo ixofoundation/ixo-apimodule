@@ -1,4 +1,5 @@
-import {sendPostJSON} from "./utils/http";
+import {sendPostJSON}  from "./utils/http";
+import {generateTxnId} from './common/util';
 
 class Network {
     hostname: string;
@@ -11,7 +12,7 @@ class Network {
         return sendPostJSON(this.hostname + '/api/network', {
             "jsonrpc": "2.0",
             "method": "ping",
-            "id": 1
+            "id": generateTxnId()
         })
     }
 
