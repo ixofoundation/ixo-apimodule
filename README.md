@@ -21,7 +21,7 @@ Note. This is still a WIP. We are planning an official release early 2018.
 ## API docs
 
 API documentation can be found an the following link:
-https://ixofoundation.github.io/mkdocs/api/
+https://ixofoundation.github.io/mkdocs/api/#ixo-module-api
 
 
 ## Scripts
