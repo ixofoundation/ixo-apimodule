@@ -1,9 +1,5 @@
 require('es6-promise').polyfill();
-if (typeof process !== 'undefined') {
-    require('isomorphic-fetch');
-} else {
-    require('whatwg-fetch');
-}
+var fetch = require('node-fetch');
 import { IDictionary } from "../common/models";
 import * as Immutable from 'immutable';
 
@@ -15,7 +11,7 @@ export function sendPostJSON<T>(url: string, body: IDictionary<any>, extraHeader
         headers: getJSONRequestHeaders(extraHeaders),
         credentials: 'same-origin'
     })
-        .then(res => res.json())
+        .then((res: any) => res.json())
         .then(checkServerError);
 }
 
