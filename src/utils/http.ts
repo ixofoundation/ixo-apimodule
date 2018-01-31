@@ -1,14 +1,18 @@
 require('es6-promise').polyfill();
-require('isomorphic-fetch');
-import {IDictionary}  from "../common/models";
+if (typeof process !== 'undefined') {
+    require('isomorphic-fetch');
+} else {
+    require('whatwg-fetch');
+}
+import { IDictionary } from "../common/models";
 import * as Immutable from 'immutable';
 
 /** Utility method for sending a POST request to the specified URL */
 export function sendPostJSON<T>(url: string, body: IDictionary<any>, extraHeaders?: IDictionary<string>): Promise<T> {
     return fetch(url, {
-        method     : 'POST',
-        body       : JSON.stringify(body),
-        headers    : getJSONRequestHeaders(extraHeaders),
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: getJSONRequestHeaders(extraHeaders),
         credentials: 'same-origin'
     })
         .then(res => res.json())
@@ -17,7 +21,7 @@ export function sendPostJSON<T>(url: string, body: IDictionary<any>, extraHeader
 
 /** Merge default JSON headers with any extra headers passed to it */
 function getJSONRequestHeaders(extraHeaders?: IDictionary<string>): IDictionary<string> {
-    let requestHeaders: IDictionary<string> = {'Accept': 'application/json', 'Content-Type': 'application/json'};
+    let requestHeaders: IDictionary<string> = { 'Accept': 'application/json', 'Content-Type': 'application/json' };
     if (extraHeaders) {
         requestHeaders = Immutable.Map(extraHeaders)
             .merge(Immutable.Map(requestHeaders))

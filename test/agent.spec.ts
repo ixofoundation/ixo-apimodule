@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import 'mocha';
-import Ixo      from '../';
+import { Ixo } from '../index';
 
 const chalk = require('chalk');
 const success = chalk.bold.green;
@@ -27,7 +27,7 @@ describe('Agent functions', () => {
     it('should create new agent', () => {
         ixo.agent.createAgent(agentData, '0x92928b5135d8dbad88b1e772bf5b8f91bfe41a8d', '0x98bc1b6a369d42bc36be05eb2890c0c0fd5df8f0239c44cc639af1f899c2cff501f04118981d8c00d461c0edd127bd1498ffd9f0198cc9fdd0888028b54985061b', new Date(), 'default').then((response: any) => {
             console.log('Create Agent: ' + success(JSON.stringify(response, null, '\t')));
-            expect(response.error.message).to.be.equal('Agent: \'0x92928b5135d8dbad88b1e772bf5b8f91bfe41a8d\' already exists on the project');
+            expect(response.error.message).to.be.contain('invalid');
         }).catch((result: Error) => {
             console.log(error(result));
         });

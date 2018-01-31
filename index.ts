@@ -4,7 +4,7 @@ import Auth       from './src/auth';
 import Project    from './src/project';
 import Agent      from './src/agent';
 
-export default class Ixo {
+export class Ixo {
     hostname: string;
     network: Network;
     cryptoUtil: CryptoUtil;
