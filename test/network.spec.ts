@@ -1,6 +1,7 @@
-import {expect}      from 'chai';
+require('isomorphic-fetch');
+import { expect } from 'chai';
 import 'mocha';
-import {IPingResult} from "../src/common/models";
+import { IPingResult } from "../src/common/models";
 import { Ixo } from '../index';
 
 const chalk = require('chalk');
