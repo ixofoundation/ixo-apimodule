@@ -10,6 +10,8 @@ const ixo = new Ixo('https://ixo-node.herokuapp.com/');
 let mnemonic: string;
 let sdid: ISovrinDidModel;
 let signature: string;
+let ecdsaKeyPair: any;
+let ecdsaSignature: any;
 
 var testJson = {
     "employees": [
@@ -39,11 +41,27 @@ describe('CryptoUtil functions', () => {
         expect(sdid).to.be.an.instanceof(Object);
     });
 
-
     it('should verify document signature', () => {
         var isValidSignature: boolean = ixo.cryptoUtil.verifyDocumentSignature(signature, sdid.verifyKey);
         console.log('Valid Signature: ' + logger(isValidSignature));
         expect(isValidSignature).to.be.true;
+    });
+
+    it('should generate ECDSA keypair', () => {
+        ecdsaKeyPair = ixo.cryptoUtil.generateEcdsaKeyPair();
+        console.log('Ecdsa keypair: ' + logger(ecdsaKeyPair));
+        expect(ecdsaKeyPair).to.be.an.instanceof(Object);
+    });
+
+    it('should sign Json using ECDSA key', () => {
+        ecdsaSignature = ixo.cryptoUtil.signPayloadUsingEcdsaKey(testJson, ecdsaKeyPair);
+        console.log('Ecdsa signature: ' + logger(ecdsaSignature));
+        expect(ecdsaSignature).to.be.an.instanceof(Object);
+    });
+
+    it('should verify the ECDSA signature', () => {
+        console.log('Is valid ECDSA signature: ' + logger(ixo.cryptoUtil.verifyEcdsaSignature(ecdsaKeyPair, ecdsaSignature, testJson)));
+        expect(ixo.cryptoUtil.verifyEcdsaSignature(ecdsaKeyPair, ecdsaSignature, testJson)).to.be.true;
     });
 
 
