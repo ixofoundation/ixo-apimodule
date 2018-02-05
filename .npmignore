@@ -65,3 +65,12 @@ typings/
 
 # User-specific stuff:
 .idea/**
+
+# Project files
+src/**
+test/**
+assets/**
+tsconfig.json
+README.md
+index.ts 
+circle.yml
