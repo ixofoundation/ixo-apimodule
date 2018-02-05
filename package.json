@@ -1,13 +1,13 @@
 {
   "name": "ixo-module",
-  "version": "1.4.9",
+  "version": "1.4.8",
   "description": "This is a node module that defines the functions that can be performed by the ixo protocol.",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "test": "mocha -r ts-node/register 'test/**/*.spec.ts'",
     "readme": "node ./node_modules/.bin/node-readme",
-    "publish": "rm -Rf node_modules/ package-lock.json dist/ && npm install && gulp && npm version patch && npm publish"
+    "publish": "npm version patch && rm -Rf node_modules/ package-lock.json dist/ && npm install && gulp && npm publish"
   },
   "repository": {
     "type": "git",
