@@ -74,3 +74,4 @@ tsconfig.json
 README.md
 index.ts 
 circle.yml
+gulpfile.js
