@@ -31,11 +31,11 @@ class Agent {
             'id': generateTxnId(),
             'params': {
                 'payload': {
+                    'did': did,
                     'template': {
                         'name': templateName
                     },
-                    'data': agentData,
-                    'did': did
+                    'data': agentData
                 },
                 'signature': {
                     'type': 'ECDSA',
