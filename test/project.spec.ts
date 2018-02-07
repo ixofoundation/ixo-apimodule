@@ -44,6 +44,7 @@ describe('Project functions', () => {
         });
 
     });
+    
     it('should create new project', () => {
         ixo.project.createProject('0x92928b5135d8dbad88b1e772bf5b8f91bfe41a8d', '0x6d1a512a1235acc8e1af7af075b38513b92bb8793dc43e705898f35b08fdbfc87f6b12e8c4e7a3cc08045bbd18eafbb5b6393c05ba76498131904af43f204aa21b', projectData, new Date()).then((response: any) => {
             console.log('Project create response: ' + success(JSON.stringify(response, null, '\t')));

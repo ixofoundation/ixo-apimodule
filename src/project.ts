@@ -8,22 +8,33 @@ class Project {
         this.hostname = hostname;
     }
 
-    getProjectTemplate(templateName: string): Promise<any> {
+    getProjectTemplate(templateName: string, did: string): Promise<any> {
         return sendPostJSON(this.hostname + '/api/project', {
             'jsonrpc': '2.0',
             'method': 'getTemplate',
             'params': {
-                'name': templateName
+                'payload': {
+                    'did': did,
+                    'data': {
+                        'name': templateName
+                    }
+                }
             },
             'id': generateTxnId()
         });
     }
 
-    listProjects(): Promise<any> {
+    listProjects(did: string): Promise<any> {
         return sendPostJSON(this.hostname + '/api/project', {
             'jsonrpc': '2.0',
             'method': 'list',
-            'id': generateTxnId()
+            'id': generateTxnId(),
+            'params': {
+                'payload': {
+                    'data': {},
+                    'did': did
+                }
+            }
         });
     }
 
@@ -31,12 +42,19 @@ class Project {
         return sendPostJSON(this.hostname + '/api/project', {
             'jsonrpc': '2.0',
             'method': 'listForDID',
-            'params': { 'did': did },
+            'params': {
+                'payload': {
+                    'did': did,
+                    'data': {
+                        'did': did
+                    }
+                }
+            },
             'id': generateTxnId()
         });
     }
 
-    createProject(did: string, signature: string, projectData: any, createdDate: Date, sigType?: string): Promise<any> {
+    createProject(did: string, signature: string, projectData: any, createdDate: Date, templateName: string, sigType?: string): Promise<any> {
         var signatureType = 'ECDSA';
         if (sigType) {
             signatureType = sigType
@@ -46,7 +64,13 @@ class Project {
             'method': 'create',
             'id': generateTxnId(),
             'params': {
-                'data': projectData,
+                'payload': {
+                    'did': did,
+                    'template': {
+                        'name': templateName
+                    },
+                    'data': projectData
+                },
                 'signature': {
                     'type': signatureType,
                     'created': createdDate,

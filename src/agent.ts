@@ -1,5 +1,5 @@
-import {sendPostJSON}  from './utils/http';
-import {generateTxnId} from './common/util';
+import { sendPostJSON } from './utils/http';
+import { generateTxnId } from './common/util';
 
 class Agent {
     hostname: string;
@@ -8,37 +8,76 @@ class Agent {
         this.hostname = hostname;
     }
 
-    getAgentTemplate(templateName: string): Promise<any> {
+    getAgentTemplate(templateName: string, did: string): Promise<any> {
         return sendPostJSON(this.hostname + '/api/agent', {
             'jsonrpc': '2.0',
-            'method' : 'getTemplate',
-            'params' : {
-                'name': templateName
+            'method': 'getTemplate',
+            'params': {
+                'payload': {
+                    'did': did,
+                    'data': {
+                        'name': templateName
+                    }
+                }
             },
-            'id'     : generateTxnId()
+            'id': generateTxnId()
         });
     }
 
     createAgent(agentData: any, did: string, signature: string, createdDate: Date, templateName: string): Promise<any> {
         return sendPostJSON(this.hostname + '/api/agent', {
             'jsonrpc': '2.0',
-            'method' : 'create',
-            'id'     : generateTxnId(),
-            'params' : {
-                'template' : {
-                    'name': templateName
+            'method': 'create',
+            'id': generateTxnId(),
+            'params': {
+                'payload': {
+                    'template': {
+                        'name': templateName
+                    },
+                    'data': agentData,
+                    'did': did
                 },
-                'data'     : agentData,
                 'signature': {
-                    'type'     : 'ECDSA',
-                    'created'  : createdDate,
-                    'creator'  : did,
+                    'type': 'ECDSA',
+                    'created': createdDate,
+                    'creator': did,
                     'signature': signature
                 }
             }
         });
     }
 
+    listAgentsForDID(did: string): Promise<any> {
+        return sendPostJSON(this.hostname + '/api/agent', {
+            'jsonrpc': '2.0',
+            'method': 'listForDID',
+            'params': {
+                'payload': {
+                    'did': did,
+                    'data': {
+                        'did': did
+                    }
+                }
+            },
+            'id': generateTxnId()
+        });
+    }
+
+    listAgnetsForProject(did: string, projectTx: string): Promise<any> {
+        return sendPostJSON(this.hostname + '/api/agent', {
+            'jsonrpc': '2.0',
+            'method': 'listForProject',
+            'params': {
+                'payload': {
+                    'did': did,
+                    'data': {
+                        'projectTx': projectTx
+                    }
+                }
+            },
+            'id': generateTxnId()
+        });
+    }
 }
 
 export default Agent;
