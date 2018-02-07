@@ -63,7 +63,7 @@ class Agent {
         });
     }
 
-    listAgnetsForProject(did: string, projectTx: string): Promise<any> {
+    listAgentsForProject(did: string, projectTx: string): Promise<any> {
         return sendPostJSON(this.hostname + '/api/agent', {
             'jsonrpc': '2.0',
             'method': 'listForProject',

@@ -14,7 +14,7 @@ class Auth {
                 var eth = new Eth(provider.currentProvider);
                 var account = provider.eth.accounts[0];
                 var msg = '0x' + new Buffer(JSON.stringify(dataToSign)).toString('hex')
-                return resolve(eth.personal_sign(dataToSign, account));
+                return resolve(eth.personal_sign(msg, account));
             } else {
                 return reject(new Error(`Provider or data to sign is missing!`));
             }
