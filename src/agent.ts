@@ -1,82 +1,36 @@
+require('es6-promise');
 import { sendPostJSON } from './utils/http';
-import { generateTxnId } from './common/util';
+import { generateTxnId, constructJsonRequest, constructJsonSignRequest } from './common/util';
+import { Ixo } from '../index';
+import { Signature } from './common/models';
 
 class Agent {
-    hostname: string;
-
-    constructor(hostname: string) {
-        this.hostname = hostname;
+    ixo: Ixo;
+    constructor(ixo: Ixo) {
+        this.ixo = ixo;
     }
 
-    getAgentTemplate(templateName: string, did: string): Promise<any> {
-        return sendPostJSON(this.hostname + '/api/agent', {
-            'jsonrpc': '2.0',
-            'method': 'getTemplate',
-            'params': {
-                'payload': {
-                    'did': did,
-                    'data': {
-                        'name': templateName
-                    }
-                }
-            },
-            'id': generateTxnId()
-        });
-    }
-
-    createAgent(agentData: any, did: string, signature: string, createdDate: Date, templateName: string): Promise<any> {
-        return sendPostJSON(this.hostname + '/api/agent', {
-            'jsonrpc': '2.0',
-            'method': 'create',
-            'id': generateTxnId(),
-            'params': {
-                'payload': {
-                    'did': did,
-                    'template': {
-                        'name': templateName
-                    },
-                    'data': agentData
-                },
-                'signature': {
-                    'type': 'ECDSA',
-                    'created': createdDate,
-                    'creator': did,
-                    'signature': signature
-                }
-            }
-        });
+    getAgentTemplate(templateName: string): Promise<any> {
+        const data = { 'name': templateName }
+        return sendPostJSON(this.ixo.hostname + '/api/agent', constructJsonRequest(this.ixo.credetialProvider.getDid(), 'getTemplate', data));
     }
 
     listAgentsForDID(did: string): Promise<any> {
-        return sendPostJSON(this.hostname + '/api/agent', {
-            'jsonrpc': '2.0',
-            'method': 'listForDID',
-            'params': {
-                'payload': {
-                    'did': did,
-                    'data': {
-                        'did': did
-                    }
-                }
-            },
-            'id': generateTxnId()
-        });
+        const data = { 'did': did }
+        return sendPostJSON(this.ixo.hostname + '/api/agent', constructJsonRequest(this.ixo.credetialProvider.getDid(), 'listForDID', data));
     }
 
     listAgentsForProject(did: string, projectTx: string): Promise<any> {
-        return sendPostJSON(this.hostname + '/api/agent', {
-            'jsonrpc': '2.0',
-            'method': 'listForProject',
-            'params': {
-                'payload': {
-                    'did': did,
-                    'data': {
-                        'projectTx': projectTx
-                    }
-                }
-            },
-            'id': generateTxnId()
-        });
+        const data = { 'projectTx': projectTx }
+        return sendPostJSON(this.ixo.hostname + '/api/agent', constructJsonRequest(this.ixo.credetialProvider.getDid(), 'listForProject', data));
+    }
+
+    createAgent(agentData: any, templateName: string): Promise<any> {
+        return this.ixo.credetialProvider.sign(agentData, templateName).then((signature: Signature) => {
+            return constructJsonSignRequest(this.ixo.credetialProvider.getDid(), agentData, 'create', templateName, signature);
+        }).then((json: any) => {
+            return sendPostJSON(this.ixo.hostname + '/api/agent', json);
+        })
     }
 }
 

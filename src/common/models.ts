@@ -1,3 +1,6 @@
+import { create } from "domain";
+import { Promise } from 'es6-promise';
+
 export interface IPingIxoNode {
     status: string
 }
@@ -27,4 +30,24 @@ export interface IPingResult {
 export interface ICredentialProviderResult {
     provider: any,
     credentialProviderInstance: any,
+}
+
+export class Signature {
+    type: string;
+    created: Date;
+    creator: string;
+    signature: string;
+
+    constructor(type: string, created: Date, did: string, signature: string) {
+        this.type = type;
+        this.created = created;
+        this.creator = did;
+        this.signature = signature;
+    }
+}
+
+export interface IxoCredentialProvider {
+    sign(dataToSign: any, templateName?: string): Promise<Signature>,
+    getDid(): string
+
 }

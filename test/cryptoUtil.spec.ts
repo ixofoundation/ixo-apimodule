@@ -1,12 +1,13 @@
-import {expect}          from 'chai';
+import { expect } from 'chai';
 import 'mocha';
-import {ISovrinDidModel} from "../src/common/models";
+import { ISovrinDidModel } from "../src/common/models";
 import { Ixo } from '../index';
+import { MockProvider } from './common/util';
 
 const chalk = require('chalk');
 const logger = chalk.bold.green;
 
-const ixo = new Ixo('https://ixo-node.herokuapp.com/');
+const ixo = new Ixo('https://ixo-node.herokuapp.com/', new MockProvider());
 let mnemonic: string;
 let sdid: ISovrinDidModel;
 let signature: string;
@@ -15,9 +16,9 @@ let ecdsaSignature: any;
 
 var testJson = {
     "employees": [
-        {"firstName": "John", "lastName": "Doe"},
-        {"firstName": "Anna", "lastName": "Smith"},
-        {"firstName": "Peter", "lastName": "Jones"}
+        { "firstName": "John", "lastName": "Doe" },
+        { "firstName": "Anna", "lastName": "Smith" },
+        { "firstName": "Peter", "lastName": "Jones" }
     ]
 };
 

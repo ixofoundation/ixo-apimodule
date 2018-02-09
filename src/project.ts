@@ -1,84 +1,37 @@
+require('es6-promise');
 import { sendPostJSON } from './utils/http';
-import { generateTxnId } from './common/util';
+import { generateTxnId, constructJsonRequest, constructJsonSignRequest } from './common/util';
+import { Ixo } from '../index';
+import { Signature } from './common/models';
 
 class Project {
-    hostname: string;
 
-    constructor(hostname: string) {
-        this.hostname = hostname;
+    ixo: Ixo;
+    constructor(ixo: Ixo) {
+        this.ixo = ixo;
     }
 
-    getProjectTemplate(templateName: string, did: string): Promise<any> {
-        return sendPostJSON(this.hostname + '/api/project', {
-            'jsonrpc': '2.0',
-            'method': 'getTemplate',
-            'params': {
-                'payload': {
-                    'did': did,
-                    'data': {
-                        'name': templateName
-                    }
-                }
-            },
-            'id': generateTxnId()
-        });
+    getProjectTemplate(templateName: string): Promise<any> {
+        const data = { 'name': templateName }
+        return sendPostJSON(this.ixo.hostname + '/api/project', constructJsonRequest(this.ixo.credetialProvider.getDid(), 'getTemplate', data));
     }
 
-    listProjects(did: string): Promise<any> {
-        return sendPostJSON(this.hostname + '/api/project', {
-            'jsonrpc': '2.0',
-            'method': 'list',
-            'id': generateTxnId(),
-            'params': {
-                'payload': {
-                    'data': {},
-                    'did': did
-                }
-            }
-        });
+    listProjects(): Promise<any> {
+        const data = {}
+        return sendPostJSON(this.ixo.hostname + '/api/project', constructJsonRequest(this.ixo.credetialProvider.getDid(), 'list', data));
     }
 
     listProjectsByDid(did: string): Promise<any> {
-        return sendPostJSON(this.hostname + '/api/project', {
-            'jsonrpc': '2.0',
-            'method': 'listForDID',
-            'params': {
-                'payload': {
-                    'did': did,
-                    'data': {
-                        'did': did
-                    }
-                }
-            },
-            'id': generateTxnId()
-        });
+        const data = { 'did': did }
+        return sendPostJSON(this.ixo.hostname + '/api/project', constructJsonRequest(this.ixo.credetialProvider.getDid(), 'listForDID', data));
     }
 
-    createProject(did: string, signature: string, projectData: any, createdDate: Date, templateName: string, sigType?: string): Promise<any> {
-        var signatureType = 'ECDSA';
-        if (sigType) {
-            signatureType = sigType
-        }
-        return sendPostJSON(this.hostname + '/api/project', {
-            'jsonrpc': '2.0',
-            'method': 'create',
-            'id': generateTxnId(),
-            'params': {
-                'payload': {
-                    'did': did,
-                    'template': {
-                        'name': templateName
-                    },
-                    'data': projectData
-                },
-                'signature': {
-                    'type': signatureType,
-                    'created': createdDate,
-                    'creator': did,
-                    'signature': signature
-                }
-            }
-        });
+    createProject(projectData: any, templateName: string): Promise<any> {
+        return this.ixo.credetialProvider.sign(projectData, templateName).then((signature: Signature) => {
+            return constructJsonSignRequest(this.ixo.credetialProvider.getDid(), projectData, 'create', templateName, signature);
+        }).then((json: any) => {
+            return sendPostJSON(this.ixo.hostname + '/api/project', json);
+        })
     }
 }
 

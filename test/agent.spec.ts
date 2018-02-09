@@ -1,42 +1,63 @@
-import {expect} from 'chai';
+require('isomorphic-fetch');
+import { expect } from 'chai';
 import 'mocha';
 import { Ixo } from '../index';
+import { MockProvider } from './common/util';
 
 const chalk = require('chalk');
 const success = chalk.bold.green;
 const error = chalk.bold.red;
-const ixo = new Ixo('https://ixo-node.herokuapp.com');
-
-var agentData = {
-    email    : 'joe@bloggs.com',
-    name     : 'Joe Blogs',
-    role     : 'SA',
-    projectTx: '58c7b58c15ede91e3504c5baab057e792e76814a2c7488fd385e732ad0508d19'
-};
+const ixo = new Ixo('https://ixo-node.herokuapp.com', new MockProvider());
+let agentData;
 
 describe('Agent functions', () => {
+    before(() => {
+        var projectData = {
+            owner: {
+                email: 'peter@noname.com',
+                name: 'Unit Tester'
+            },
+            name: 'IXO-Test',
+            country: 'UK'
+        };
+
+        return new Promise((resolve) => {
+            ixo.project.createProject(projectData, 'default').then((response: any) => {
+                agentData = {
+                    email: 'joe@bloggs.com',
+                    name: 'Joe Blogs',
+                    role: 'SA',
+                    projectTx: response.result.tx
+                };
+                resolve();
+            }).catch((result: Error) => {
+                console.log(error(result));
+            });
+        });
+    });
+
     it('should return agent template', () => {
-        ixo.agent.getAgentTemplate('default', '0x92928b5135d8dbad88b1e772bf5b8f91bfe41a8d').then((response: any) => {
+        ixo.agent.getAgentTemplate('default').then((response: any) => {
             console.log('Agent template: ' + success(JSON.stringify(response, null, '\t')));
-            expect(response).to.be.an.instanceof(Object);
+            expect(response.result).to.not.equal(null);
         }).catch((result: Error) => {
             console.log(error(result));
         });
 
     });
     it('should create new agent', () => {
-        ixo.agent.createAgent(agentData, '0x92928b5135d8dbad88b1e772bf5b8f91bfe41a8d', '0x98bc1b6a369d42bc36be05eb2890c0c0fd5df8f0239c44cc639af1f899c2cff501f04118981d8c00d461c0edd127bd1498ffd9f0198cc9fdd0888028b54985061b', new Date(), 'default').then((response: any) => {
+        ixo.agent.createAgent(agentData, 'default').then((response: any) => {
             console.log('Create Agent: ' + success(JSON.stringify(response, null, '\t')));
-            expect(response.error.message).to.be.contain('Invalid transaction input signature');
+            expect(response.result.email).to.be.equal('joe@bloggs.com');
         }).catch((result: Error) => {
             console.log(error(result));
         });
 
     });
     it('should list agent by did', () => {
-        ixo.agent.listAgentsForDID('0x92928b5135d8dbad88b1e772bf5b8f91bfe41a8d').then((response: any) => {
+        ixo.agent.listAgentsForDID(ixo.credetialProvider.getDid()).then((response: any) => {
             console.log('Agent list for DID: ' + success(JSON.stringify(response, null, '\t')));
-            expect(response).to.be.an.instanceof(Object);
+            expect(response.result).to.not.equal(null);
         }).catch((result: Error) => {
             console.log(error(result));
         });
