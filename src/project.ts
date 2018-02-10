@@ -27,11 +27,13 @@ class Project {
     }
 
     createProject(projectData: any, templateName: string): Promise<any> {
-        return this.ixo.credetialProvider.sign(projectData, templateName).then((signature: Signature) => {
-            return constructJsonSignRequest(this.ixo.credetialProvider.getDid(), projectData, 'create', templateName, signature);
-        }).then((json: any) => {
-            return sendPostJSON(this.ixo.hostname + '/api/project', json);
-        })
+        return new Promise((resolve) => {
+            this.ixo.credetialProvider.sign(projectData, templateName).then((signature: Signature) => {
+                return constructJsonSignRequest(this.ixo.credetialProvider.getDid(), projectData, 'create', templateName, signature);
+            }).then((json: any) => {
+                return resolve(sendPostJSON(this.ixo.hostname + '/api/project', json));
+            })
+        });
     }
 }
 

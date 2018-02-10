@@ -26,12 +26,14 @@ class Agent {
     }
 
     createAgent(agentData: any, templateName: string): Promise<any> {
-        return this.ixo.credetialProvider.sign(agentData, templateName).then((signature: Signature) => {
-            return constructJsonSignRequest(this.ixo.credetialProvider.getDid(), agentData, 'create', templateName, signature);
-        }).then((json: any) => {
-            return sendPostJSON(this.ixo.hostname + '/api/agent', json);
-        })
+        return new Promise((resolve) => {
+            return this.ixo.credetialProvider.sign(agentData, templateName).then((signature: Signature) => {
+                return constructJsonSignRequest(this.ixo.credetialProvider.getDid(), agentData, 'create', templateName, signature);
+            }).then((json: any) => {
+                return resolve(sendPostJSON(this.ixo.hostname + '/api/agent', json));
+            })
+        });
     }
 }
 
-export default Agent;
+    export default Agent;
