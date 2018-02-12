@@ -1,30 +1,39 @@
 import Network from './src/network';
 import CryptoUtil from './src/cryptoUtil';
-import Auth from './src/auth';
 import Project from './src/project';
 import Agent from './src/agent';
 import { IxoCredentialProvider } from './src/common/models';
 import Web3Provider from './src/providers/web3Provider';
+import { resolveProvider } from './src/providers/providerResolver';
 
 export class Ixo {
-    static Web3Provider = Web3Provider;
-    
     hostname: string;
     credetialProvider: IxoCredentialProvider
     network: Network;
     cryptoUtil: CryptoUtil;
-    auth: Auth;
     project: Project;
     agent: Agent;
 
-    constructor(hostname: string, credetialProvider: IxoCredentialProvider) {
+    constructor(hostname: string, credetialProvider?: IxoCredentialProvider) {
+        if (credetialProvider) {
+            this.credetialProvider = credetialProvider;
+        }
         this.hostname = hostname;
-        this.credetialProvider = credetialProvider;
         this.network = new Network(this);
         this.cryptoUtil = new CryptoUtil();
-        this.auth = new Auth();
         this.project = new Project(this);
         this.agent = new Agent(this);
+    }
+
+    init(provider: any): Promise<any> {
+        return new Promise((resolve, reject) => {
+            resolveProvider(provider).then((provider: IxoCredentialProvider) => {
+                this.credetialProvider = provider;
+                return resolve(provider);
+            }).catch((error: any) => {
+                return reject(error);
+            })
+        })
     }
 }
 
