@@ -55,7 +55,7 @@ describe('Agent functions', () => {
 
     });
     it('should list agent by did', () => {
-        ixo.agent.listAgentsForDID(ixo.credetialProvider.getDid()).then((response: any) => {
+        ixo.agent.listAgentsForDID(ixo.credentialProvider.getDid()).then((response: any) => {
             console.log('Agent list for DID: ' + success(JSON.stringify(response, null, '\t')));
             expect(response.result).to.not.equal(null);
         }).catch((result: Error) => {

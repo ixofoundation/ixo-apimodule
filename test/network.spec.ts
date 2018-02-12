@@ -25,7 +25,7 @@ describe('Network functions', () => {
     it('should return network status', () => {
 
 
-        ixo.credetialProvider.sign(projectData).then((resp: Signature) => {
+        ixo.credentialProvider.sign(projectData).then((resp: Signature) => {
             console.log(JSON.stringify(resp.signature));
 
         }).catch((result: Error) => {

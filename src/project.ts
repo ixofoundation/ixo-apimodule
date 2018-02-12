@@ -13,23 +13,23 @@ class Project {
 
     getProjectTemplate(templateName: string): Promise<any> {
         const data = { 'name': templateName }
-        return sendPostJSON(this.ixo.hostname + '/api/project', constructJsonRequest(this.ixo.credetialProvider.getDid(), 'getTemplate', data));
+        return sendPostJSON(this.ixo.hostname + '/api/project', constructJsonRequest(this.ixo.credentialProvider.getDid(), 'getTemplate', data));
     }
 
     listProjects(): Promise<any> {
         const data = {}
-        return sendPostJSON(this.ixo.hostname + '/api/project', constructJsonRequest(this.ixo.credetialProvider.getDid(), 'list', data));
+        return sendPostJSON(this.ixo.hostname + '/api/project', constructJsonRequest(this.ixo.credentialProvider.getDid(), 'list', data));
     }
 
     listProjectsByDid(did: string): Promise<any> {
         const data = { 'did': did }
-        return sendPostJSON(this.ixo.hostname + '/api/project', constructJsonRequest(this.ixo.credetialProvider.getDid(), 'listForDID', data));
+        return sendPostJSON(this.ixo.hostname + '/api/project', constructJsonRequest(this.ixo.credentialProvider.getDid(), 'listForDID', data));
     }
 
     createProject(projectData: any, templateName: string): Promise<any> {
         return new Promise((resolve) => {
-            this.ixo.credetialProvider.sign(projectData, templateName).then((signature: Signature) => {
-                return constructJsonSignRequest(this.ixo.credetialProvider.getDid(), projectData, 'create', templateName, signature);
+            this.ixo.credentialProvider.sign(projectData, templateName).then((signature: Signature) => {
+                return constructJsonSignRequest(this.ixo.credentialProvider.getDid(), projectData, 'create', templateName, signature);
             }).then((json: any) => {
                 return resolve(sendPostJSON(this.ixo.hostname + '/api/project', json));
             })

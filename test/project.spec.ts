@@ -42,7 +42,7 @@ describe('Project functions', () => {
     });
 
     it('should return list of projects by did', () => {
-        ixo.project.listProjectsByDid(ixo.credetialProvider.getDid()).then((response: any) => {
+        ixo.project.listProjectsByDid(ixo.credentialProvider.getDid()).then((response: any) => {
             console.log('Projects by did: ' + success(JSON.stringify(response, null, '\t')));
             expect(response.result).to.not.equal(null);
         }).catch((result: Error) => {

@@ -8,15 +8,15 @@ import { resolveProvider } from './src/providers/providerResolver';
 
 export class Ixo {
     hostname: string;
-    credetialProvider: IxoCredentialProvider
+    credentialProvider: IxoCredentialProvider
     network: Network;
     cryptoUtil: CryptoUtil;
     project: Project;
     agent: Agent;
 
-    constructor(hostname: string, credetialProvider?: IxoCredentialProvider) {
-        if (credetialProvider) {
-            this.credetialProvider = credetialProvider;
+    constructor(hostname: string, credentialProvider?: IxoCredentialProvider) {
+        if (credentialProvider) {
+            this.credentialProvider = credentialProvider;
         }
         this.hostname = hostname;
         this.network = new Network(this);
@@ -28,7 +28,7 @@ export class Ixo {
     init(provider: any): Promise<any> {
         return new Promise((resolve, reject) => {
             resolveProvider(provider).then((provider: IxoCredentialProvider) => {
-                this.credetialProvider = provider;
+                this.credentialProvider = provider;
                 return resolve(provider);
             }).catch((error: any) => {
                 return reject(error);
