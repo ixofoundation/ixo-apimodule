@@ -17,6 +17,8 @@ export class Ixo {
     constructor(hostname: string, credentialProvider?: IxoCredentialProvider) {
         if (credentialProvider) {
             this.credentialProvider = credentialProvider;
+        } else {
+            this.credentialProvider = null
         }
         this.hostname = hostname;
         this.network = new Network(this);
