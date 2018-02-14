@@ -34,9 +34,9 @@ describe('Agent functions', () => {
                 };
                 ixo.agent.createAgent(agentData, 'default').then((response: any) => {
                     agentUpdate = { agentTx: response.result.tx, status: "Approved" }
-
+                    resolve();
                 })
-                resolve();
+
             }).catch((result: Error) => {
                 console.log(error(result));
             });
@@ -71,7 +71,7 @@ describe('Agent functions', () => {
 
     });
     it('update agent status', () => {
-        ixo.agent.updateAgentStatus(agentUpdate, 'default').then((response: any) => {
+        ixo.agent.updateAgentStatus(agentUpdate).then((response: any) => {
             console.log('Agent status update: ' + success(JSON.stringify(response, null, '\t')));
             expect(response.result).to.not.equal(null);
         }).catch((result: Error) => {

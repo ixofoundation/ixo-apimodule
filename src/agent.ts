@@ -35,10 +35,10 @@ class Agent {
         });
     }
 
-    updateAgentStatus(agentData: any, templateName: string): Promise<any> {
+    updateAgentStatus(agentData: any): Promise<any> {
         return new Promise((resolve) => {
-            return this.ixo.credentialProvider.sign(agentData, templateName).then((signature: Signature) => {
-                return constructJsonSignRequest(this.ixo.credentialProvider.getDid(), agentData, 'updateAgentStatus', templateName, signature);
+            return this.ixo.credentialProvider.sign(agentData).then((signature: Signature) => {
+                return constructJsonSignRequest(this.ixo.credentialProvider.getDid(), agentData, 'updateAgentStatus', null, signature);
             }).then((json: any) => {
                 return resolve(sendPostJSON(this.ixo.hostname + '/api/agent', json));
             })
@@ -46,4 +46,4 @@ class Agent {
     }
 }
 
-    export default Agent;
+export default Agent;

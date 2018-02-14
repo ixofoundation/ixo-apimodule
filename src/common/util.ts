@@ -21,30 +21,41 @@ export function generateJsonPayload(data: string, did: string, templateName?: st
     }
 }
 
-export function constructJsonSignRequest(did: string, projectData: string, method: string, templateName: string, signature?: Signature): any {
-    const jsonRequest = {
+export function constructJsonSignRequest(did: string, data: string, method: string, templateName?: string, signature?: Signature): any {
+    var jsonRequest = {
         'jsonrpc': '2.0',
         'method': method,
         'id': generateTxnId(),
         'params': {
             'payload': {
                 'did': did,
-                'data': projectData,
-                'template': {
-                    'name': templateName
+                'data': data
+            }
+        }
+    }
+    if (templateName) {
+        var jsonRequestTemp = {
+            ...jsonRequest, 'params': {
+                ...jsonRequest.params,
+                'payload': { ...jsonRequest.params.payload, template: { name: templateName } }
+            }
+        };
+        jsonRequest = jsonRequestTemp;
+    }
+    if (signature) {
+        var jsonRequestTemp2 = {
+            ...jsonRequest, 'params': {
+                ...jsonRequest.params, signature: {
+                    type: signature.type,
+                    created: signature.created,
+                    creator: signature.creator,
+                    signature: signature.signature
                 }
             }
         }
+        jsonRequest = jsonRequestTemp2;
     }
-    if (signature) {
-        return {
-            ...jsonRequest, 'params': {
-                ...jsonRequest.params, 'signature': signature
-            }
-        }
-    } else {
-        return jsonRequest;
-    }
+    return jsonRequest;
 }
 
 export function constructJsonRequest(did: string, method: string, data: any, templateName?: string): any {
