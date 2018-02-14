@@ -34,6 +34,16 @@ class Agent {
             })
         });
     }
+
+    updateAgentStatus(agentData: any, templateName: string): Promise<any> {
+        return new Promise((resolve) => {
+            return this.ixo.credentialProvider.sign(agentData, templateName).then((signature: Signature) => {
+                return constructJsonSignRequest(this.ixo.credentialProvider.getDid(), agentData, 'updateAgentStatus', templateName, signature);
+            }).then((json: any) => {
+                return resolve(sendPostJSON(this.ixo.hostname + '/api/agent', json));
+            })
+        });
+    }
 }
 
     export default Agent;

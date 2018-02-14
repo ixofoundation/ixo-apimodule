@@ -9,6 +9,8 @@ const success = chalk.bold.green;
 const error = chalk.bold.red;
 const ixo = new Ixo('https://ixo-node.herokuapp.com', new MockProvider());
 let agentData;
+let projectTx;
+let agentUpdate;
 
 describe('Agent functions', () => {
     before(() => {
@@ -23,12 +25,17 @@ describe('Agent functions', () => {
 
         return new Promise((resolve) => {
             ixo.project.createProject(projectData, 'default').then((response: any) => {
+                projectTx = response.result.tx;
                 agentData = {
                     email: 'joe@bloggs.com',
                     name: 'Joe Blogs',
                     role: 'SA',
                     projectTx: response.result.tx
                 };
+                ixo.agent.createAgent(agentData, 'default').then((response: any) => {
+                    agentUpdate = { agentTx: response.result.tx, status: "Approved" }
+
+                })
                 resolve();
             }).catch((result: Error) => {
                 console.log(error(result));
@@ -45,18 +52,27 @@ describe('Agent functions', () => {
         });
 
     });
-    it('should create new agent', () => {
-        ixo.agent.createAgent(agentData, 'default').then((response: any) => {
-            console.log('Create Agent: ' + success(JSON.stringify(response, null, '\t')));
-            expect(response.result.email).to.be.equal('joe@bloggs.com');
+    it('should list agent by did', () => {
+        ixo.agent.listAgentsForDID(ixo.credentialProvider.getDid()).then((response: any) => {
+            console.log('Agent list for DID: ' + success(JSON.stringify(response, null, '\t')));
+            expect(response.result).to.not.equal(null);
         }).catch((result: Error) => {
             console.log(error(result));
         });
 
     });
-    it('should list agent by did', () => {
-        ixo.agent.listAgentsForDID(ixo.credentialProvider.getDid()).then((response: any) => {
-            console.log('Agent list for DID: ' + success(JSON.stringify(response, null, '\t')));
+    it('should list agents for project', () => {
+        ixo.agent.listAgentsForProject(ixo.credentialProvider.getDid(), projectTx).then((response: any) => {
+            console.log('Agent list for Project: ' + success(JSON.stringify(response, null, '\t')));
+            expect(response.result).to.not.equal(null);
+        }).catch((result: Error) => {
+            console.log(error(result));
+        });
+
+    });
+    it('update agent status', () => {
+        ixo.agent.updateAgentStatus(agentUpdate, 'default').then((response: any) => {
+            console.log('Agent status update: ' + success(JSON.stringify(response, null, '\t')));
             expect(response.result).to.not.equal(null);
         }).catch((result: Error) => {
             console.log(error(result));
