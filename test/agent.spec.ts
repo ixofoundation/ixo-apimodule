@@ -17,10 +17,24 @@ describe('Agent functions', () => {
         var projectData = {
             owner: {
                 email: 'peter@noname.com',
-                name: 'Unit Tester'
+                name: 'Peter Piper'
             },
-            name: 'IXO-Test',
-            country: 'UK'
+            name: 'Reforestation',
+            country: 'UK',
+            about: "A project",
+            agentTemplate: {
+                name: "default"
+            },
+            claimTemplate: {
+                name: "default"
+            },
+            evaluationTemplate: {
+                name: "default"
+            },
+            numberOfSuccessfulClaims: 10,
+            autoApproveInvestmentAgent: true,
+            autoApproveServiceAgent: true,
+            autoApproveEvaluationAgent: true
         };
 
         return new Promise((resolve) => {
@@ -33,6 +47,7 @@ describe('Agent functions', () => {
                     projectTx: response.result.tx
                 };
                 ixo.agent.createAgent(agentData, 'default').then((response: any) => {
+                    console.log(response)
                     agentUpdate = { agentTx: response.result.tx, status: "Approved" }
                     resolve();
                 })

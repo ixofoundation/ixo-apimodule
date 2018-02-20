@@ -17,7 +17,21 @@ var projectData = {
         name: 'Peter Piper'
     },
     name: 'Reforestation',
-    country: 'UK'
+    country: 'UK',
+    about: "A project",
+    agentTemplate: {
+        name: "default"
+    },
+    claimTemplate: {
+        name: "default"
+    },
+    evaluationTemplate: {
+        name: "default"
+    },
+    numberOfSuccessfulClaims: 10,
+    autoApproveInvestmentAgent: true,
+    autoApproveServiceAgent: true,
+    autoApproveEvaluationAgent: true
 };
 
 describe('Project functions', () => {
