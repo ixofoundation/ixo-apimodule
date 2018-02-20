@@ -42,7 +42,6 @@ describe('Project functions', () => {
         }).catch((result: Error) => {
             console.log(error(result));
         });
-
     });
 
     it('should return list of projects', () => {
@@ -52,7 +51,6 @@ describe('Project functions', () => {
         }).catch((result: Error) => {
             console.log(error(result));
         });
-
     });
 
     it('should return list of projects by did', () => {
@@ -62,7 +60,15 @@ describe('Project functions', () => {
         }).catch((result: Error) => {
             console.log(error(result));
         });
+    });
 
+    it('should return list of projects by did', () => {
+        ixo.project.listProjectsByDidAndRole('0xc26791a2ed4ebdf072b098f4ae336b3c62ef2ac1', 'IA').then((response: any) => {
+            console.log('Projects by did and role: ' + success(JSON.stringify(response, null, '\t')));
+            expect(response.result).to.not.equal(null);
+        }).catch((result: Error) => {
+            console.log(error(result));
+        });
     });
 
     it('should create new project', () => {

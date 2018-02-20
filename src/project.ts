@@ -26,6 +26,14 @@ class Project {
         return sendPostJSON(this.ixo.hostname + '/api/project', constructJsonRequest(this.ixo.credentialProvider.getDid(), 'listForDID', data));
     }
 
+    listProjectsByDidAndRole(did: string, role: string): Promise<any> {
+        const data = {
+            'did': did,
+            'role': role
+        }
+        return sendPostJSON(this.ixo.hostname + '/api/project', constructJsonRequest(this.ixo.credentialProvider.getDid(), 'listForAgentDIDAndRole', data));
+    }
+
     createProject(projectData: any, templateName: string): Promise<any> {
         return new Promise((resolve) => {
             this.ixo.credentialProvider.sign(projectData, templateName).then((signature: Signature) => {
