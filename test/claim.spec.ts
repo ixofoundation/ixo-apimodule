@@ -74,6 +74,15 @@ describe('Claim functions', () => {
         });
     });
 
+    it('should return evaluation template', () => {
+        ixo.claim.getEvaluationTemplate('default').then((response: any) => {
+            console.log('Evaluation template: ' + success(JSON.stringify(response.result.template, null, '\t')));
+            expect(response.result).to.not.equal(null);
+        }).catch((result: Error) => {
+            console.log(error(result));
+        });
+    });
+
     it('should create new claim', (done) => {
         ixo.claim.createClaim(claimData, 'default').then((response: any) => {
             console.log('Claim create response: ' + success(JSON.stringify(response, null, '\t')));
