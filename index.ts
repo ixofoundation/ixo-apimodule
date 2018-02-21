@@ -2,6 +2,7 @@ import Network from './src/network';
 import CryptoUtil from './src/cryptoUtil';
 import Project from './src/project';
 import Agent from './src/agent';
+import Claim from './src/claim';
 import { IxoCredentialProvider } from './src/common/models';
 import Web3Provider from './src/providers/web3Provider';
 import { resolveProvider } from './src/providers/providerResolver';
@@ -13,6 +14,7 @@ export class Ixo {
     cryptoUtil: CryptoUtil;
     project: Project;
     agent: Agent;
+    claim: Claim;
 
     constructor(hostname: string, credentialProvider?: IxoCredentialProvider) {
         if (credentialProvider) {
@@ -25,6 +27,7 @@ export class Ixo {
         this.cryptoUtil = new CryptoUtil();
         this.project = new Project(this);
         this.agent = new Agent(this);
+        this.claim = new Claim(this);
     }
 
     init(provider: any): Promise<any> {
