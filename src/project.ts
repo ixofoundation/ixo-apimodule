@@ -39,6 +39,7 @@ class Project {
             this.ixo.credentialProvider.sign(projectData, templateName).then((signature: Signature) => {
                 return constructJsonSignRequest(this.ixo.credentialProvider.getDid(), projectData, 'create', templateName, signature);
             }).then((json: any) => {
+               
                 return resolve(sendPostJSON(this.ixo.hostname + '/api/project', json));
             })
         });

@@ -20,7 +20,7 @@ class Web3Provider implements IxoCredentialProvider {
 
                 eth.personal_sign(msg, did)
                     .then((signature: string) => {
-                        return resolve(new Signature('ECDSA', new Date(), did, signature))
+                        return resolve(new Signature('ECDSA', new Date(), did, did, signature))
                     })
             } else {
                 return reject(new Error(`Provider or data to sign is missing!`));

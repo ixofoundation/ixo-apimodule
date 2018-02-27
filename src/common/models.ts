@@ -37,11 +37,13 @@ export class Signature {
     created: Date;
     creator: string;
     signature: string;
+    publicKey: string;
 
-    constructor(type: string, created: Date, did: string, signature: string) {
+    constructor(type: string, created: Date, did: string, publicKey: string, signature: string) {
         this.type = type;
         this.created = created;
         this.creator = did;
+        this.publicKey = publicKey;
         this.signature = signature;
     }
 }

@@ -25,7 +25,7 @@ export class MockProvider implements IxoCredentialProvider {
             var sig = ethUtil.ecsign(ethUtil.hashPersonalMessage(ethUtil.toBuffer(payload)), this.ethereumWallet.getPrivateKey());
             var serialized = ethUtil.bufferToHex(Buffer.concat([sig.r, sig.s, ethUtil.toBuffer(sig.v - 27)]))
 
-            return resolve(new Signature('ECDSA', new Date(), this.getDid(), serialized));
+            return resolve(new Signature('ECDSA', new Date(), this.getDid(), this.getDid(), serialized));
         })
     }
 

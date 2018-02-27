@@ -49,6 +49,7 @@ export function constructJsonSignRequest(did: string, data: string, method: stri
                     type: signature.type,
                     created: signature.created,
                     creator: signature.creator,
+                    publicKey: signature.publicKey,
                     signature: signature.signature
                 }
             }
