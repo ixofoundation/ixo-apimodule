@@ -1,6 +1,6 @@
 {
   "name": "ixo-module",
-  "version": "1.4.26",
+  "version": "1.4.27",
   "description": "This is a node module that defines the functions that can be performed by the ixo protocol.",
   "main": "dist/index.js",
   "scripts": {

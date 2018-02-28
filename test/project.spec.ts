@@ -80,4 +80,13 @@ describe('Project functions', () => {
         });
 
     });
+
+    it('should return project by Id', () => {
+        ixo.project.findProjectById('5a8edc0288bdb9001a0f9a97').then((response: any) => {
+            console.log('Project data: ' + success(JSON.stringify(response, null, '\t')));
+            expect(response.result).to.not.equal(null);
+        }).catch((result: Error) => {
+            console.log(error(result));
+        });
+    });
 });
