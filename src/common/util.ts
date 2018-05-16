@@ -28,7 +28,6 @@ export function constructJsonSignRequest(did: string, data: string, method: stri
         'id': generateTxnId(),
         'params': {
             'payload': {
-                'did': did,
                 'data': data
             }
         }
@@ -48,7 +47,7 @@ export function constructJsonSignRequest(did: string, data: string, method: stri
                 ...jsonRequest.params, signature: {
                     type: signature.type,
                     created: signature.created,
-                    creator: signature.creator,
+                    creator: 'did:sov:'+signature.creator,
                     publicKey: signature.publicKey,
                     signature: signature.signature
                 }

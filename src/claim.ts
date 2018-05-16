@@ -10,6 +10,7 @@ class Claim {
         this.ixo = ixo;
     }
 
+    // COMMENTED OUT CODE NEEDS TO BE REIMPLEMENTED WITH THE PROJECT DOC ONCE THE BLOCKCHAIN IS UP
     getClaimTemplate(templateName: string): Promise<any> {
         const data = { 'name': templateName }
         return sendPostJSON(this.ixo.hostname + '/api/claim', constructJsonRequest(this.ixo.credentialProvider.getDid(), 'getTemplate', data));
