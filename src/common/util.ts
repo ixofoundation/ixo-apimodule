@@ -21,14 +21,14 @@ export function generateJsonPayload(data: string, did: string, templateName?: st
     }
 }
 
-export function constructJsonSignRequest(did: string, data: string, method: string, templateName?: string, signature?: Signature): any {
+export function constructJsonSignRequest(did: string, method: string, templateName?: string, signature?: Signature, data?: string): any {
     var jsonRequest = {
         'jsonrpc': '2.0',
         'method': method,
         'id': generateTxnId(),
         'params': {
             'payload': {
-                'data': data
+                'data': data ? data : {}
             }
         }
     }
@@ -47,7 +47,7 @@ export function constructJsonSignRequest(did: string, data: string, method: stri
                 ...jsonRequest.params, signature: {
                     type: signature.type,
                     created: signature.created,
-                    creator: 'did:sov:'+signature.creator,
+                    creator: signature.creator,
                     publicKey: signature.publicKey,
                     signature: signature.signature
                 }
@@ -65,7 +65,6 @@ export function constructJsonRequest(did: string, method: string, data: any, tem
         'id': generateTxnId(),
         'params': {
             'payload': {
-                'did': did,
                 'data': data
             }
         }

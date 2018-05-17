@@ -10,6 +10,7 @@ const success = chalk.bold.green;
 const error = chalk.bold.red;
 const ixo = new Ixo('https://ixo-node.herokuapp.com', new MockProvider());
 const sovrinDid = ixo.cryptoUtil.generateSovrinDID(ixo.cryptoUtil.generateMnemonic());
+const PDSUrl = 'http://localhost:5000/';
 
 var projectData = {
     Title: "Clifton Beach Clean Up",
@@ -70,13 +71,12 @@ describe('Project functions', () => {
     // });
 
     it('should create new project', () => {
-        ixo.project.createProject(projectData, 'default').then((response: any) => {
+        ixo.project.createProject(projectData, 'create_project', PDSUrl).then((response: any) => {
             console.log('Project create response: ' + success(JSON.stringify(response, null, '\t')));
             expect(response.result.Title).to.be.equal('Clifton Beach Clean Up');
         }).catch((result: Error) => {
             console.log(error(result));
         });
-
     });
 
     // it('should return project by Id', () => {
