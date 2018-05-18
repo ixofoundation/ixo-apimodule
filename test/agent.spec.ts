@@ -15,17 +15,30 @@ const agentData = {
         role: 'SA',
         agentDid: '1234'
     };
-let agentUpdate = { agentDid: '1234', status: "APPROVED"}
+let agentUpdate = { agentDid: '1234', status: "DECLINED", version: 11}
 
 describe('Agent functions', () => {
+            // ******************************************** //
+            //TODO -> for agents, must create project, then create agent
+            // ******************************************** //
+    // before(() => {
+    //     it('should create new project', () => {
+    //         ixo.project.createProject(projectData, 'create_project', PDSUrl).then((response: any) => {
+    //             console.log('Project create response: ' + success(JSON.stringify(response, null, '\t')));
+    //             expect(response.result.Title).to.be.equal('Clifton Beach Clean Up');
+    //         }).catch((result: Error) => {
+    //             console.log(error(result));
+    //         });
+    //     });
+    // });
 
     it('should return agent template', () => {
-        // ixo.agent.createAgent(agentData, 'create_agent', PDSUrl).then((response: any) => {
-        //     console.log(response)
-        //     // agentUpdate = { agentTx: response.result.tx, status: "Approved" }
-        // }).catch((result: Error) => {
-        //     console.log(error(result));
-        // });
+        ixo.agent.createAgent(agentData, 'create_agent', PDSUrl).then((response: any) => {
+            console.log(response)
+            // agentUpdate = { agentTx: response.result.tx, status: "Approved" }
+        }).catch((result: Error) => {
+            console.log(error(result));
+        });
     });
     // });
 
@@ -48,7 +61,7 @@ describe('Agent functions', () => {
 
     // });
     it('should list agents for project', () => {
-        ixo.agent.listAgentsForProject(PDSUrl).then((response: any) => {
+        ixo.agent.listAgentsForProject(PDSUrl, 'create_agent').then((response: any) => {
             console.log('Agent list for Project: ' + success(JSON.stringify(response, null, '\t')));
             expect(response.result).to.not.equal(null);
         }).catch((result: Error) => {
@@ -56,11 +69,12 @@ describe('Agent functions', () => {
         });
     });
     it('update agent status', () => {
-        // ixo.agent.updateAgentStatus(agentUpdate, PDSUrl).then((response: any) => {
-        //     console.log('Agent status update: ' + success(JSON.stringify(response, null, '\t')));
-        //     expect(response.result).to.not.equal(null);
-        // }).catch((result: Error) => {
-        //     console.log(error(result));
-        // });
+        ixo.agent.updateAgentStatus(agentUpdate, PDSUrl).then((response: any) => {
+            console.log('Agent status update: ' + success(JSON.stringify(response, null, '\t')));
+            expect(response.result).to.not.equal(null);
+        }).catch((result: Error) => {
+            console.log(error(result));
+        });
+        
     });
 });

@@ -8,7 +8,6 @@ import Web3Provider from './src/providers/web3Provider';
 import { resolveProvider } from './src/providers/providerResolver';
 
 export class Ixo {
-    hostname: string;
     credentialProvider: IxoCredentialProvider
     network: Network;
     cryptoUtil: CryptoUtil;
@@ -16,13 +15,12 @@ export class Ixo {
     agent: Agent;
     claim: Claim;
 
-    constructor(hostname: string, credentialProvider?: IxoCredentialProvider) {
+    constructor(credentialProvider?: IxoCredentialProvider) {
         if (credentialProvider) {
             this.credentialProvider = credentialProvider;
         } else {
             this.credentialProvider = null
         }
-        this.hostname = hostname;
         this.network = new Network(this);
         this.cryptoUtil = new CryptoUtil();
         this.project = new Project(this);
