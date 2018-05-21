@@ -8,7 +8,7 @@ import { MockProvider } from './common/util';
 const chalk = require('chalk');
 const success = chalk.bold.green;
 const error = chalk.bold.red;
-const ixo = new Ixo('https://ixo-node.herokuapp.com', new MockProvider());
+const ixo = new Ixo(new MockProvider());
 const sovrinDid = ixo.cryptoUtil.generateSovrinDID(ixo.cryptoUtil.generateMnemonic());
 const PDSUrl = 'http://localhost:5000/';
 

@@ -21,12 +21,6 @@ export interface ISovrinDidSecretModel {
     signKey: string
 }
 
-export interface IPingResult {
-    jsonrpc: string,
-    id: number,
-    result: string
-}
-
 export interface ICredentialProviderResult {
     provider: any,
     credentialProviderInstance: any,

@@ -9,34 +9,18 @@ const chalk = require('chalk');
 const success = chalk.bold.green;
 const error = chalk.bold.red;
 
-const ixo = new Ixo('https://ixo-node.herokuapp.com', new MockProvider());
+const ixo = new Ixo(new MockProvider());
 
-var projectData = {
-    owner: {
-        email: 'peter@noname.com',
-        name: 'Peter Piper'
-    },
-    name: 'Reforestation',
-    country: 'UK'
-};
 
 describe('Network functions', () => {
 
     it('should return network status', () => {
-
-
-        ixo.credentialProvider.sign(projectData).then((resp: Signature) => {
-            console.log(JSON.stringify(resp.signature));
-
+        ixo.network.pingIxoServerNode().then((response: string) => {
+            console.log('Ping Results: ' + success(JSON.stringify(response, null, '\t')));
+            expect(response).equals('API is running');
         }).catch((result: Error) => {
             console.log(error(result))
         });
-        // ixo.network.pingIxoServerNode().then((response: IPingResult) => {
-        //     console.log('Ping Results: ' + success(JSON.stringify(response, null, '\t')));
-        //     expect(response.result).equals('pong');
-        // }).catch((result: Error) => {
-        //     console.log(error(result))
-        // });
 
     });
 });
