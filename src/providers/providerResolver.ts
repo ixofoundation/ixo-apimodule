@@ -31,4 +31,4 @@ function getWeb3Instance(provider: any): Promise<any> {
             }
         }
     });
-}
+}	

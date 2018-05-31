@@ -1,0 +1,128 @@
+{
+  "jsonrpc":"2.0", 
+  "method":"createProject",
+  "id": 123,
+  "params": {
+        "payload": {
+            "template": {
+                "name": "create_project"
+            },
+            "data": {
+                "Title": "Clifton Beach Clean Up",
+                "ShortDescription": "Clean up of Clifton Beach after New Years Eve Party",
+                "LongDescription": "Clean up of Clifton Beach after New Years Eve Party",
+                "ImpactAction": "Clean up of Clifton Beach after New Years Eve Party",
+                "Country": "Clean up of Clifton Beach after New Years Eve Party",
+                "Sdgs": "Clean up of Clifton Beach after New Years Eve Party",
+                "ImpactsRequired": "Clean up of Clifton Beach after New Years Eve Party",
+                "ClaimTemplate": "Clean up of Clifton Beach after New Years Eve Party",
+                "SocialMedia":{ 
+                    "FacebookLink": "Clean up of Clifton Beach after New Years Eve Party",
+                    "InstagramLink": "",
+                    "TwitterLink": ""
+                },
+                "Image": ""
+            }
+        },
+        "signature": {
+            "type": "ECDSA",
+            "created": "2016-02-08T16:02:20Z", 
+            "creator": "did:sov:6tt6YbcCqR92YPQhpsiPEg",
+            "signature": "0x1d4a6d5efce1312944f781fb917b484f2ac0c74c53fe8b571dc8f1be6dc6b6692db3e3d08c0a934631f81bf0bba50c591385d34819ac955ec16f38ee04ee480201",
+            "publicKey": "6f4991811f586e1970ce86798c36d41739371d336ab1bd09da9daa66096162de"
+        }
+    }
+}
+
+{  
+   "jsonrpc":"2.0",
+   "method":"createAgent",
+   "id":48036,
+   "params":{  
+      "payload":{  
+         "data":{  
+            "email":"donovan@ixo.com",
+            "name":"Donovan",
+            "role":"SA"
+         },
+         "template":{  
+            "name":"create_agent"
+         }
+      },
+      "signature":{  
+         "type":"ECDSA",
+         "created":"2018-05-16T12:58:07.284Z",
+         "creator":"did:sov:0x279291ddf089c0e07c237fa70d86691432c0441c",
+         "publicKey":"0x279291ddf089c0e07c237fa70d86691432c0441c",
+         "signature":"0x0dacb44285cbf3b3c96301283b63720255f4e9bf810d649aa318c4bd0ec1e3515146e44a5c3d7c6c5ecb0834578a6cf1b67c5498c1b361769f61a968631d32e800"
+      }
+   }
+}
+
+{  
+   "jsonrpc":"2.0",
+   "method":"createProject",
+   "id":30302,
+   "params":{  
+      "payload":{  
+         "data":{  
+            "Title":"Clifton Beach Clean Up",
+            "Owner":"Donny",
+            "ShortDescription":"Clean up of Clifton Beach after New Years Eve Party",
+            "LongDescription":"Rubbish has been left everywhere after the last party of 2017. The people did their damage and had fun, now it's time to fix up the mess",
+            "ImpactAction":"New Year beach cleanup",
+            "Country":"South Africa",
+            "Sdgs":[  
+               "15.2",
+               "12",
+               "10.1"
+            ],
+            "ImpactsRequired":100,
+            "ClaimTemplate":"beach_claims",
+            "SocialMedia":{  
+               "FacebookLink":"exampleFBURL",
+               "InstagramLink":"exampleInstaURL",
+               "TwitterLink":"exampleTwitterURL"
+            },
+            "Image":"test.png",
+            "autoApproveInvestmentAgent":true,
+            "autoApproveServiceAgent":false,
+            "autoApproveEvaluationAgent":true
+         },
+         "template":{  
+            "name":"create_project"
+         }
+      },
+      "signature":{  
+         "type":"ECDSA",
+         "created":"2018-05-15T09:45:54.586Z",
+         "creator":"0x46146279351a7c8a0e4243b4024da15fabe69427",
+         "publicKey":"0x46146279351a7c8a0e4243b4024da15fabe69427",
+         "signature":"0xcc10637423caa8af38584b38753b5f0a1196ac94a26bf9039f59b55520c613842c962a5e583e6a5533408bb9cdaf6ad9d61099eb27a0d629e51c4f5e0701ac4a01"
+      }
+   }
+}
+
+type BaseProjectDoc struct {
+    ProjectDoc struct {
+        Did              string    `json:"did"`
+        PubKey           string    `json:"pubKey"`
+        Title            string    `json:"title"`
+        ShortDescription string    `json:"shortDescription"`
+        LongDescription  string    `json:"longDescription"`
+        ImpactAction     string    `json:"impactAction"`
+        CreatedOn        time.Time `json:"createdOn"`
+        CreatedBy        string    `json:"createdBy"`
+        Country          string    `json:"country"`
+        Sdgs             []string  `json:"sdgs"`
+        ImpactsRequired  string    `json:"impactsRequired"`
+        ClaimTemplate    string    `json:"claimTemplate"`
+        SocialMedia      struct {
+            FacebookLink  string `json:"facebookLink"`
+            InstagramLink string `json:"instagramLink"`
+            TwitterLink   string `json:"twitterLink"`
+        } `json:"socialMedia"`
+        WebLink string `json:"webLink"`
+        Image   string `json:"image"`
+    } `json:"projectDoc"`
+}

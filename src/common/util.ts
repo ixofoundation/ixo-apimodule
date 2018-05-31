@@ -21,7 +21,7 @@ export function generateJsonPayload(data: string, did: string, templateName?: st
     }
 }
 
-export function constructJsonSignRequest(did: string, method: string, templateName?: string, signature?: Signature, data?: string): any {
+export function constructJsonSignRequest(did: string, method: string, signature?: Signature, data?: string): any {
     var jsonRequest = {
         'jsonrpc': '2.0',
         'method': method,
@@ -32,15 +32,7 @@ export function constructJsonSignRequest(did: string, method: string, templateNa
             }
         }
     }
-    if (templateName) {
-        var jsonRequestTemp = {
-            ...jsonRequest, 'params': {
-                ...jsonRequest.params,
-                'payload': { ...jsonRequest.params.payload, template: { name: templateName } }
-            }
-        };
-        jsonRequest = jsonRequestTemp;
-    }
+
     if (signature) {
         var jsonRequestTemp2 = {
             ...jsonRequest, 'params': {
@@ -81,4 +73,15 @@ export function constructJsonRequest(did: string, method: string, data: any, tem
     } else {
         return jsonRequest;
     }
+}
+
+export function constructPublicJsonRequest(method: string): any {
+    const jsonRequest = {
+        'jsonrpc': '2.0',
+        'method': method,
+        'id': generateTxnId(),
+        'params': {
+        }
+    }
+	return jsonRequest;
 }
