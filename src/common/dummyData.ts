@@ -1,25 +1,55 @@
 export const projectData = {
-    Title: "Clifton Beach Clean Up",
-    Owner: "Donny",
-    ShortDescription: "Clean up of Clifton Beach after New Years Eve Party",
-    LongDescription: "Rubbish has been left everywhere after the last party of 2017. The people did their damage and had fun, now it's time to fix up the mess",
-    ImpactAction: "New Year beach cleanup",
-    Country: "South Africa",
-    Sdgs: ["15.2","12","10.1"],
-    ImpactsRequired: 100,
-    ClaimTemplate: "beach_claims",
-    SocialMedia:{ 
-        FacebookLink: "exampleFBURL",
-        InstagramLink: "exampleInstaURL",
-        TwitterLink: "exampleTwitterURL"
-    },
-    Image: "test.png",
-    autoApproveInvestmentAgent: true,
-    autoApproveServiceAgent: false,
-    autoApproveEvaluationAgent: true
+	title: "Togo Water project",
+	ownerName: "Donny",
+	ownerEmail: "dono@gmail.com",
+	shortDescription: "Togo provides clean water, basic toilets and good hygiene practices are essential for the survival and development of children in Uganda.",
+	longDescription: "Like other rural areas in Africa, the water supply and sanitation infrastructure in Togo is poor, which in turn results in illnesses as a result of hygiene deficits. The German Red Cross is cooperating with the Togolese Red Cross (TRC) in the Maritime region to improve drinking water supplies as well as hygiene and sewage water systems.",
+	impactAction: "buckets of water",
+	createdOn: "2018-05-31T14:52:30.938Z",
+	createdBy: "ULuWeP524szMuCjGj4MCqN",
+	projectLocation: "ZA",
+	sdgs: [1, 13, 14.2],
+	claims: {  
+		required: 30,
+		currentSucessful: 0,
+		currentRejected: 0
+	 },
+	 templates:{  
+		claim: "water_default"
+	 },
+	agents:{  
+		evaluators: 0,
+		evaluatorsPending: 0,
+		serviceProviders: 0,
+		serviceProvidersPending: 0,
+		investors: 0
+	},
+	evaluatorPayPerClaim: 15,
+	socialMedia: {
+		facebookLink: "facebook.com/togo",
+		instagramLink: "instagram.com/togo",
+		twitterLink: "twitter.com/togo",
+		webLink: "togo.com"
+	},
+	ixo: {  
+	   totalStaked: 0,
+	   totalUsed: 0
+	},
+	serviceEndpoint:"https://togo.pds.ixo.network",
+	imageLink:"",
+	founder:{  
+	   name:"Test",
+	   email:"founder@email.com",
+	   countryOfOrigin:"ZA",
+	   shortDescription:"primarydonny",
+	   websiteURL:"www.youtwitface.com",
+	   logoLink:""
+	}
 };
 
 export const DID = "did:sov:0x4ef229e0a3c2bcf6d0d405dd0d6ea01ae0ddfe8f";
+
+export const PDSUrl = 'http://localhost:5000/';
 
 export const signature = {  
     type:"ECDSA",

@@ -1,6 +1,6 @@
 require('es6-promise');
 import { sendPostJSON } from './utils/http';
-import { constructJsonRequest, constructJsonSignRequest } from './common/util';
+import { generateTxnId, constructJsonRequest, constructJsonSignRequest } from './common/util';
 import * as Dummy from './common/dummyData';
 import { Ixo } from '../index';
 import { Signature } from './common/models';
@@ -11,24 +11,24 @@ class Agent {
         this.ixo = ixo;
     }    
 
-    listAgentsForProject(PDSUrl: string, data?: any): Promise<any> {
+    listAgentsForProject(PDSUrl: string, templateName:string, data?: any): Promise<any> {
         //the data isn't required, by adding data, it filters results to return all that meet this condition 
         return new Promise((resolve) => {
-			const json = constructJsonSignRequest(Dummy.DID, 'listAgents', Dummy.signature, data);
+			const json = constructJsonSignRequest(Dummy.DID, 'listAgents', 'create_agent', Dummy.signature, data);
             return resolve(sendPostJSON(PDSUrl+'api/request', json));
         });
     }
 
-    createAgent(agentData: any, PDSUrl: string): Promise<any> {
+    createAgent(agentData: any, templateName: string, PDSUrl: string): Promise<any> {
         return new Promise((resolve) => {
-			const json = constructJsonSignRequest(Dummy.DID, 'createAgent', Dummy.signature, agentData);
+			const json = constructJsonSignRequest(Dummy.DID, 'createAgent', 'create_agent', Dummy.signature, agentData);
             return resolve(sendPostJSON(PDSUrl+'api/request', json));
         });
     }
 
     updateAgentStatus(agentData: any, PDSUrl: string): Promise<any> {
         return new Promise((resolve) => {
-			const json = constructJsonSignRequest(Dummy.DID, 'updateAgentStatus', Dummy.signature, agentData);
+			const json = constructJsonSignRequest(Dummy.DID, 'updateAgentStatus', "agent_status", Dummy.signature, agentData);
 			return resolve(sendPostJSON(PDSUrl+'api/request', json));
         });
     }

@@ -21,7 +21,7 @@ export function generateJsonPayload(data: string, did: string, templateName?: st
     }
 }
 
-export function constructJsonSignRequest(did: string, method: string, signature?: Signature, data?: string): any {
+export function constructJsonSignRequest(did: string, method: string, templateName: string, signature?: Signature, data?: string): any {
     var jsonRequest = {
         'jsonrpc': '2.0',
         'method': method,
@@ -32,7 +32,15 @@ export function constructJsonSignRequest(did: string, method: string, signature?
             }
         }
     }
-
+    if (templateName) {
+        var jsonRequestTemp = {
+            ...jsonRequest, 'params': {
+                ...jsonRequest.params,
+                'payload': { ...jsonRequest.params.payload, template: { name: templateName } }
+            }
+        };
+        jsonRequest = jsonRequestTemp;
+    }
     if (signature) {
         var jsonRequestTemp2 = {
             ...jsonRequest, 'params': {
@@ -40,7 +48,6 @@ export function constructJsonSignRequest(did: string, method: string, signature?
                     type: signature.type,
                     created: signature.created,
                     creator: signature.creator,
-                    publicKey: signature.publicKey,
                     signature: signature.signature
                 }
             }

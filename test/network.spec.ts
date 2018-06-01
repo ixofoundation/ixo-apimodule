@@ -9,7 +9,7 @@ const chalk = require('chalk');
 const success = chalk.bold.green;
 const error = chalk.bold.red;
 
-const ixo = new Ixo(new MockProvider());
+const ixo = new Ixo();
 
 
 describe('Network functions', () => {
