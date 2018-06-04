@@ -14,14 +14,14 @@ class Agent {
     listAgentsForProject(PDSUrl: string, templateName:string, data?: any): Promise<any> {
         //the data isn't required, by adding data, it filters results to return all that meet this condition 
         return new Promise((resolve) => {
-			const json = constructJsonSignRequest(Dummy.DID, 'listAgents', 'create_agent', Dummy.signature, data);
+			const json = constructJsonSignRequest(Dummy.signature.creator, 'listAgents', 'create_agent', Dummy.signature, data);
             return resolve(sendPostJSON(PDSUrl+'api/request', json));
         });
     }
 
     createAgent(agentData: any, templateName: string, PDSUrl: string): Promise<any> {
         return new Promise((resolve) => {
-			const json = constructJsonSignRequest(Dummy.DID, 'createAgent', 'create_agent', Dummy.signature, agentData);
+			const json = constructJsonSignRequest(Dummy.signature.creator, 'createAgent', 'create_agent', Dummy.signature, agentData);
             return resolve(sendPostJSON(PDSUrl+'api/request', json));
         });
     }

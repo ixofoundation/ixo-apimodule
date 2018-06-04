@@ -28,7 +28,7 @@ export interface ICredentialProviderResult {
 
 export class Signature {
     type: string;
-    created: Date;
+    created: Date | string;
     creator: string;
     signature: string;
     publicKey: string;

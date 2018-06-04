@@ -3,14 +3,13 @@ import { expect } from 'chai';
 import 'mocha';
 import { Ixo } from '../index';
 import { getWeb3Instance } from '../src/utils/authUtil';
-import { signature, projectData } from '../src/common/dummyData';
+import { signature, projectData, PDSUrl } from '../src/common/dummyData';
 
 const chalk = require('chalk');
 const success = chalk.bold.green;
 const error = chalk.bold.red;
 const ixo = new Ixo();
 const sovrinDid = ixo.cryptoUtil.generateSovrinDID(ixo.cryptoUtil.generateMnemonic());
-const PDSUrl = 'http://localhost:5000/';
 
 describe('Project functions', () => {
 

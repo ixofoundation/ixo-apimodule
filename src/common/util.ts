@@ -33,7 +33,7 @@ export function constructJsonSignRequest(did: string, method: string, templateNa
         }
     }
     if (templateName) {
-        var jsonRequestTemp = {
+        const jsonRequestTemp = {
             ...jsonRequest, 'params': {
                 ...jsonRequest.params,
                 'payload': { ...jsonRequest.params.payload, template: { name: templateName } }
@@ -42,13 +42,13 @@ export function constructJsonSignRequest(did: string, method: string, templateNa
         jsonRequest = jsonRequestTemp;
     }
     if (signature) {
-        var jsonRequestTemp2 = {
+        const jsonRequestTemp2 = {
             ...jsonRequest, 'params': {
                 ...jsonRequest.params, signature: {
                     type: signature.type,
                     created: signature.created,
                     creator: signature.creator,
-                    signature: signature.signature
+                    signature: signature.signature.slice(0,128)
                 }
             }
         }
