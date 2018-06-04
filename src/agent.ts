@@ -28,7 +28,7 @@ class Agent {
 
     updateAgentStatus(agentData: any, PDSUrl: string): Promise<any> {
         return new Promise((resolve) => {
-			const json = constructJsonSignRequest(Dummy.DID, 'updateAgentStatus', "agent_status", Dummy.signature, agentData);
+			const json = constructJsonSignRequest(Dummy.signature.creator, 'updateAgentStatus', "agent_status", Dummy.signature, agentData);
 			return resolve(sendPostJSON(PDSUrl+'api/request', json));
         });
     }
