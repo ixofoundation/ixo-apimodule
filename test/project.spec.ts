@@ -13,14 +13,14 @@ const sovrinDid = ixo.cryptoUtil.generateSovrinDID(ixo.cryptoUtil.generateMnemon
 
 describe('Project functions', () => {
 
-    it('should return list of projects', () => {
-        ixo.project.listProjects().then((response: any) => {
-            console.log('Project list: ' + success(JSON.stringify(response.result, null, '\t')));
-            expect(response.result).to.not.equal(null);
-        }).catch((result: Error) => {
-            console.log(error(result));
-        });
-    });
+    // it('should return list of projects', () => {
+    //     ixo.project.listProjects().then((response: any) => {
+    //         console.log('Project list: ' + success(JSON.stringify(response.result, null, '\t')));
+    //         expect(response.result).to.not.equal(null);
+    //     }).catch((result: Error) => {
+    //         console.log(error(result));
+    //     });
+    // });
 
     it('should create new project', () => {
         ixo.project.createProject(projectData, signature, PDSUrl).then((response: any) => {
