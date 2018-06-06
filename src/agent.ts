@@ -9,26 +9,26 @@ class Agent {
     ixo: Ixo;
     constructor(ixo: Ixo) {
         this.ixo = ixo;
-    }    
-
-    listAgentsForProject(PDSUrl: string, templateName:string, data?: any): Promise<any> {
+	}    
+	
+    createAgent(agentData: any, signature: Signature, PDSUrl: string): Promise<any> {
+        return new Promise((resolve) => {
+			const json = constructJsonSignRequest('createAgent', 'create_agent', signature, agentData);
+            return resolve(sendPostJSON(PDSUrl+'api/request', json));
+        });
+	}
+	
+    listAgentsForProject(signature: Signature, PDSUrl: string, data?: any): Promise<any> {
         //the data isn't required, by adding data, it filters results to return all that meet this condition 
         return new Promise((resolve) => {
-			const json = constructJsonSignRequest(Dummy.signature.creator, 'listAgents', 'create_agent', Dummy.signature, data);
+			const json = constructJsonSignRequest('listAgents', 'create_agent', signature, data);
             return resolve(sendPostJSON(PDSUrl+'api/request', json));
         });
     }
 
-    createAgent(agentData: any, templateName: string, PDSUrl: string): Promise<any> {
+    updateAgentStatus(agentData: any, signature: Signature, PDSUrl: string): Promise<any> {
         return new Promise((resolve) => {
-			const json = constructJsonSignRequest(Dummy.signature.creator, 'createAgent', 'create_agent', Dummy.signature, agentData);
-            return resolve(sendPostJSON(PDSUrl+'api/request', json));
-        });
-    }
-
-    updateAgentStatus(agentData: any, PDSUrl: string): Promise<any> {
-        return new Promise((resolve) => {
-			const json = constructJsonSignRequest(Dummy.signature.creator, 'updateAgentStatus', "agent_status", Dummy.signature, agentData);
+			const json = constructJsonSignRequest('updateAgentStatus', "agent_status", signature, agentData);
 			return resolve(sendPostJSON(PDSUrl+'api/request', json));
         });
     }

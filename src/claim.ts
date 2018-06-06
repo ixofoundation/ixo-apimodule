@@ -10,24 +10,24 @@ class Claim {
     constructor(ixo: Ixo) {
         this.ixo = ixo;
     }
-
-    createClaim(claimData: any, templateName: string, PDSUrl: string): Promise<any> {
+    createClaim(data: any, signature: Signature, PDSUrl: string): Promise<any> {
         return new Promise((resolve) => {
-			const json = constructJsonSignRequest(Dummy.signature.creator, 'submitClaim', 'submit_claim', Dummy.signature, claimData);
+			const json = constructJsonSignRequest('submitClaim', 'submit_claim', signature, data);
             return resolve(sendPostJSON(PDSUrl + 'api/request', json));
         })
     }
 
-    evaluateClaim(evaluationData: any, templateName: string, PDSUrl: string): Promise<any> {
+    evaluateClaim(data: any, signature: Signature, PDSUrl: string): Promise<any> {
         return new Promise((resolve) => {
-			const json = constructJsonSignRequest(Dummy.signature.creator, 'evaluateClaim', 'evaluate_claim', Dummy.signature, evaluationData);
+			const json = constructJsonSignRequest('evaluateClaim', 'evaluate_claim', signature, data);
 			return resolve(sendPostJSON(PDSUrl + 'api/request', json));
 		})
     }
-
-    listClaimsForProject(PDSUrl: string, templateName: string, data?: any): Promise<any> {
+	
+    listClaimsForProject(signature: Signature, PDSUrl: string, data?: any): Promise<any> {
         return new Promise((resolve) => {
-			const json = constructJsonSignRequest(Dummy.signature.creator, 'listClaims', 'submit_claim', Dummy.signature, data);
+
+			const json = constructJsonSignRequest('listClaims', 'submit_claim', signature);
 			return resolve(sendPostJSON(PDSUrl + 'api/request', json));
 		})
     }

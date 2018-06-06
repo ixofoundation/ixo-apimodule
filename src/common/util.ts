@@ -21,7 +21,7 @@ export function generateJsonPayload(data: string, did: string, templateName?: st
     }
 }
 
-export function constructJsonSignRequest(did: string, method: string, templateName: string, signature?: Signature, data?: string): any {
+export function constructJsonSignRequest(method: string, templateName: string, signature?: Signature, data?: string): any {
     var jsonRequest = {
         'jsonrpc': '2.0',
         'method': method,

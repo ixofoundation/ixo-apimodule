@@ -51,8 +51,8 @@ export const projectData = {
 	}
  };
 
-export const PDSUrl = 'http://localhost:5000/';
-// export const PDSUrl = 'http://192.168.1.125:5000/';
+// export const PDSUrl = 'http://localhost:5000/';
+export const PDSUrl = 'http://192.168.1.125:5000/';
 
 export const signature = {
 	type: 'ed25519-sha-256',
