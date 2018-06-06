@@ -42,9 +42,6 @@ export function constructJsonSignRequest(did: string, method: string, templateNa
         jsonRequest = jsonRequestTemp;
     }
     if (signature) {
-		let tempSignature = signature.signature;
-		signature.signature.length > 128 ? tempSignature = signature.signature.slice(0,128) : tempSignature = signature.signature;
-	
         const jsonRequestTemp2 = {
             ...jsonRequest, 'params': {
                 ...jsonRequest.params, signature: {

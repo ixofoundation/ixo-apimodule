@@ -13,21 +13,21 @@ class Claim {
 
     createClaim(claimData: any, templateName: string, PDSUrl: string): Promise<any> {
         return new Promise((resolve) => {
-			const json = constructJsonSignRequest(Dummy.DID, 'submitClaim', 'submit_claim', Dummy.signature, claimData);
+			const json = constructJsonSignRequest(Dummy.signature.creator, 'submitClaim', 'submit_claim', Dummy.signature, claimData);
             return resolve(sendPostJSON(PDSUrl + 'api/request', json));
         })
     }
 
     evaluateClaim(evaluationData: any, templateName: string, PDSUrl: string): Promise<any> {
         return new Promise((resolve) => {
-			const json = constructJsonSignRequest(Dummy.DID, 'evaluateClaim', 'evaluate_claim', Dummy.signature, evaluationData);
+			const json = constructJsonSignRequest(Dummy.signature.creator, 'evaluateClaim', 'evaluate_claim', Dummy.signature, evaluationData);
 			return resolve(sendPostJSON(PDSUrl + 'api/request', json));
 		})
     }
 
     listClaimsForProject(PDSUrl: string, templateName: string, data?: any): Promise<any> {
         return new Promise((resolve) => {
-			const json = constructJsonSignRequest(Dummy.DID, 'listClaims', 'submit_claim', Dummy.signature, data);
+			const json = constructJsonSignRequest(Dummy.signature.creator, 'listClaims', 'submit_claim', Dummy.signature, data);
 			return resolve(sendPostJSON(PDSUrl + 'api/request', json));
 		})
     }

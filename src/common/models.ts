@@ -30,7 +30,7 @@ export class Signature {
     type: string;
     created: Date | string;
     creator: string;
-    signature: string;
+    signatureValue: string;
     publicKey: string;
 
     constructor(type: string, created: Date, did: string, publicKey: string, signature: string) {
@@ -38,7 +38,7 @@ export class Signature {
         this.created = created;
         this.creator = did;
         this.publicKey = publicKey;
-        this.signature = signature;
+        this.signatureValue = signature;
     }
 }
 
