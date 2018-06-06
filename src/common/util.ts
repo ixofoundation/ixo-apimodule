@@ -48,7 +48,7 @@ export function constructJsonSignRequest(did: string, method: string, templateNa
                     type: signature.type,
                     created: signature.created,
                     creator: signature.creator,
-                    signature: signature.signature
+                    signatureValue: signature.signatureValue
                 }
             }
         }
