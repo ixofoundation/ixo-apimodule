@@ -18,8 +18,8 @@ class Agent {
         });
 	}
 	
-    listAgentsForProject(signature: Signature, PDSUrl: string, data?: any): Promise<any> {
-        //the data isn't required, by adding data, it filters results to return all that meet this condition 
+    listAgentsForProject(data: any, signature: Signature, PDSUrl: string): Promise<any> {
+        //the data can be filtered by adding/removing from payload, it filters results to return all that meet this condition 
         return new Promise((resolve) => {
 			const json = constructJsonSignRequest('listAgents', 'create_agent', signature, data);
             return resolve(sendPostJSON(PDSUrl+'api/request', json));

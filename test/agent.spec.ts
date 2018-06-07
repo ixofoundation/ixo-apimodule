@@ -13,10 +13,11 @@ const agentData = {
         email: 'don@ixo.com',
         name: 'Don',
         role: 'SA',
-        agentDid: '1234'
+		agentDid: '1234',
+		projectDid: 'did:ixo:111'
     };
-let agentUpdate = { agentDid: '1234', status: "DECLINED", version: 2}
-
+let agentUpdate = { agentDid: 'did:sov:111', status: "DECLINED", version: 1, projectDid: 'did:ixo:111'}
+let listData = { projectDid: 'did:ixo:111' }
 describe('Agent functions', () => {
 
 	it('should create an agent', () => {
@@ -29,7 +30,7 @@ describe('Agent functions', () => {
 	});
 
 	it('should list agents for project', () => {
-		ixo.agent.listAgentsForProject(signature, PDSUrl).then((response: any) => {
+		ixo.agent.listAgentsForProject(listData, signature, PDSUrl).then((response: any) => {
 			console.log('Agent list for Project: ' + success(JSON.stringify(response, null, '\t')));
 			expect(response.result).to.not.equal(null);
 		}).catch((result: Error) => {
