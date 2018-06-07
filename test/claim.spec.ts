@@ -2,6 +2,7 @@ require('isomorphic-fetch');
 import { Ixo } from '../index';
 import { expect } from 'chai';
 import { MockProvider } from './common/util';
+import { signature } from '../dist/src/common/dummyData';
 const chalk = require('chalk');
 const success = chalk.bold.green;
 const error = chalk.bold.red;
@@ -13,11 +14,12 @@ let projectTx;
 let claimData = { name: 'doggy bag', weight: '2kg', claimid: 123 };
 let agentUpdate;
 let evaluationData = { claimId: 123, status: 'evaulated'};
+let listData = { projectDid: 'did:ixo:111' }
 
 describe('Claim functions', () => {
 
     it('should create new claim', () => {
-        ixo.claim.createClaim(claimData, 'submit_claim', PDSUrl).then((response: any) => {
+        ixo.claim.createClaim(claimData, signature, PDSUrl).then((response: any) => {
             console.log('Claim create response: ' + success(JSON.stringify(response, null, '\t')));
             // expect(response.result.name).to.be.equal('Sipho');
         }).catch((result: Error) => {
@@ -26,7 +28,7 @@ describe('Claim functions', () => {
     });
 
     it('should evaluate claim', () => {
-        ixo.claim.evaluateClaim(evaluationData, 'evaluate_claim', PDSUrl).then((response: any) => {
+        ixo.claim.evaluateClaim(evaluationData, signature, PDSUrl).then((response: any) => {
             console.log('Claim evaluate response: ' + success(JSON.stringify(response, null, '\t')));
             // expect(response.error.message).to.be.equal('Only the Evaluation agents on project can evaluate claims');
         }).catch((result: Error) => {
@@ -35,7 +37,7 @@ describe('Claim functions', () => {
     });
 
     it('list all claims', () => {
-        ixo.claim.listClaimsForProject(PDSUrl, 'submit_claim').then((response: any) => {
+        ixo.claim.listClaimsForProject(listData, signature, PDSUrl).then((response: any) => {
             console.log('Claim evaluate response: ' + success(JSON.stringify(response, null, '\t')));
             // expect(response.error.message).to.be.equal('Only the Evaluation agents on project can evaluate claims');
         }).catch((result: Error) => {
