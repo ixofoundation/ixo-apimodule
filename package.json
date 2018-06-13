@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "test": "mocha --timeout 5000 -r ts-node/register 'test/**/agent.spec.ts'",
+    "test": "mocha --timeout 5000 -r ts-node/register 'test/**/network.spec.ts'",
     "readme": "node ./node_modules/.bin/node-readme",
     "prep-publish": "rm -Rf node_modules/ package-lock.json dist/ && npm install && gulp"
   },
@@ -24,6 +24,7 @@
     "base58": "1.0.1",
     "bip39": "2.4.0",
     "crypto-js": "^3.1.9-1",
+    "dotenv": "^6.0.0",
     "elliptic": "^6.4.0",
     "ethjs-query": "^0.3.3",
     "immutable": "^3.8.2",

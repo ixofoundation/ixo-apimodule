@@ -12,7 +12,7 @@ class Project {
     }
 
     listProjects(): Promise<any> {
-        return sendPostJSON('https://ixo-block-sync.herokuapp.com/api/project', constructPublicJsonRequest('listProjects'));
+        return sendPostJSON(process.env.BLOCKCHAIN_URI + '/api/project/', constructPublicJsonRequest('listProjects'));
     }
     
     createProject(data: any, signature: Signature, PDSUrl: string): Promise<any> {

@@ -7,7 +7,8 @@ import { MockProvider } from './common/util';
 const chalk = require('chalk');
 const logger = chalk.bold.green;
 
-const ixo = new Ixo('https://ixo-node.herokuapp.com/', new MockProvider());
+//const ixo = new Ixo('https://ixo-node.herokuapp.com/', new MockProvider());
+const ixo = new Ixo();
 let mnemonic: string;
 let sdid: ISovrinDidModel;
 let signature: string;

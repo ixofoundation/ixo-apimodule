@@ -9,8 +9,8 @@ class Network {
         this.ixo = ixo;
     }
 
-    pingIxoServerNode(): Promise<any> {
-        return fetch('http://localhost:5000'
+    pingIxoBlockchain(): Promise<any> {
+        return fetch(process.env.BLOCKCHAIN_URI_TENDERMINT + '/health'
     ).then(function(response) {
             return response.text();
           }).catch((error) => {
@@ -18,6 +18,15 @@ class Network {
           });
     }
 
+
+    pingIxoExplorer(): Promise<any> {
+        return fetch(process.env.BLOCKCHAIN_URI
+    ).then(function(response) {
+            return response.text();
+          }).catch((error) => {
+            return error;
+          });
+    }
 }
 
 export default Network;
