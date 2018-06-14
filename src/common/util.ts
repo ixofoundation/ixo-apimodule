@@ -94,6 +94,7 @@ export function constructPublicJsonRequest(method: string, data?: any): any {
 	if (data) {
 		const updatedJson =  Object.assign(jsonRequest);
 		updatedJson.params = data;
+		console.log(updatedJson);
 		return updatedJson;
 	}
 	return jsonRequest;

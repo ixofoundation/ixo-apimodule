@@ -17,7 +17,7 @@ class Project {
 	}
 	
 	getProjectByDid(projectDid: any): Promise<any> {
-		const payload = {ProjectDid: projectDid};
+		const payload = {projectDid: projectDid};
         return sendPostJSON(BLOCKCHAIN_URI + '/api/project/', constructPublicJsonRequest('listProjectByDid', payload));
     }
     
