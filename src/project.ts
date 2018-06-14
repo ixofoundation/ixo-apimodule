@@ -17,7 +17,8 @@ class Project {
 	}
 	
 	getProjectByDid(projectDid: any): Promise<any> {
-        return sendPostJSON(BLOCKCHAIN_URI + '/api/project/', constructPublicJsonRequest('listProjectByDid', projectDid));
+		const payload = {ProjectDid: projectDid};
+        return sendPostJSON(BLOCKCHAIN_URI + '/api/project/', constructPublicJsonRequest('listProjectByDid', payload));
     }
     
     createProject(data: any, signature: Signature, PDSUrl: string): Promise<any> {

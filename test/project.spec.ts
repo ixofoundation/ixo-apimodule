@@ -10,7 +10,7 @@ const success = chalk.bold.green;
 const error = chalk.bold.red;
 const ixo = new Ixo();
 const sovrinDid = ixo.cryptoUtil.generateSovrinDID(ixo.cryptoUtil.generateMnemonic());
-const projectDid = {"projectDid": "did:ixo:9pJ4ChrvkaoP6C2dHJNXRK"};
+const projectDid = "did:ixo:9pJ4ChrvkaoP6C2dHJNXRK";
 describe('Project functions', () => {
 
     it('should return list of projects', () => {
