@@ -90,14 +90,11 @@ export function constructPublicJsonRequest(method: string, data?: any): any {
         'params': {
         }
 	}
-	console.log('test');
 
 	if (data) {
-		return {
-			...jsonRequest, 'params': {
-				...jsonRequest.params, data
-			}
-		}
+		const updatedJson =  Object.assign(jsonRequest);
+		updatedJson.params = data;
+		return updatedJson;
 	}
 	return jsonRequest;
 }
