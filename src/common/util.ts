@@ -57,7 +57,7 @@ export function constructJsonSignRequest(method: string, templateName: string, s
     return jsonRequest;
 }
 
-export function constructJsonRequest(did: string, method: string, data: any, templateName?: string): any {
+export function constructJsonRequest(method: string, data: any, templateName?: string): any {
     const jsonRequest = {
         'jsonrpc': '2.0',
         'method': method,
@@ -82,13 +82,22 @@ export function constructJsonRequest(did: string, method: string, data: any, tem
     }
 }
 
-export function constructPublicJsonRequest(method: string): any {
+export function constructPublicJsonRequest(method: string, data?: any): any {
     const jsonRequest = {
         'jsonrpc': '2.0',
         'method': method,
         'id': generateTxnId(),
         'params': {
         }
-    }
+	}
+	console.log('test');
+
+	if (data) {
+		return {
+			...jsonRequest, 'params': {
+				...jsonRequest.params, data
+			}
+		}
+	}
 	return jsonRequest;
 }

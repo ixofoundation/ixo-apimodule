@@ -13,6 +13,10 @@ class Project {
 
     listProjects(): Promise<any> {
         return sendPostJSON(process.env.BLOCKCHAIN_URI + '/api/project/', constructPublicJsonRequest('listProjects'));
+	}
+	
+	getProjectByDid(projectDid: any): Promise<any> {
+        return sendPostJSON(process.env.BLOCKCHAIN_URI + '/api/project/', constructPublicJsonRequest('listProjectByDid', projectDid));
     }
     
     createProject(data: any, signature: Signature, PDSUrl: string): Promise<any> {
