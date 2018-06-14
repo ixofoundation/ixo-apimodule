@@ -25,7 +25,7 @@ describe('User functions', () => {
 
     it('should register user did', () => {
         ixo.user.registerUserDid(didDoc, signature).then((response: string) => {
-            console.log('Project create response: ' + success(JSON.stringify(response, null, '\t')));
+            console.log('User DID registration response: ' + success(JSON.stringify(response, null, '\t')));
             expect(response).to.not.equal(null);
         }).catch((result: Error) => {
             console.log(error(result))

@@ -1,8 +1,9 @@
 require('es6-promise');
 import { sendPostJSON } from './utils/http';
-import { generateTxnId, constructJsonRequest, constructJsonSignRequest, constructPublicJsonRequest } from './common/util';
+import { constructJsonSignRequest, constructPublicJsonRequest } from './common/util';
 import { Ixo } from '../index';
 import { Signature } from './common/models';
+import { BLOCKCHAIN_URI } from './common/dummyData';
 
 class Project {
 
@@ -12,11 +13,11 @@ class Project {
     }
 
     listProjects(): Promise<any> {
-        return sendPostJSON(process.env.BLOCKCHAIN_URI + '/api/project/', constructPublicJsonRequest('listProjects'));
+        return sendPostJSON(BLOCKCHAIN_URI + '/api/project/', constructPublicJsonRequest('listProjects'));
 	}
 	
 	getProjectByDid(projectDid: any): Promise<any> {
-        return sendPostJSON(process.env.BLOCKCHAIN_URI + '/api/project/', constructPublicJsonRequest('listProjectByDid', projectDid));
+        return sendPostJSON(BLOCKCHAIN_URI + '/api/project/', constructPublicJsonRequest('listProjectByDid', projectDid));
     }
     
     createProject(data: any, signature: Signature, PDSUrl: string): Promise<any> {

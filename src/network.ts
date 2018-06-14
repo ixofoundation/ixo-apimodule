@@ -1,6 +1,5 @@
-import { sendPostJSON } from "./utils/http";
-import { generateTxnId } from './common/util';
 import { Ixo } from "../index";
+import { BLOCKCHAIN_URI_TENDERMINT, BLOCKCHAIN_URI } from "./common/dummyData";
 
 class Network {
     ixo: Ixo;
@@ -10,7 +9,7 @@ class Network {
     }
 
     pingIxoBlockchain(): Promise<any> {
-        return fetch(process.env.BLOCKCHAIN_URI_TENDERMINT + '/health'
+        return fetch(BLOCKCHAIN_URI_TENDERMINT + '/health'
     ).then(function(response) {
             return response.text();
           }).catch((error) => {
@@ -20,7 +19,7 @@ class Network {
 
 
     pingIxoExplorer(): Promise<any> {
-        return fetch(process.env.BLOCKCHAIN_URI
+        return fetch(BLOCKCHAIN_URI
     ).then(function(response) {
             return response.text();
           }).catch((error) => {

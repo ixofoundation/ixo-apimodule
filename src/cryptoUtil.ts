@@ -3,7 +3,6 @@ const sovrin = require('sovrin-did');
 const crypto = require('crypto');
 const base58 = require('bs58');
 const EC = require('elliptic').ec;
-const SHA256 = require('crypto-js/sha256');
 const hash = require('json-hash');
 
 class CryptoUtil {

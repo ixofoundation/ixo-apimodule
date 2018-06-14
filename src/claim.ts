@@ -1,7 +1,6 @@
 import { Ixo } from '../index';
 import { sendPostJSON } from './utils/http';
-import { constructJsonRequest, constructJsonSignRequest } from './common/util';
-import * as Dummy from './common/dummyData';
+import { constructJsonSignRequest } from './common/util';
 import { Signature } from './common/models';
 
 class Claim {
@@ -30,7 +29,6 @@ class Claim {
 			return resolve(sendPostJSON(PDSUrl + 'api/request', json));
 		})
     }
-
 }
 
 export default Claim;

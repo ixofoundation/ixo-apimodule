@@ -1,7 +1,7 @@
 require('es6-promise');
-import * as Dummy from './common/dummyData';
 import { Ixo } from '../index';
 import { Signature } from './common/models';
+import { BLOCKCHAIN_URI_TENDERMINT } from './common/dummyData';
 
 class User {
     ixo: Ixo;
@@ -19,7 +19,7 @@ class User {
         const ledgerObjectJson = this.generateLedgerObjectJson(data, signatureValue, created)
         const ledgerObjectUppercaseHex = new Buffer(ledgerObjectJson).toString("hex").toUpperCase()
 
-        return fetch(process.env.BLOCKCHAIN_URI_TENDERMINT + '/broadcast_tx_sync?tx=0x' + ledgerObjectUppercaseHex)
+        return fetch(BLOCKCHAIN_URI_TENDERMINT + '/broadcast_tx_sync?tx=0x' + ledgerObjectUppercaseHex)
             .then(function (response) {
                 return response;
             }).catch((error) => {

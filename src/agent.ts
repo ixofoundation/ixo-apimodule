@@ -1,7 +1,6 @@
 require('es6-promise');
 import { sendPostJSON } from './utils/http';
-import { generateTxnId, constructJsonRequest, constructJsonSignRequest } from './common/util';
-import * as Dummy from './common/dummyData';
+import { constructJsonSignRequest } from './common/util';
 import { Ixo } from '../index';
 import { Signature } from './common/models';
 

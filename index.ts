@@ -1,4 +1,3 @@
-require('dotenv').config();
 import Network from './src/network';
 import CryptoUtil from './src/cryptoUtil';
 import Project from './src/project';
