@@ -1,4 +1,3 @@
-require('isomorphic-fetch');
 import { expect } from 'chai';
 import 'mocha';
 import { Signature } from "../src/common/models";

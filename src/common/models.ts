@@ -1,4 +1,3 @@
-import { create } from "domain";
 import { Promise } from 'es6-promise';
 
 export interface IPingIxoNode {

@@ -1,4 +1,3 @@
-require('isomorphic-fetch');
 import { Ixo } from '../index';
 import { expect } from 'chai';
 import { MockProvider } from './common/util';

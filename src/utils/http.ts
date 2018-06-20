@@ -1,5 +1,5 @@
 require('es6-promise').polyfill();
-require('node-fetch');
+import 'cross-fetch/polyfill';
 import { IDictionary } from "../common/models";
 import * as Immutable from 'immutable';
 

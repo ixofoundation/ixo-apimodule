@@ -1,15 +1,17 @@
-require('isomorphic-fetch');
 import { expect } from 'chai';
 import 'mocha';
 import { Ixo } from '../index';
 import { getWeb3Instance } from '../src/utils/authUtil';
 import { signature, projectData, PDSUrl } from '../src/common/dummyData';
+import CryptoUtil from './util/cryptoUtil';
 
 const chalk = require('chalk');
 const success = chalk.bold.green;
 const error = chalk.bold.red;
 const ixo = new Ixo();
-const sovrinDid = ixo.cryptoUtil.generateSovrinDID(ixo.cryptoUtil.generateMnemonic());
+let cryptoUtil = new CryptoUtil();
+
+const sovrinDid = cryptoUtil.generateSovrinDID(cryptoUtil.generateMnemonic());
 const projectDid = "did:ixo:9pJ4ChrvkaoP6C2dHJNXRK";
 describe('Project functions', () => {
 

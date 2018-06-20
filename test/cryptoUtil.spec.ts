@@ -3,6 +3,7 @@ import 'mocha';
 import { ISovrinDidModel } from "../src/common/models";
 import { Ixo } from '../index';
 import { MockProvider } from './common/util';
+import CryptoUtil from './util/cryptoUtil';
 
 const chalk = require('chalk');
 const logger = chalk.bold.green;
@@ -14,6 +15,7 @@ let sdid: ISovrinDidModel;
 let signature: string;
 let ecdsaKeyPair: any;
 let ecdsaSignature: any;
+let cryptoUtil = new CryptoUtil();
 
 var testJson = {
     "employees": [
@@ -26,44 +28,44 @@ var testJson = {
 describe('CryptoUtil functions', () => {
 
     it('should return mnemonic', () => {
-        mnemonic = ixo.cryptoUtil.generateMnemonic();
+        mnemonic = cryptoUtil.generateMnemonic();
         console.log('Mnemonic: ' + logger(mnemonic));
         expect(mnemonic).to.be.a('string');
     });
 
     it('should generate SovrinDID', () => {
-        sdid = ixo.cryptoUtil.generateSovrinDID(mnemonic);
+        sdid = cryptoUtil.generateSovrinDID(mnemonic);
         console.log('SovrinDID: ' + logger(JSON.stringify(sdid, null, '\t')));
         expect(sdid).to.be.an.instanceof(Object);
     });
 
     it('should generate document signature', () => {
-        signature = ixo.cryptoUtil.getDocumentSignature(sdid.secret.signKey, sdid.verifyKey, JSON.stringify(testJson));
+        signature = cryptoUtil.getDocumentSignature(sdid.secret.signKey, sdid.verifyKey, JSON.stringify(testJson));
         console.log('Document Signature: ' + logger(signature));
         expect(sdid).to.be.an.instanceof(Object);
     });
 
     it('should verify document signature', () => {
-        var isValidSignature: boolean = ixo.cryptoUtil.verifyDocumentSignature(signature, sdid.verifyKey);
+        var isValidSignature: boolean = cryptoUtil.verifyDocumentSignature(signature, sdid.verifyKey);
         console.log('Valid Signature: ' + logger(isValidSignature));
         expect(isValidSignature).to.be.true;
     });
 
     it('should generate ECDSA keypair', () => {
-        ecdsaKeyPair = ixo.cryptoUtil.generateEcdsaKeyPair();
+        ecdsaKeyPair = cryptoUtil.generateEcdsaKeyPair();
         console.log('Ecdsa keypair: ' + logger(ecdsaKeyPair));
         expect(ecdsaKeyPair).to.be.an.instanceof(Object);
     });
 
     it('should sign Json using ECDSA key', () => {
-        ecdsaSignature = ixo.cryptoUtil.signPayloadUsingEcdsaKey(testJson, ecdsaKeyPair);
+        ecdsaSignature = cryptoUtil.signPayloadUsingEcdsaKey(testJson, ecdsaKeyPair);
         console.log('Ecdsa signature: ' + logger(ecdsaSignature));
         expect(ecdsaSignature).to.be.an.instanceof(Object);
     });
 
     it('should verify the ECDSA signature', () => {
-        console.log('Is valid ECDSA signature: ' + logger(ixo.cryptoUtil.verifyEcdsaSignature(ecdsaKeyPair, ecdsaSignature, testJson)));
-        expect(ixo.cryptoUtil.verifyEcdsaSignature(ecdsaKeyPair, ecdsaSignature, testJson)).to.be.true;
+        console.log('Is valid ECDSA signature: ' + logger(cryptoUtil.verifyEcdsaSignature(ecdsaKeyPair, ecdsaSignature, testJson)));
+        expect(cryptoUtil.verifyEcdsaSignature(ecdsaKeyPair, ecdsaSignature, testJson)).to.be.true;
     });
 
 
