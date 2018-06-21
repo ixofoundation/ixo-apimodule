@@ -48,10 +48,11 @@ class Project {
         let payload = {
             key: key
         }
+
         return new Promise((resolve) => {
             const json = constructPublicJsonRequest('fetchPublic', payload);
             sendPostJSON(PDSUrl + 'api/public', json).then((response: any) => {
-                resolve("data:" + response.contentType + ";base64," + response.data);
+                resolve("data:" + response.result.contentType + ";base64," + response.result.data);
             })
         });
     }
