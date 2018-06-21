@@ -3,6 +3,7 @@ import Project from './src/project';
 import Agent from './src/agent';
 import Claim from './src/claim';
 import User from './src/user';
+import Stats from './src/stats';
 
 export class Ixo {
     network: Network;
@@ -10,6 +11,7 @@ export class Ixo {
     agent: Agent;
     claim: Claim;
     user: User;
+    stats: Stats;
 
     constructor() {
         this.network = new Network(this);
@@ -17,6 +19,7 @@ export class Ixo {
         this.agent = new Agent(this);
         this.claim = new Claim(this);
         this.user = new User(this);
+        this.stats = new Stats(this);
     }
 }
 

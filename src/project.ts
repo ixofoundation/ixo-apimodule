@@ -28,14 +28,19 @@ class Project {
         });
     }
 
-    createPublic(data: any, contentType: any, PDSUrl: string) {
+    createPublic(source: any, PDSUrl: string) {
+        let srcParts = source.split(',');
+        let data = srcParts[1];
+        let contentType = srcParts[0].split(';');
+        contentType = contentType[0].split(':')[1];
+
         let payload = {
             data: data,
             contentType: contentType
         }
         return new Promise((resolve) => {
             const json = constructPublicJsonRequest('createPublic', payload);
-            resolve(sendPostJSON(PDSUrl + 'api/request', json));
+            resolve(sendPostJSON(PDSUrl + 'api/public', json));
         });
     }
 
@@ -45,7 +50,9 @@ class Project {
         }
         return new Promise((resolve) => {
             const json = constructPublicJsonRequest('fetchPublic', payload);
-            resolve(sendPostJSON(PDSUrl + 'api/request', json));
+            sendPostJSON(PDSUrl + 'api/public', json).then((response: any) => {
+                resolve("data:" + response.contentType + ";base64," + response.data);
+            })
         });
     }
 }
