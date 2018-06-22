@@ -25,7 +25,7 @@ class Claim {
 	
     listClaimsForProject(data: any, signature: Signature, PDSUrl: string): Promise<any> {
         return new Promise((resolve) => {
-			const json = constructJsonSignRequest('listClaims', 'submit_claim', signature, data);
+			const json = constructJsonSignRequest('listClaims', 'list_claim', signature, data);
 			return resolve(sendPostJSON(PDSUrl + 'api/request', json));
 		})
     }
