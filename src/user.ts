@@ -30,11 +30,19 @@ class User {
 
     getDidDoc(did: string) {
         return fetch(BLOCKCHAIN_URI_REST + 'did/' + did)
-        .then(function (response) {
-            return response.json();
-        }).catch((error) => {
-            return error;
-        });   
+            .then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                }
+                else {
+                    var obj = {
+                        error: response.statusText
+                    }
+                }
+                return obj;
+            }).catch((error) => {
+                return error;
+            });
     }
 }
 
