@@ -1,7 +1,8 @@
 require('es6-promise');
 import { Ixo } from '../index';
 import { Signature } from './common/models';
-import { BLOCKCHAIN_URI_TENDERMINT } from './common/dummyData';
+import { BLOCKCHAIN_URI_TENDERMINT, BLOCKCHAIN_URI_REST } from './common/dummyData';
+
 
 class User {
     ixo: Ixo;
@@ -9,7 +10,7 @@ class User {
         this.ixo = ixo;
     }
 
-    generateLedgerObjectJson = (didDoc: string, signature: string, created: any) => {
+    generateLedgerObjectJson = (didDoc: any, signature: string, created: any) => {
         const signatureValue = [1, signature]
         return JSON.stringify({ payload: [10, didDoc], signature: { signatureValue, created } })
     }
@@ -25,6 +26,15 @@ class User {
             }).catch((error) => {
                 return error;
             });
+    }
+
+    getDidDoc(did: string) {
+        return fetch(BLOCKCHAIN_URI_REST + 'did/' + did)
+        .then(function (response) {
+            return response.json;
+        }).catch((error) => {
+            return error;
+        });   
     }
 }
 

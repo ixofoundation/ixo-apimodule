@@ -54,6 +54,7 @@ export const projectData = {
 export const PDSUrl = 'http://192.168.1.125:5000/';
 export const BLOCKCHAIN_URI = 'https://ixo-block-sync.herokuapp.com';
 export const BLOCKCHAIN_URI_TENDERMINT = 'http://104.155.142.57:46657';
+export const BLOCKCHAIN_URI_REST= 'http://104.155.142.57:1317/';
 
 export const signature = {
 	type: 'ed25519-sha-256',
