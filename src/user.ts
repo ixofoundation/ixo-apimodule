@@ -31,7 +31,7 @@ class User {
     getDidDoc(did: string) {
         return fetch(BLOCKCHAIN_URI_REST + 'did/' + did)
             .then(function (response) {
-                if (response.ok) {
+                if (response.status == 200) {
                     return response.json();
                 }
                 else {
