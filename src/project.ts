@@ -1,64 +1,66 @@
 require('es6-promise');
 import { sendPostJSON } from './utils/http';
-import { constructJsonSignRequest, constructPublicJsonRequest, constructJsonRequest } from './common/util';
+import { constructJsonSignRequest, constructPublicJsonRequest } from './common/util';
 import { Ixo } from '../index';
 import { Signature } from './common/models';
-import { BLOCKCHAIN_URI } from './common/dummyData';
-
 class Project {
+	ixo: Ixo;
+	constructor(ixo: Ixo) {
+		this.ixo = ixo;
+	}
 
-    ixo: Ixo;
-    constructor(ixo: Ixo) {
-        this.ixo = ixo;
-    }
+	listProjects(): Promise<any> {
+		return sendPostJSON(this.ixo.config.getBlockSyncUrl() + '/api/project/', constructPublicJsonRequest('listProjects'));
+	}
 
-    listProjects(): Promise<any> {
-        return sendPostJSON(BLOCKCHAIN_URI + '/api/project/', constructPublicJsonRequest('listProjects'));
-    }
+	getProjectByProjectDid(projectDid: any): Promise<any> {
+		const payload = { projectDid: projectDid };
+		return sendPostJSON(this.ixo.config.getBlockSyncUrl() + '/api/project/', constructPublicJsonRequest('listProjectByProjectDid', payload));
+	}
 
-    getProjectByDid(projectDid: any): Promise<any> {
-        const payload = { projectDid: projectDid };
-        return sendPostJSON(BLOCKCHAIN_URI + '/api/project/', constructPublicJsonRequest('listProjectByDid', payload));
-    }
+	getProjectByUserDid(senderDid: any): Promise<any> {
+		const payload = { senderDid: senderDid };
+		return sendPostJSON(this.ixo.config.getBlockSyncUrl() + '/api/project/', constructPublicJsonRequest('listProjectBySenderDid', payload));
+	}
 
-    createProject(data: any, signature: Signature, PDSUrl: string): Promise<any> {
-        return new Promise((resolve) => {
-            const json = constructJsonSignRequest('createProject', 'create_project', signature, data);
-            resolve(sendPostJSON(PDSUrl + 'api/request', json));
-        });
-    }
+	createProject(data: any, signature: Signature, PDSUrl: string): Promise<any> {
+		return new Promise(resolve => {
+			const json = constructJsonSignRequest('createProject', 'create_project', signature, data);
+			resolve(sendPostJSON(PDSUrl + 'api/request', json));
+		});
+	}
 
-    createPublic(source: any, PDSUrl: string) {
-        let srcParts = source.split(',');
-        let data = srcParts[1];
-        let contentType = srcParts[0].split(';');
-        contentType = contentType[0].split(':')[1];
+	createPublic(source: any, PDSUrl: string) {
+		let srcParts = source.split(',');
+		let data = srcParts[1];
+		let contentType = srcParts[0].split(';');
+		contentType = contentType[0].split(':')[1];
 
-        let payload = {
-            data: data,
-            contentType: contentType
-        }
-        return new Promise((resolve) => {
-            const json = constructPublicJsonRequest('createPublic', payload);
-            resolve(sendPostJSON(PDSUrl + 'api/public', json));
-        });
-    }
+		let payload = {
+			data: data,
+			contentType: contentType
+		};
+		return new Promise(resolve => {
+			const json = constructPublicJsonRequest('createPublic', payload);
+			resolve(sendPostJSON(PDSUrl + 'api/public', json));
+		});
+	}
 
-    fetchPublic(key: any, PDSUrl: string) {
-        let payload = {
-            key: key
-        }
-        return new Promise((resolve) => {
-            const json = constructPublicJsonRequest('fetchPublic', payload);
-            sendPostJSON(PDSUrl + 'api/public', json).then((response: any) => {
-                let obj = {
-                    data: response.result.data,
-                    contentType: response.result.contentType
-                }
-                resolve(obj);
-            })
-        });
-    }
+	fetchPublic(key: any, PDSUrl: string) {
+		let payload = {
+			key: key
+		};
+		return new Promise(resolve => {
+			const json = constructPublicJsonRequest('fetchPublic', payload);
+			sendPostJSON(PDSUrl + 'api/public', json).then((response: any) => {
+				let obj = {
+					data: response.result.data,
+					contentType: response.result.contentType
+				};
+				resolve(obj);
+			});
+		});
+	}
 }
 
 export default Project;
