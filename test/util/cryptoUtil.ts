@@ -1,6 +1,6 @@
 const bip39 = require('bip39');
 const sovrin = require('sovrin-did');
-const crypto = require('crypto');
+const SHA256 = require("crypto-js/sha256");
 const base58 = require('bs58');
 const EC = require('elliptic').ec;
 const hash = require('json-hash');
@@ -11,7 +11,7 @@ class CryptoUtil {
     }
 
     generateSovrinDID(mnemonic: string) {
-        const seed = crypto.createHash('sha256').update(mnemonic).digest("hex");
+        const seed = SHA256(mnemonic).toString();
 
         // Convert SHA256 hash to Uint8Array
         var didSeed = new Uint8Array(32);

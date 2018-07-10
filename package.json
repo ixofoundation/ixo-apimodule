@@ -1,11 +1,11 @@
 {
   "name": "ixo-module",
-  "version": "1.4.38",
+  "version": "1.4.53",
   "description": "This is a node module that defines the functions that can be performed by the ixo protocol.",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "test": "mocha --timeout 5000 -r ts-node/register 'test/**/project.spec.ts'",
+    "test": "mocha --timeout 5000 -r ts-node/register 'test/**/**.spec.ts'",
     "readme": "node ./node_modules/.bin/node-readme",
     "prep-publish": "rm -Rf node_modules/ package-lock.json dist/ && npm install && gulp"
   },
@@ -21,21 +21,20 @@
   "homepage": "https://github.com/ixofoundation/ixo-module#readme",
   "dependencies": {
     "@types/es6-promise": "^3.3.0",
+    "axios": "^0.18.0",
     "base58": "1.0.1",
     "bip39": "2.4.0",
-    "crypto-js": "^3.1.9-1",
+    "cross-fetch": "^2.2.1",
     "elliptic": "^6.4.0",
     "ethjs-query": "^0.3.3",
     "immutable": "^3.8.2",
-    "isomorphic-fetch": "^2.2.1",
     "jayson": "^2.0.5",
     "json-hash": "^1.2.0",
     "loadjs": "^3.5.2",
     "node": "^9.3.0",
-    "node-fetch": "^1.7.3",
     "sovrin-did": "1.2.0",
-    "tls": "0.0.1",
-    "whatwg-fetch": "^2.0.3"
+    "stream": "0.0.2",
+    "tls": "0.0.1"
   },
   "devDependencies": {
     "@types/chai": "^4.1.0",
@@ -47,6 +46,7 @@
     "browserify": "^15.2.0",
     "chai": "^4.1.2",
     "chalk": "^2.3.0",
+    "crypto-js": "^3.1.9-1",
     "ethereumjs-util": "^5.1.4",
     "ethereumjs-wallet": "^0.6.0",
     "ethjs-provider-http": "^0.1.6",

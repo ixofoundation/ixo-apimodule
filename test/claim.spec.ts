@@ -1,13 +1,12 @@
-require('isomorphic-fetch');
 import { Ixo } from '../index';
 import { expect } from 'chai';
 import { MockProvider } from './common/util';
 import { signature } from '../dist/src/common/dummyData';
+import { PDSUrl } from '../src/common/dummyData';
 const chalk = require('chalk');
 const success = chalk.bold.green;
 const error = chalk.bold.red;
-const ixo = new Ixo();
-const PDSUrl = 'http://localhost:5000/';
+const ixo = new Ixo("35.192.187.110", "https://ixo-block-sync.herokuapp.com");
 
 let agentData;
 let projectTx;
