@@ -8,7 +8,7 @@ class Stats {
 		this.ixo = ixo;
 	}
 
-	getGolbalStats(): Promise<any> {
+	getGlobalStats(): Promise<any> {
 		return sendPostJSON(this.ixo.config.getBlockSyncUrl() + '/api/stats/', constructPublicJsonRequest('listStats'));
 	}
 }
