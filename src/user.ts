@@ -1,6 +1,8 @@
 require('es6-promise');
 import { Ixo } from '../index';
 import { Signature } from './common/models';
+import { sendPostJSON } from './utils/http';
+import { constructPublicJsonRequest } from './common/util';
 class User {
 	ixo: Ixo;
 	constructor(ixo: Ixo) {
@@ -27,20 +29,8 @@ class User {
 	}
 
 	getDidDoc(did: string) {
-		return fetch(this.ixo.config.getBlockchainRestUrl + '/did/' + did)
-			.then(function(response: any) {
-				if (response.status === 200) {
-					return response.json();
-				} else {
-					var obj = {
-						error: response.statusText
-					};
-				}
-				return obj;
-			})
-			.catch(error => {
-				return error;
-			});
+		const payload = { did: did };
+		return sendPostJSON(this.ixo.config.getBlockSyncUrl() + '/api/did/', constructPublicJsonRequest('getDidDocByDid', payload));
 	}
 }
 
