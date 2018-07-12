@@ -50,14 +50,19 @@ class Project {
 		let payload = {
 			key: key
 		};
-		return new Promise(resolve => {
+		return new Promise((resolve,reject) => {
 			const json = constructPublicJsonRequest('fetchPublic', payload);
 			sendPostJSON(PDSUrl + 'api/public', json).then((response: any) => {
-				let obj = {
-					data: response.result.data,
-					contentType: response.result.contentType
-				};
-				resolve(obj);
+				if (response.result.data) {
+					let obj = {
+						data: response.result.data,
+						contentType: response.result.contentType
+					};
+					resolve(obj);
+				} else {
+					reject(null);
+				}
+
 			});
 		});
 	}
