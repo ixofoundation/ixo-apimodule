@@ -1,7 +1,7 @@
 require('es6-promise');
 import { Ixo } from '../index';
 import { Signature } from './common/models';
-import { sendPostJSON } from './utils/http';
+import { sendPostJSON, sendGetJSON } from './utils/http';
 import { constructPublicJsonRequest } from './common/util';
 class User {
 	ixo: Ixo;
@@ -12,7 +12,7 @@ class User {
 	generateLedgerObjectJson = (didDoc: any, signature: string, created: any) => {
 		const signatureValue = [1, signature];
 		return JSON.stringify({ payload: [10, didDoc], signature: { signatureValue, created } });
-	}
+	};
 
 	registerUserDid(data: any, signature: Signature): Promise<any> {
 		const { signatureValue, created } = signature;
@@ -29,8 +29,7 @@ class User {
 	}
 
 	getDidDoc(did: string) {
-		const payload = { did: did };
-		return sendPostJSON(this.ixo.config.getBlockSyncUrl() + '/api/did/', constructPublicJsonRequest('getDidDocByDid', payload));
+		return sendGetJSON(this.ixo.config.getBlockSyncUrl() + '/api/did/getByDid/' + did);
 	}
 }
 

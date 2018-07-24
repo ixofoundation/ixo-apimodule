@@ -1,5 +1,5 @@
 require('es6-promise');
-import { sendPostJSON } from './utils/http';
+import { sendPostJSON, sendGetJSON } from './utils/http';
 import { constructJsonSignRequest, constructPublicJsonRequest } from './common/util';
 import { Ixo } from '../index';
 import { Signature } from './common/models';
@@ -10,12 +10,11 @@ class Project {
 	}
 
 	listProjects(): Promise<any> {
-		return sendPostJSON(this.ixo.config.getBlockSyncUrl() + '/api/project/', constructPublicJsonRequest('listProjects'));
+		return sendGetJSON(this.ixo.config.getBlockSyncUrl() + '/api/project/listProjects');
 	}
 
 	getProjectByProjectDid(projectDid: any): Promise<any> {
-		const payload = { projectDid: projectDid };
-		return sendPostJSON(this.ixo.config.getBlockSyncUrl() + '/api/project/', constructPublicJsonRequest('listProjectByProjectDid', payload));
+		return sendGetJSON(this.ixo.config.getBlockSyncUrl() + '/api/project/getByProjectDid/' + projectDid);
 	}
 
 	getProjectByUserDid(senderDid: any): Promise<any> {
@@ -50,7 +49,7 @@ class Project {
 		let payload = {
 			key: key
 		};
-		return new Promise((resolve,reject) => {
+		return new Promise((resolve, reject) => {
 			const json = constructPublicJsonRequest('fetchPublic', payload);
 			sendPostJSON(PDSUrl + 'api/public', json).then((response: any) => {
 				if (response.result.data) {
@@ -62,7 +61,6 @@ class Project {
 				} else {
 					reject(null);
 				}
-
 			});
 		});
 	}
