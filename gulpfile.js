@@ -14,6 +14,13 @@ gulp.task('ts-to-js', function() {
 		.js.pipe(gulp.dest('dist'));
 });
 
+gulp.task('ts-def', function() {
+	return tsProject
+		.src()
+		.pipe(tsProject())
+		.dts.pipe(gulp.dest('dist'));
+});
+
 gulp.task('uglify', function() {
 	return gulp
 		.src('dist/**')
@@ -21,4 +28,4 @@ gulp.task('uglify', function() {
 		.pipe(gulp.dest('dist/'));
 });
 
-gulp.task('default', gulpSequence('ts-to-js', 'uglify'));
+gulp.task('default', gulpSequence('ts-to-js', 'uglify', 'ts-def'));
