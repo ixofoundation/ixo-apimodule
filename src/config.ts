@@ -1,18 +1,14 @@
 class Config {
-	BLOCKCHAIN_IP: string;
+	BLOCKCHAIN_NODE_URL: string;
 	BLOCK_SYNC_URL: string;
 
-	constructor(BLOCKCHAIN_IP: string, BLOCK_SYNC_URL: string) {
-		this.BLOCKCHAIN_IP = BLOCKCHAIN_IP;
+	constructor(BLOCKCHAIN_NODE_URL: string, BLOCK_SYNC_URL: string) {
+		this.BLOCKCHAIN_NODE_URL = BLOCKCHAIN_NODE_URL;
 		this.BLOCK_SYNC_URL = BLOCK_SYNC_URL;
 	}
 
 	getBlockchainUrl(): string {
-		return 'http://' + this.BLOCKCHAIN_IP + ':46657';
-	}
-
-	getBlockchainRestUrl(): string {
-		return 'http://' + this.BLOCKCHAIN_IP + ':1317';
+		return this.BLOCKCHAIN_NODE_URL;
 	}
 
 	getBlockSyncUrl(): string {

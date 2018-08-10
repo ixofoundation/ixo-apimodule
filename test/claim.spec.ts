@@ -6,7 +6,7 @@ import { PDSUrl } from '../src/common/dummyData';
 const chalk = require('chalk');
 const success = chalk.bold.green;
 const error = chalk.bold.red;
-const ixo = new Ixo("35.192.187.110", "https://ixo-block-sync.herokuapp.com");
+const ixo = new Ixo("http://35.192.187.110:46657", "https://ixo-block-sync.herokuapp.com");
 
 let agentData;
 let projectTx;
