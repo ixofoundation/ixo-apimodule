@@ -7,7 +7,7 @@ class Network {
 	}
 
 	pingIxoBlockchain(): Promise<any> {
-		return fetch(this.ixo.config.getBlockchainUrl + '/health')
+		return fetch(this.ixo.config.getBlockchainUrl() + '/health')
 			.then(function(response: any) {
 				return response.text();
 			})
