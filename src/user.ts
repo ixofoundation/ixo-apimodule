@@ -19,13 +19,14 @@ class User {
 		const ledgerObjectJson = this.generateLedgerObjectJson(data, signatureValue, created);
 		const ledgerObjectUppercaseHex = new Buffer(ledgerObjectJson).toString('hex').toUpperCase();
 
-		return fetch(this.ixo.config.getBlockchainUrl() + '/broadcast_tx_sync?tx=0x' + ledgerObjectUppercaseHex)
-			.then(function(response: any) {
-				return response;
-			})
-			.catch(error => {
-				return error;
-			});
+		return sendGetJSON(this.ixo.config.getBlockSyncUrl() + '/api/blockchain/0x' + ledgerObjectUppercaseHex);
+		// return fetch(this.ixo.config.getBlockchainUrl() + '/broadcast_tx_sync?tx=0x' + ledgerObjectUppercaseHex)
+		// 	.then(function(response: any) {
+		// 		return response;
+		// 	})
+		// 	.catch(error => {
+		// 		return error;
+		// 	});
 	}
 
 	getDidDoc(did: string) {
