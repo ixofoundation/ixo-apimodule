@@ -1,5 +1,5 @@
 require('es6-promise');
-import { sendPostJSON } from './utils/http';
+import { sendGetJSON } from './utils/http';
 import { constructPublicJsonRequest } from './common/util';
 import { Ixo } from '../index';
 class Stats {
@@ -9,7 +9,7 @@ class Stats {
 	}
 
 	getGlobalStats(): Promise<any> {
-		return sendPostJSON(this.ixo.config.getBlockSyncUrl() + '/api/stats/', constructPublicJsonRequest('listStats'));
+		return sendGetJSON(this.ixo.config.getBlockSyncUrl() + '/api/stats/listStats');
 	}
 }
 

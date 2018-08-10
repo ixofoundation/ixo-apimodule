@@ -15,6 +15,17 @@ export function sendPostJSON<T>(url: string, body: IDictionary<any>, extraHeader
 		.then(checkServerError);
 }
 
+/** Utility method for sending a POST request to the specified URL */
+export function sendGetJSON<T>(url: string, extraHeaders?: IDictionary<string>): Promise<T> {
+	return fetch(url, {
+		method: 'GET',
+		headers: getJSONRequestHeaders(extraHeaders),
+		credentials: 'same-origin'
+	})
+		.then((res: any) => res.json())
+		.then(checkServerError);
+}
+
 /** Merge default JSON headers with any extra headers passed to it */
 function getJSONRequestHeaders(extraHeaders?: IDictionary<string>): IDictionary<string> {
 	let requestHeaders: IDictionary<string> = { Accept: 'application/json', 'Content-Type': 'application/json' };

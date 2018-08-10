@@ -28,4 +28,15 @@ describe('User functions', () => {
 				console.log(error(result));
 			});
 	});
+	it('should return user did', () => {
+		ixo.user
+			.getDidDoc(didDoc.didDoc.did)
+			.then((response: any) => {
+				console.log('User get DidDoc response: ' + success(JSON.stringify(response, null, '\t')));
+				expect(response).to.not.equal(null);
+			})
+			.catch((result: Error) => {
+				console.log(error(result));
+			});
+	});
 });
