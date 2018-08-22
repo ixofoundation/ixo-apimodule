@@ -6,6 +6,7 @@ import { constructPublicJsonRequest } from './common/util';
 class User {
 	ixo: Ixo;
 	constructor(ixo: Ixo) {
+		console.log('inside User CTOR');
 		this.ixo = ixo;
 	}
 
