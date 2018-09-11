@@ -11,7 +11,11 @@ class User {
 
 	generateLedgerObjectJson = (didDoc: any, signature: string, created: any) => {
 		const signatureValue = [1, signature];
-		return JSON.stringify({ payload: [10, didDoc], signature: { signatureValue, created } });
+
+		const didDocJson = JSON.stringify(didDoc);
+		const didDocHex = new Buffer(didDocJson).toString("hex").toUpperCase()
+			
+		return JSON.stringify({ payload: [10, didDocHex], signature: { signatureValue, created } });
 	};
 
 	registerUserDid(data: any, signature: Signature): Promise<any> {
