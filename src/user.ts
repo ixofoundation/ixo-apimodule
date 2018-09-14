@@ -13,9 +13,9 @@ class User {
 		const signatureValue = [1, signature];
 
 		const didDocJson = JSON.stringify(didDoc);
-		const didDocHex = new Buffer(didDocJson).toString("hex").toUpperCase()
+		// const didDocHex = new Buffer(didDocJson).toString("hex").toUpperCase()
 			
-		return JSON.stringify({ payload: [10, didDocHex], signature: { signatureValue, created } });
+		return JSON.stringify({ payload: [10, didDocJson], signature: { signatureValue, created } });
 	};
 
 	registerUserDid(data: any, signature: Signature): Promise<any> {
