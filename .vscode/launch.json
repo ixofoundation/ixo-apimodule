@@ -17,7 +17,7 @@
                 "--colors",
                 "-r",
                 "ts-node/register",
-                "${workspaceFolder}/test/**/network.spec.ts"
+                "${workspaceFolder}/test/**/project.spec.ts"
             ],
             "internalConsoleOptions": "openOnSessionStart"
         },
