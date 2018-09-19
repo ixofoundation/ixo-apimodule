@@ -8,11 +8,13 @@ export interface IDictionary<T> {
 export interface ISovrinDidModel {
 	did: string;
 	verifyKey: string;
+	encryptionPublicKey: string;
 	secret: ISovrinDidSecretModel;
 }
 export interface ISovrinDidSecretModel {
 	seed: string;
 	signKey: string;
+	encryptionPrivateKey: string;
 }
 export interface ICredentialProviderResult {
 	provider: any;
