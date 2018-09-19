@@ -5,6 +5,9 @@ import Claim from './src/claim';
 import User from './src/user';
 import Stats from './src/stats';
 import Config from './src/config';
+import Web3Proxy from './src/web3-proxy';
+import Web3 from 'web3';
+
 export class Ixo {
 	network: Network;
 	project: Project;
@@ -13,6 +16,7 @@ export class Ixo {
 	user: User;
 	stats: Stats;
 	config: Config;
+	web3Proxy: Web3Proxy;
 
 	constructor(BLOCKCHAIN_IP: string, BLOCK_SYNC_URL: string) {
 		this.config = new Config(BLOCKCHAIN_IP, BLOCK_SYNC_URL);
@@ -23,4 +27,8 @@ export class Ixo {
 		this.user = new User(this);
 		this.stats = new Stats(this);
 	}
+
+	initWeb3 = (provider: any, contractABI: string, contractAddress: string) => {
+		this.
+	};
 }

@@ -34,7 +34,8 @@
     "node": "^9.3.0",
     "sovrin-did": "1.2.0",
     "stream": "0.0.2",
-    "tls": "0.0.1"
+    "tls": "0.0.1",
+    "web3-eth": "^1.0.0-beta.36"
   },
   "devDependencies": {
     "@types/chai": "^4.1.0",
