@@ -10,28 +10,33 @@ const success = chalk.bold.green;
 const error = chalk.bold.red;
 const ixo = new Ixo(BLOCKCHAIN_URI_TENDERMINT, BLOCKCHAIN_URI);
 let cryptoUtil = new CryptoUtil();
-let signature: Signature;
 let didDoc: ISovrinDidModel;
 
 describe('Project functions', () => {
-	before(function() {
+	before(function(done) {
 		didDoc = cryptoUtil.generateSovrinDID(cryptoUtil.generateMnemonic());
-		signature = {
-			type: 'ed25519-sha-256',
-			created: new Date(),
-			creator: 'did:sov:' + didDoc.did,
-			publicKey: didDoc.encryptionPublicKey,
-			signatureValue: new Buffer(cryptoUtil.getDocumentSignature(didDoc.secret.signKey, didDoc.verifyKey, JSON.stringify(projectData)))
-				.slice(0, 64)
-				.toString('hex')
-				.toUpperCase()
+		let didPayload = {
+			didDoc: {
+				did: 'did:sov:' + didDoc.did,
+				pubKey: didDoc.verifyKey,
+				credentials: []
+			}
 		};
+		ixo.user.registerUserDid(didPayload, cryptoUtil.getSignatureForPayload(didDoc, didPayload)).then((response: any) => {
+			if (JSON.stringify(response).includes('hash')) {
+				setTimeout(function() {
+					ixo.user.getDidDoc(didPayload.didDoc.did).then((response: any) => {
+						console.log('RESPONSE DID: ' + JSON.stringify(response));
+						return done();
+					});
+				}, 1000);
+			}
+		});
 	});
 
 	it('should create new project', () => {
-		console.log(projectData);
 		ixo.project
-			.createProject(JSON.parse(JSON.stringify(projectData)), signature, PDSUrl)
+			.createProject(JSON.parse(JSON.stringify(projectData)), cryptoUtil.getSignatureForPayload(didDoc, projectData), PDSUrl)
 			.then((response: any) => {
 				console.log('Project create response: ' + success(JSON.stringify(response, null, '\t')));
 				expect(response.result).to.not.equal(null);
@@ -41,7 +46,7 @@ describe('Project functions', () => {
 			});
 	});
 
-	/* it('should return list of projects', () => {
+	it('should return list of projects', () => {
 		ixo.project
 			.listProjects()
 			.then((response: any) => {
@@ -53,7 +58,7 @@ describe('Project functions', () => {
 			});
 	});
 
-	it('should return project with Did', () => {
+	/* it('should return project with Did', () => {
 		ixo.project
 			.getProjectByProjectDid(projectDid)
 			.then((response: any) => {
@@ -63,5 +68,5 @@ describe('Project functions', () => {
 			.catch((result: Error) => {
 				console.log(error(result));
 			});
-	}); */
+	});  */
 });

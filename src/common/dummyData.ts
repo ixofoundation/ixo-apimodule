@@ -17,7 +17,7 @@ export const projectData = {
 			form: 'y3ahhxfxk4jm7nqkr2'
 		}
 	},
-	evaluatorPayPerClaim: 0,
+	evaluatorPayPerClaim: '0',
 	socialMedia: {
 		facebookLink: 'https://www.facebook.com/ixofoundation/',
 		instagramLink: '',
