@@ -1,32 +1,30 @@
 require('es6-promise');
-import { sendPostJSON, sendGetJSON } from './utils/http';
-import { constructJsonSignRequest, constructPublicJsonRequest } from './common/util';
-import { Ixo } from '../index';
 import { Signature } from './common/models';
+import { constructJsonSignRequest, constructPublicJsonRequest } from './common/util';
+import Config from './config';
+import { sendGetJSON, sendPostJSON } from './utils/http';
 class Project {
-	ixo: Ixo;
-	constructor(ixo: Ixo) {
-		this.ixo = ixo;
+	config: Config;
+	constructor(config: Config) {
+		this.config = config;
 	}
 
 	listProjects(): Promise<any> {
-		return sendGetJSON(this.ixo.config.getBlockSyncUrl() + '/api/project/listProjects');
+		return sendGetJSON(this.config.getBlockSyncUrl() + '/api/project/listProjects');
 	}
 
 	getProjectByProjectDid(projectDid: any): Promise<any> {
-		return sendGetJSON(this.ixo.config.getBlockSyncUrl() + '/api/project/getByProjectDid/' + projectDid);
+		return sendGetJSON(this.config.getBlockSyncUrl() + '/api/project/getByProjectDid/' + projectDid);
 	}
 
 	getProjectByUserDid(senderDid: any): Promise<any> {
 		const payload = { senderDid: senderDid };
-		return sendPostJSON(this.ixo.config.getBlockSyncUrl() + '/api/project/', constructPublicJsonRequest('listProjectBySenderDid', payload));
+		return sendPostJSON(this.config.getBlockSyncUrl() + '/api/project/', constructPublicJsonRequest('listProjectBySenderDid', payload));
 	}
 
 	createProject(data: any, signature: Signature, PDSUrl: string): Promise<any> {
-		return new Promise(resolve => {
-			const json = constructJsonSignRequest('createProject', 'create_project', signature, data);
-			resolve(sendPostJSON(PDSUrl + 'api/request', json));
-		});
+		const json = constructJsonSignRequest('createProject', 'create_project', signature, data);
+		return sendPostJSON(PDSUrl + 'api/request', json);
 	}
 
 	createPublic(source: any, PDSUrl: string) {
@@ -39,10 +37,9 @@ class Project {
 			data: data,
 			contentType: contentType
 		};
-		return new Promise(resolve => {
-			const json = constructPublicJsonRequest('createPublic', payload);
-			resolve(sendPostJSON(PDSUrl + 'api/public', json));
-		});
+
+		const json = constructPublicJsonRequest('createPublic', payload);
+		return sendPostJSON(PDSUrl + 'api/public', json);
 	}
 
 	fetchPublic(key: any, PDSUrl: string) {
@@ -51,17 +48,21 @@ class Project {
 		};
 		return new Promise((resolve, reject) => {
 			const json = constructPublicJsonRequest('fetchPublic', payload);
-			sendPostJSON(PDSUrl + 'api/public', json).then((response: any) => {
-				if (response.result.data) {
-					let obj = {
-						data: response.result.data,
-						contentType: response.result.contentType
-					};
-					resolve(obj);
-				} else {
-					reject(null);
-				}
-			});
+			sendPostJSON(PDSUrl + 'api/public', json)
+				.then((response: any) => {
+					if (response.result.data) {
+						let obj = {
+							data: response.result.data,
+							contentType: response.result.contentType
+						};
+						resolve(obj);
+					} else {
+						reject(null);
+					}
+				})
+				.catch((error: any) => {
+					reject(error);
+				});
 		});
 	}
 }

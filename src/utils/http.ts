@@ -11,8 +11,13 @@ export function sendPostJSON<T>(url: string, body: IDictionary<any>, extraHeader
 		headers: getJSONRequestHeaders(extraHeaders),
 		credentials: 'same-origin'
 	})
-		.then((res: any) => res.json())
-		.then(checkServerError);
+		.then((response: any) => {
+			return response.json();
+		})
+		.then(checkServerError)
+		.catch((error: any) => {
+			throw error;
+		});
 }
 
 /** Utility method for sending a POST request to the specified URL */
@@ -22,8 +27,13 @@ export function sendGetJSON<T>(url: string, extraHeaders?: IDictionary<string>):
 		headers: getJSONRequestHeaders(extraHeaders),
 		credentials: 'same-origin'
 	})
-		.then((res: any) => res.json())
-		.then(checkServerError);
+		.then((response: any) => {
+			return response.json();
+		})
+		.then(checkServerError)
+		.catch((error: any) => {
+			throw error;
+		});
 }
 
 /** Merge default JSON headers with any extra headers passed to it */
