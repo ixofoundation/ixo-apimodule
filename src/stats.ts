@@ -1,15 +1,14 @@
 require('es6-promise');
+import Config from './config';
 import { sendGetJSON } from './utils/http';
-import { constructPublicJsonRequest } from './common/util';
-import { Ixo } from '../index';
 class Stats {
-	ixo: Ixo;
-	constructor(ixo: Ixo) {
-		this.ixo = ixo;
+	config: Config;
+	constructor(config: Config) {
+		this.config = config;
 	}
 
 	getGlobalStats(): Promise<any> {
-		return sendGetJSON(this.ixo.config.getBlockSyncUrl() + '/api/stats/listStats');
+		return sendGetJSON(this.config.getBlockSyncUrl() + '/api/stats/listStats');
 	}
 }
 

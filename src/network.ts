@@ -1,13 +1,13 @@
-import { Ixo } from '../index';
+import Config from './config';
 class Network {
-	ixo: Ixo;
+	config: Config;
 
-	constructor(ixo: Ixo) {
-		this.ixo = ixo;
+	constructor(config: Config) {
+		this.config = config;
 	}
 
 	pingIxoBlockchain(): Promise<any> {
-		return fetch(this.ixo.config.getBlockchainUrl() + '/health')
+		return fetch(this.config.getBlockchainUrl() + '/health')
 			.then(function(response: any) {
 				return response.text();
 			})
@@ -17,7 +17,7 @@ class Network {
 	}
 
 	pingIxoExplorer(): Promise<any> {
-		return fetch(this.ixo.config.getBlockSyncUrl())
+		return fetch(this.config.getBlockSyncUrl())
 			.then(function(response: any) {
 				return response.text();
 			})
