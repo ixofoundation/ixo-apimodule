@@ -10,7 +10,8 @@ class User {
 
 	generateLedgerObjectJson = (didDoc: any, signature: string, created: any) => {
 		const signatureValue = [1, signature];
-		return JSON.stringify({ payload: [10, didDoc], signature: { signatureValue, created } });
+		//return JSON.stringify({ payload: [10, didDoc], signature: { signatureValue, created } });
+		return JSON.stringify({ payload: [{type: "did/AddDid", value:didDoc}], signatures: [{ signatureValue: signature, created: created }] });
 	}
 
 	registerUserDid(data: any, signature: Signature): Promise<any> {
