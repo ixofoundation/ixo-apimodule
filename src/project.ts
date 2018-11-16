@@ -27,6 +27,11 @@ class Project {
 		return sendPostJSON(PDSUrl + 'api/request', json);
 	}
 
+	updateProjectStatus(data: any, signature: Signature, PDSUrl: string): Promise<any> {
+		const json = constructJsonSignRequest('updateProjectStatus', 'project_status', signature, data);
+		return sendPostJSON(PDSUrl + 'api/request', json);
+	}
+
 	createPublic(source: any, PDSUrl: string) {
 		let srcParts = source.split(',');
 		let data = srcParts[1];
@@ -64,6 +69,18 @@ class Project {
 					reject(error);
 				});
 		});
+	}
+
+	generateWithdrawObjectJson = (data: any, signature: string, created: any) => {
+		return JSON.stringify({ payload: [{type: "project/WithdrawFunds", value: data}], signatures: [{ signatureValue: signature, created: created }] });
+	}
+
+	payOutToEthWallet(data: any, signature: Signature): Promise<any> {
+		const { signatureValue, created } = signature;
+		const withdrawObjectJson = this.generateWithdrawObjectJson(data, signatureValue, created);
+		const withdrawObjectUppercaseHex = new Buffer(withdrawObjectJson).toString('hex').toUpperCase();
+
+		return sendGetJSON(this.config.getBlockSyncUrl() + '/api/blockchain/0x' + withdrawObjectUppercaseHex);
 	}
 }
 

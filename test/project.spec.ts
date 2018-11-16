@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import 'mocha';
 import { Ixo } from '../index';
-import { projectData, PDSUrl, BLOCKCHAIN_URI_TENDERMINT, BLOCKCHAIN_URI } from '../src/common/dummyData';
+import { projectData, PDSUrl, BLOCKCHAIN_URI_TENDERMINT, BLOCKCHAIN_URI, signature } from '../src/common/dummyData';
 import CryptoUtil from './util/cryptoUtil';
 import { ISovrinDidModel, Signature } from '../src/common/models';
 
@@ -11,7 +11,7 @@ const error = chalk.bold.red;
 const ixo = new Ixo(BLOCKCHAIN_URI_TENDERMINT, BLOCKCHAIN_URI);
 let cryptoUtil = new CryptoUtil();
 let didDoc: ISovrinDidModel;
-
+const statusData = { projectDid: 'did:ixo:111', status: 'PENDING', txnId: '1111111' }
 describe('Project functions', () => {
 	before(function(done) {
 		didDoc = cryptoUtil.generateSovrinDID(cryptoUtil.generateMnemonic());
@@ -49,6 +49,18 @@ describe('Project functions', () => {
 	it('should return list of projects', () => {
 		ixo.project
 			.listProjects()
+			.then((response: any) => {
+				console.log('Project list: ' + success(JSON.stringify(response, null, '\t')));
+				expect(response).to.not.equal(null);
+			})
+			.catch((result: Error) => {
+				console.log(error(result));
+			});
+	});
+
+	it('should update project status', () => {
+		ixo.project
+			.updateProjectStatus(statusData, signature, PDSUrl)
 			.then((response: any) => {
 				console.log('Project list: ' + success(JSON.stringify(response, null, '\t')));
 				expect(response).to.not.equal(null);
