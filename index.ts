@@ -14,8 +14,8 @@ export class Ixo {
 	stats: Stats;
 	config: Config;
 
-	constructor(BLOCKCHAIN_IP: string, BLOCK_SYNC_URL: string) {
-		this.config = new Config(BLOCKCHAIN_IP, BLOCK_SYNC_URL);
+	constructor(BLOCK_SYNC_URL: string) {
+		this.config = new Config(BLOCK_SYNC_URL);
 		this.network = new Network(this.config);
 		this.project = new Project(this.config);
 		this.agent = new Agent();
