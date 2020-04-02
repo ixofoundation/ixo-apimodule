@@ -6,46 +6,46 @@ const EC = require('elliptic').ec;
 const hash = require('json-hash');
 
 class CryptoUtil {
-    generateMnemonic() {
-        return bip39.generateMnemonic();
+  generateMnemonic() {
+    return bip39.generateMnemonic();
+  }
+
+  generateSovrinDID(mnemonic: string) {
+    const seed = SHA256(mnemonic).toString();
+
+    // Convert SHA256 hash to Uint8Array
+    var didSeed = new Uint8Array(32);
+    for (var i = 0; i < 32; ++i) {
+      didSeed[i] = parseInt(seed.substring(i * 2, i * 2 + 2), 16)
     }
 
-    generateSovrinDID(mnemonic: string) {
-        const seed = SHA256(mnemonic).toString();
+    // Create the Sovrin DID
+    return sovrin.fromSeed(didSeed);
+  }
 
-        // Convert SHA256 hash to Uint8Array
-        var didSeed = new Uint8Array(32);
-        for (var i = 0; i < 32; ++i) {
-            didSeed[i] = parseInt(seed.substring(i * 2, i * 2 + 2), 16)
-        }
+  getDocumentSignature(privateKey: string, publicKey: string, inputFile: string) {
+    return base58.encode(sovrin.signMessage(new Buffer(JSON.stringify(inputFile)), privateKey, publicKey));
+  }
 
-        // Create the Sovrin DID
-        return sovrin.fromSeed(didSeed);
-    }
+  verifyDocumentSignature(signature: string, publicKey: string) {
+    return !(sovrin.verifySignedMessage(base58.decode(signature), publicKey) === false);
+  }
 
-    getDocumentSignature(privateKey: string, publicKey: string, inputFile: string) {
-        return base58.encode(sovrin.signMessage(new Buffer(JSON.stringify(inputFile)), privateKey, publicKey));
-    }
+  generateEcdsaKeyPair() {
+    var ec = new EC('secp256k1');
+    return ec.genKeyPair();
+  }
 
-    verifyDocumentSignature(signature: string, publicKey: string) {
-        return !(sovrin.verifySignedMessage(base58.decode(signature), publicKey) === false);
-    }
+  signPayloadUsingEcdsaKey(payload: any, ecdsaKey: any) {
+    var payloadHash = hash.digest(payload);
+    return ecdsaKey.sign(payloadHash);
+  }
 
-    generateEcdsaKeyPair() {
-        var ec = new EC('secp256k1');
-        return ec.genKeyPair();
-    }
-
-    signPayloadUsingEcdsaKey(payload: any, ecdsaKey: any) {
-        var payloadHash = hash.digest(payload);
-        return ecdsaKey.sign(payloadHash);
-    }
-
-    verifyEcdsaSignature(key: any, signature: any, payload: any): boolean {
-        var derSignature = signature.toDER();
-        var payloadHash = hash.digest(payload);
-        return key.verify(payloadHash, derSignature);
-    }
+  verifyEcdsaSignature(key: any, signature: any, payload: any): boolean {
+    var derSignature = signature.toDER();
+    var payloadHash = hash.digest(payload);
+    return key.verify(payloadHash, derSignature);
+  }
 
 }
 
