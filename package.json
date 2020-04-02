@@ -21,7 +21,7 @@
   "homepage": "https://github.com/ixofoundation/ixo-module#readme",
   "dependencies": {
     "@types/es6-promise": "^3.3.0",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "base58": "1.0.1",
     "bip39": "2.4.0",
     "cross-fetch": "^2.2.1",

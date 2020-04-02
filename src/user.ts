@@ -1,37 +1,38 @@
 require('es6-promise');
-import { Ixo } from '../index';
-import { Signature } from './common/models';
-import { sendPostJSON, sendGetJSON } from './utils/http';
-import { constructPublicJsonRequest } from './common/util';
+import {Ixo} from '../index';
+import {Signature} from './common/models';
+import {sendGetJSON} from './utils/http';
+
 class User {
-	ixo: Ixo;
-	constructor(ixo: Ixo) {
-		this.ixo = ixo;
-	}
+  ixo: Ixo;
 
-	generateLedgerObjectJson = (didDoc: any, signature: string, created: any) => {
-		const signatureValue = [1, signature];
-		return JSON.stringify({ payload: [10, didDoc], signature: { signatureValue, created } });
-	};
+  constructor(ixo: Ixo) {
+    this.ixo = ixo;
+  }
 
-	registerUserDid(data: any, signature: Signature): Promise<any> {
-		const { signatureValue, created } = signature;
-		const ledgerObjectJson = this.generateLedgerObjectJson(data, signatureValue, created);
-		const ledgerObjectUppercaseHex = new Buffer(ledgerObjectJson).toString('hex').toUpperCase();
+  generateLedgerObjectJson = (didDoc: any, signature: string, created: any) => {
+    const signatureValue = [1, signature];
+    return JSON.stringify({payload: [10, didDoc], signature: {signatureValue, created}});
+  };
 
-		return sendGetJSON(this.ixo.config.getBlockSyncUrl() + '/api/blockchain/0x' + ledgerObjectUppercaseHex);
-		// return fetch(this.ixo.config.getBlockchainUrl() + '/broadcast_tx_sync?tx=0x' + ledgerObjectUppercaseHex)
-		// 	.then(function(response: any) {
-		// 		return response;
-		// 	})
-		// 	.catch(error => {
-		// 		return error;
-		// 	});
-	}
+  registerUserDid(data: any, signature: Signature): Promise<any> {
+    const {signatureValue, created} = signature;
+    const ledgerObjectJson = this.generateLedgerObjectJson(data, signatureValue, created);
+    const ledgerObjectUppercaseHex = new Buffer(ledgerObjectJson).toString('hex').toUpperCase();
 
-	getDidDoc(did: string) {
-		return sendGetJSON(this.ixo.config.getBlockSyncUrl() + '/api/did/getByDid/' + did);
-	}
+    return sendGetJSON(this.ixo.config.getBlockSyncUrl() + '/api/blockchain/0x' + ledgerObjectUppercaseHex);
+    // return fetch(this.ixo.config.getBlockchainUrl() + '/broadcast_tx_sync?tx=0x' + ledgerObjectUppercaseHex)
+    // 	.then(function(response: any) {
+    // 		return response;
+    // 	})
+    // 	.catch(error => {
+    // 		return error;
+    // 	});
+  }
+
+  getDidDoc(did: string) {
+    return sendGetJSON(this.ixo.config.getBlockSyncUrl() + '/api/did/getByDid/' + did);
+  }
 }
 
 export default User;
