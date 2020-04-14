@@ -1,17 +1,51 @@
 import { expect } from 'chai';
 import 'mocha';
 import { Ixo } from '../index';
-import { signature, projectData, PDSUrl } from '../src/common/dummyData';
+import { projectData, PDSUrl, BLOCKCHAIN_URI_TENDERMINT, BLOCKCHAIN_URI, signature } from '../src/common/dummyData';
 import CryptoUtil from './util/cryptoUtil';
+import { ISovrinDidModel, Signature } from '../src/common/models';
 
 const chalk = require('chalk');
 const success = chalk.bold.green;
 const error = chalk.bold.red;
-const ixo = new Ixo('http://35.192.187.110:46657', 'https://ixo-block-sync.herokuapp.com');
+const ixo = new Ixo(BLOCKCHAIN_URI_TENDERMINT, BLOCKCHAIN_URI);
 let cryptoUtil = new CryptoUtil();
-
-const projectDid = 'did:ixo:AD62zEi9NAS9MVmfStpKrw';
+let didDoc: ISovrinDidModel;
+const statusData = { projectDid: 'did:ixo:111', status: 'PENDING', txnId: '1111111' }
 describe('Project functions', () => {
+	before(function(done) {
+		didDoc = cryptoUtil.generateSovrinDID(cryptoUtil.generateMnemonic());
+		let didPayload = {
+			didDoc: {
+				did: 'did:sov:' + didDoc.did,
+				pubKey: didDoc.verifyKey,
+				credentials: []
+			}
+		};
+		ixo.user.registerUserDid(didPayload, cryptoUtil.getSignatureForPayload(didDoc, didPayload)).then((response: any) => {
+			if (JSON.stringify(response).includes('hash')) {
+				setTimeout(function() {
+					ixo.user.getDidDoc(didPayload.didDoc.did).then((response: any) => {
+						console.log('RESPONSE DID: ' + JSON.stringify(response));
+						return done();
+					});
+				}, 1000);
+			}
+		});
+	});
+
+	it('should create new project', () => {
+		ixo.project
+			.createProject(JSON.parse(JSON.stringify(projectData)), cryptoUtil.getSignatureForPayload(didDoc, projectData), PDSUrl)
+			.then((response: any) => {
+				console.log('Project create response: ' + success(JSON.stringify(response, null, '\t')));
+				expect(response.result).to.not.equal(null);
+			})
+			.catch((result: Error) => {
+				console.log(error(result));
+			});
+	});
+
 	it('should return list of projects', () => {
 		ixo.project
 			.listProjects()
@@ -24,7 +58,19 @@ describe('Project functions', () => {
 			});
 	});
 
-	it('should return project with Did', () => {
+	it('should update project status', () => {
+		ixo.project
+			.updateProjectStatus(statusData, signature, PDSUrl)
+			.then((response: any) => {
+				console.log('Project list: ' + success(JSON.stringify(response, null, '\t')));
+				expect(response).to.not.equal(null);
+			})
+			.catch((result: Error) => {
+				console.log(error(result));
+			});
+	});
+
+	/* it('should return project with Did', () => {
 		ixo.project
 			.getProjectByProjectDid(projectDid)
 			.then((response: any) => {
@@ -34,17 +80,5 @@ describe('Project functions', () => {
 			.catch((result: Error) => {
 				console.log(error(result));
 			});
-	});
-
-	it('should create new project', () => {
-		ixo.project
-			.createProject(projectData, signature, PDSUrl)
-			.then((response: any) => {
-				console.log('Project create response: ' + success(JSON.stringify(response, null, '\t')));
-				expect(response.result).to.not.equal(null);
-			})
-			.catch((result: Error) => {
-				console.log(error(result));
-			});
-	});
+	});  */
 });

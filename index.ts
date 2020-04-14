@@ -14,13 +14,13 @@ export class Ixo {
 	stats: Stats;
 	config: Config;
 
-	constructor(BLOCKCHAIN_IP: string, BLOCK_SYNC_URL: string) {
-		this.config = new Config(BLOCKCHAIN_IP, BLOCK_SYNC_URL);
-		this.network = new Network(this);
-		this.project = new Project(this);
-		this.agent = new Agent(this);
-		this.claim = new Claim(this);
-		this.user = new User(this);
-		this.stats = new Stats(this);
+	constructor(BLOCK_SYNC_URL: string) {
+		this.config = new Config(BLOCK_SYNC_URL);
+		this.network = new Network(this.config);
+		this.project = new Project(this.config);
+		this.agent = new Agent();
+		this.claim = new Claim();
+		this.user = new User(this.config);
+		this.stats = new Stats(this.config);
 	}
 }
