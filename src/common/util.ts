@@ -60,6 +60,43 @@ export function constructJsonSignRequest(method: string, templateName: string, s
   return jsonRequest;
 }
 
+export function constructJsonPartialSignRequest(method: string, templateName: string, signature?: Signature, data?: string): any {
+  var jsonRequest = {
+    jsonrpc: '2.0',
+    method: method,
+    id: generateTxnId(),
+    params: {
+      payload: {
+        data: data ? data : {}
+      }
+    }
+  };
+  if (templateName) {
+    const jsonRequestTemp = {
+      ...jsonRequest,
+      params: {
+        ...jsonRequest.params,
+        payload: {...jsonRequest.params.payload, template: {name: templateName}}
+      }
+    };
+    jsonRequest = jsonRequestTemp;
+  }
+  if (signature) {
+    const jsonRequestTemp2 = {
+      ...jsonRequest,
+      params: {
+        ...jsonRequest.params,
+        signature: {
+          created: signature.created,
+          creator: signature.creator,
+        }
+      }
+    };
+    jsonRequest = jsonRequestTemp2;
+  }
+  return jsonRequest;
+}
+
 export function constructJsonRequest(method: string, data: any, templateName?: string): any {
   const jsonRequest = {
     jsonrpc: '2.0',

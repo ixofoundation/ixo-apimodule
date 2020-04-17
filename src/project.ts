@@ -1,6 +1,6 @@
 require('es6-promise');
 import {Signature} from './common/models';
-import {constructJsonSignRequest, constructPublicJsonRequest} from './common/util';
+import {constructJsonPartialSignRequest, constructJsonSignRequest, constructPublicJsonRequest} from './common/util';
 import Config from './config';
 import {sendGetJSON, sendPostJSON} from './utils/http';
 
@@ -31,6 +31,11 @@ class Project {
 
   updateProjectStatus(data: any, signature: Signature, PDSUrl: string): Promise<any> {
     const json = constructJsonSignRequest('updateProjectStatus', 'project_status', signature, data);
+    return sendPostJSON(PDSUrl + 'api/request', json);
+  }
+
+  fundProject(data: any, signature: Signature, PDSUrl: string): Promise<any> {
+    const json = constructJsonPartialSignRequest('fundProject', 'fund_project', signature, data);
     return sendPostJSON(PDSUrl + 'api/request', json);
   }
 
