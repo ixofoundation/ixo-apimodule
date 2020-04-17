@@ -1,30 +1,35 @@
 require('es6-promise');
-import { Signature } from './common/models';
+import {Signature} from './common/models';
 import Config from './config';
-import { sendGetJSON } from './utils/http';
+import {sendGetJSON} from './utils/http';
+
 class User {
-	config: Config;
-	constructor(config: Config) {
-		this.config = config;
-	}
+  config: Config;
 
-	generateLedgerObjectJson = (didDoc: any, signature: string, created: any) => {
-		const signatureValue = [1, signature];
-		//return JSON.stringify({ payload: [10, didDoc], signature: { signatureValue, created } });
-		return JSON.stringify({ payload: [{type: "did/AddDid", value:didDoc}], signatures: [{ signatureValue: signature, created: created }] });
-	}
+  constructor(config: Config) {
+    this.config = config;
+  }
 
-	registerUserDid(data: any, signature: Signature): Promise<any> {
-		const { signatureValue, created } = signature;
-		const ledgerObjectJson = this.generateLedgerObjectJson(data, signatureValue, created);
-		const ledgerObjectUppercaseHex = new Buffer(ledgerObjectJson).toString('hex').toUpperCase();
+  generateLedgerObjectJson = (didDoc: any, signature: string, created: any) => {
+    const signatureValue = [1, signature];
+    //return JSON.stringify({ payload: [10, didDoc], signature: { signatureValue, created } });
+    return JSON.stringify({
+      payload: [{type: "did/AddDid", value: didDoc}],
+      signatures: [{signatureValue: signature, created: created}]
+    });
+  }
 
-		return sendGetJSON(this.config.getBlockSyncUrl() + '/api/blockchain/0x' + ledgerObjectUppercaseHex);
-	}
+  registerUserDid(data: any, signature: Signature): Promise<any> {
+    const {signatureValue, created} = signature;
+    const ledgerObjectJson = this.generateLedgerObjectJson(data, signatureValue, created);
+    const ledgerObjectUppercaseHex = new Buffer(ledgerObjectJson).toString('hex').toUpperCase();
 
-	getDidDoc(did: string) {
-		return sendGetJSON(this.config.getBlockSyncUrl() + '/api/did/getByDid/' + did);
-	}
+    return sendGetJSON(this.config.getBlockSyncUrl() + '/api/blockchain/0x' + ledgerObjectUppercaseHex);
+  }
+
+  getDidDoc(did: string) {
+    return sendGetJSON(this.config.getBlockSyncUrl() + '/api/did/getByDid/' + did);
+  }
 }
 
 export default User;
