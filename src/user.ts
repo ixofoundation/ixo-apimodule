@@ -1,7 +1,8 @@
-require('es6-promise');
 import {Signature} from './common/models';
 import Config from './config';
 import {sendGetJSON} from './utils/http';
+
+require('es6-promise');
 
 class User {
   config: Config;

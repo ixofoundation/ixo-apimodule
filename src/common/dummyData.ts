@@ -8,7 +8,7 @@ export const projectData = {
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac rutrum elit, in tincidunt tortor. Sed rutrum massa at leo aliquet ultrices. Donec sed nulla sit amet leo feugiat rhoncus. Suspendisse et rhoncus urna. Nunc at sodales dui. Ut et malesuada leo. Vestibulum a ligula sed magna semper semper. Nam pharetra tempor augue ornare elementum. Sed bibendum imperdiet nibh. Maecenas vehicula nunc ullamcorper mollis hendrerit. Praesent rhoncus tincidunt nulla sed consectetur. Maecenas eget commodo tortor. Maecenas ac fringilla tortor.',
   impactAction: '10m x 10m sections cleared',
   projectLocation: 'ZA',
-  requiredClaims: 30,
+  requiredClaims: '30',
   autoApprove: ['SA'],
   sdgs: ['15.5'],
   templates: {
@@ -37,9 +37,7 @@ export const projectData = {
 };
 
 export const PDSUrl = 'http://localhost:5000/';
-export const BLOCKCHAIN_URI = 'http://localhost:8080';
-export const BLOCKCHAIN_URI_TENDERMINT = 'http://localhost:46657';
-export const BLOCKCHAIN_URI_REST = 'http://35.192.187.110:1317';
+export const BLOCKSYNC_URL = 'http://localhost:8080';
 
 export const signature = {
   type: 'ed25519-sha-256',

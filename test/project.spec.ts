@@ -1,17 +1,20 @@
 import {expect} from 'chai';
 import 'mocha';
 import {Ixo} from '../index';
-import {BLOCKCHAIN_URI, BLOCKCHAIN_URI_TENDERMINT, PDSUrl, projectData, signature} from '../src/common/dummyData';
+import {BLOCKSYNC_URL, PDSUrl, projectData, signature} from '../src/common/dummyData';
 import CryptoUtil from './util/cryptoUtil';
 import {ISovrinDidModel} from '../src/common/models';
 
 const chalk = require('chalk');
 const success = chalk.bold.green;
 const error = chalk.bold.red;
-const ixo = new Ixo(BLOCKCHAIN_URI_TENDERMINT, BLOCKCHAIN_URI);
+
+const ixo = new Ixo(BLOCKSYNC_URL);
+
 let cryptoUtil = new CryptoUtil();
 let didDoc: ISovrinDidModel;
 const statusData = {projectDid: 'did:ixo:111', status: 'PENDING', txnId: '1111111'}
+
 describe('Project functions', () => {
   before(function (done) {
     didDoc = cryptoUtil.generateSovrinDID(cryptoUtil.generateMnemonic());
@@ -19,7 +22,7 @@ describe('Project functions', () => {
       didDoc: {
         did: 'did:sov:' + didDoc.did,
         pubKey: didDoc.verifyKey,
-        credentials: []
+        credentials: [],
       }
     };
     ixo.user.registerUserDid(didPayload, cryptoUtil.getSignatureForPayload(didDoc, didPayload)).then((response: any) => {
