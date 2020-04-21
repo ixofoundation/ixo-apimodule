@@ -57,10 +57,10 @@ class CryptoUtil {
       created: new Date(),
       creator: `did:sov:${sovrinDid.did}`,
       publicKey: sovrinDid.encryptionPublicKey,
-      signatureValue: new Buffer(payloadSig)
+      signatureValue: Buffer.from(payloadSig)
         .slice(0, 64)
-        .toString('hex')
-        .toUpperCase()
+        .toString('base64')
+      // .toUpperCase()
     };
 
     return signature;

@@ -1,12 +1,10 @@
 import {expect} from 'chai';
 import 'mocha';
 import {ISovrinDidModel} from "../src/common/models";
-import {Ixo} from '../index';
 import CryptoUtil from './util/cryptoUtil';
 
 const chalk = require('chalk');
 const logger = chalk.bold.green;
-const ixo = new Ixo("http://35.192.187.110:46657", "https://ixo-block-sync.herokuapp.com");
 let mnemonic: string;
 let sdid: ISovrinDidModel;
 let signature: string;

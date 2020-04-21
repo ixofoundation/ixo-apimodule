@@ -1,12 +1,12 @@
 import {expect} from 'chai';
 import 'mocha';
 import {Ixo} from '../index';
-import {PDSUrl, signature} from '../src/common/dummyData';
+import {BLOCKSYNC_URL, PDSUrl, signature} from '../src/common/dummyData';
 
 const chalk = require('chalk');
 const success = chalk.bold.green;
 const error = chalk.bold.red;
-const ixo = new Ixo("http://35.192.187.110:46657", "https://ixo-block-sync.herokuapp.com");
+const ixo = new Ixo(BLOCKSYNC_URL);
 const agentData = {
   email: 'don@ixo.com',
   name: 'Don',
