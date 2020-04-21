@@ -33,7 +33,7 @@ const signature: Signature = {
   created: "2020-04-21T14:39:01.737Z",
   creator: "did:sov:Eu7Aru9sH4VB5GqEaohnJe",
   signatureValue: "KpZecbwgoNpuVAPgl3YQ+sEoHOcs9znM4Mx4VFSHrzAhhv7nAoeYCW0qwp9fThjVz1J8FJMN6Bknhfyn/Hq3DQ==",
-  publicKey: "8aMcV6btrGHHrURQHjBEV7tmvLj18BnQhj3pAy1YxBR4", // from above sovrinDid
+  publicKey: undefined, // encryptionPublicKey from above sovrinDid
 }
 
 describe('User functions', () => {
