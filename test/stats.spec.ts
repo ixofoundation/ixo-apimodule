@@ -1,11 +1,12 @@
 import {expect} from 'chai';
 import 'mocha';
 import {Ixo} from '../index';
+import {BLOCKSYNC_URL} from "../src/common/dummyData";
 
 const chalk = require('chalk');
 const success = chalk.bold.green;
 const error = chalk.bold.red;
-const ixo = new Ixo('http://35.192.187.110:46657', 'https://ixo-block-sync.herokuapp.com');
+const ixo = new Ixo(BLOCKSYNC_URL);
 
 describe('Stats functions', () => {
   it('should return global stats', () => {

@@ -18,11 +18,12 @@ const statusData = {projectDid: 'did:ixo:111', status: 'PENDING', txnId: '111111
 describe('Project functions', () => {
   before(function (done) {
     didDoc = cryptoUtil.generateSovrinDID(cryptoUtil.generateMnemonic());
+    const credentials: any[] = [];  // just to have explicit any[]
     let didPayload = {
       didDoc: {
         did: 'did:sov:' + didDoc.did,
         pubKey: didDoc.verifyKey,
-        credentials: [],
+        credentials: credentials,
       }
     };
     ixo.user.registerUserDid(didPayload, cryptoUtil.getSignatureForPayload(didDoc, didPayload)).then((response: any) => {

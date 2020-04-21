@@ -1,12 +1,13 @@
 import {expect} from 'chai';
 import 'mocha';
 import {Ixo} from '../index';
+import {BLOCKSYNC_URL} from "../src/common/dummyData";
 
 const chalk = require('chalk');
 const success = chalk.bold.green;
 const error = chalk.bold.red;
 
-const ixo = new Ixo("http://localhost:46657", "http://localhost:8080");
+const ixo = new Ixo(BLOCKSYNC_URL);
 
 describe('Network functions', () => {
 
@@ -17,17 +18,5 @@ describe('Network functions', () => {
     }).catch((result: Error) => {
       console.log(error(result))
     });
-  });
-
-  it('should return blockchain status', () => {
-    ixo.network
-      .pingIxoBlockchain()
-      .then((response: string) => {
-        console.log('Ping Results: ' + success(JSON.stringify(response, null, '\t')));
-        expect(response).equals('{\n  "jsonrpc": "2.0",\n  "id": "",\n  "result": {}\n}');
-      })
-      .catch((result: Error) => {
-        console.log(error(result));
-      });
   });
 });
