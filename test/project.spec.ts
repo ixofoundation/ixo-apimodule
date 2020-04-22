@@ -17,6 +17,7 @@ const statusData = {projectDid: 'did:ixo:111', status: 'PENDING', txnId: '111111
 
 describe('Project functions', () => {
   before(function (done) {
+    this.timeout(10000)
     didDoc = cryptoUtil.generateSovrinDID(cryptoUtil.generateMnemonic());
     const credentials: any[] = [];  // just to have explicit any[]
     let didPayload = {
@@ -33,7 +34,7 @@ describe('Project functions', () => {
             console.log('RESPONSE DID: ' + JSON.stringify(response));
             return done();
           });
-        }, 1000);
+        }, 6000);
       }
     });
   });
