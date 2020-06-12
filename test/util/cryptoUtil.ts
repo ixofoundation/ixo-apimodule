@@ -60,7 +60,6 @@ class CryptoUtil {
       signatureValue: Buffer.from(payloadSig)
         .slice(0, 64)
         .toString('base64')
-      // .toUpperCase()
     };
 
     return signature;
