@@ -19,7 +19,7 @@ describe('Project functions', () => {
   before(function (done) {
     this.timeout(10000)
     didDoc = cryptoUtil.generateSovrinDID(cryptoUtil.generateMnemonic());
-    const credentials: any[] = [];  // just to have explicit any[]
+    const credentials: any[] = null;  // just to have explicit any[]
     let didPayload = {
       didDoc: {
         did: 'did:sov:' + didDoc.did,

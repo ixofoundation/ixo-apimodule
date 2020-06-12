@@ -10,7 +10,7 @@ const error = chalk.bold.red;
 
 const ixo = new Ixo(BLOCKSYNC_URL);
 
-const credentials: any[] = [];
+const credentials: any[] = null;  // just to have explicit any[]
 const didPayload = {
   didDoc: {
     did: "did:sov:Eu7Aru9sH4VB5GqEaohnJe",
