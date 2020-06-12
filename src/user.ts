@@ -14,7 +14,9 @@ class User {
   generateLedgerObjectJson = (didDoc: any, signature: string, created: any) => {
     return JSON.stringify({
       payload: [{type: "did/AddDid", value: didDoc}],
-      signatures: [{signatureValue: signature, created: created}]
+      // fee: {amount: [{denom: "ixo", amount: "5000"}], gas: "200000"},
+      signatures: [{signatureValue: signature, created: created}],
+      // memo: "this is a memo",
     });
   }
 
