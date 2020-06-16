@@ -38,6 +38,8 @@ export const projectData = {
 
 export const PDSUrl = 'http://localhost:5000/';
 export const BLOCKSYNC_URL = 'http://localhost:8080';
+export const CHAIN_URL = 'http://localhost:26657';
+export const REST_URL = 'http://localhost:1317';
 
 export const signature = {
   type: 'ed25519-sha-256',

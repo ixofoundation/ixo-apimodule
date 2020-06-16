@@ -1,6 +1,6 @@
 import {Signature} from './common/models';
 import Config from './config';
-import {sendGetJSON} from './utils/http';
+import {sendGetJSON, sendPostJSON} from './utils/http';
 
 require('es6-promise');
 
@@ -20,12 +20,56 @@ class User {
     });
   }
 
+  generateLedgerObjectJsonWithFee = (didDoc: any, signature: string, created: any, fee: object) => {
+    return JSON.stringify({
+      payload: [{type: "did/AddDid", value: didDoc}],
+      fee,
+      signatures: [{signatureValue: signature, created: created}]
+      // memo: "this is a memo",
+    });
+  }
+
   registerUserDid(data: any, signature: Signature): Promise<any> {
     const {signatureValue, created} = signature;
     const ledgerObjectJson = this.generateLedgerObjectJson(data, signatureValue, created);
     const ledgerObjectUppercaseHex = new Buffer(ledgerObjectJson).toString('hex').toUpperCase();
 
     return sendGetJSON(this.config.getBlockSyncUrl() + '/api/blockchain/0x' + ledgerObjectUppercaseHex);
+  }
+
+  registerUserDidWithFee(data: any, signature: Signature, fee: object): Promise<any> {
+    const {signatureValue, created} = signature;
+    const ledgerObjectJson = this.generateLedgerObjectJsonWithFee(data, signatureValue, created, fee);
+    const ledgerObjectUppercaseHex = new Buffer(ledgerObjectJson).toString('hex').toUpperCase();
+
+    return sendGetJSON(this.config.getBlockSyncUrl() + '/api/blockchain/0x' + ledgerObjectUppercaseHex);
+  }
+
+  registerUserDidRpcWithFee(data: any, signature: Signature, CHAINUrl: string, fee: object): Promise<any> {
+    const {signatureValue, created} = signature;
+    const ledgerObjectJson = this.generateLedgerObjectJsonWithFee(data, signatureValue, created, fee);
+    const ledgerObjectUppercaseHex = new Buffer(ledgerObjectJson).toString('hex').toUpperCase();
+
+    return sendGetJSON(CHAINUrl + '/broadcast_tx_commit?tx=0x' + ledgerObjectUppercaseHex);
+  }
+
+  registerUserDidRestWithFee(data: any, signature: Signature, RESTUrl: string, fee: object): Promise<any> {
+    const {signatureValue, created} = signature;
+    const ledgerObjectJson = this.generateLedgerObjectJsonWithFee(data, signatureValue, created, fee);
+    const ledgerObjectUppercaseHex = new Buffer(ledgerObjectJson).toString('hex').toUpperCase();
+    const broadcastFormat = {
+      "mode": "block",
+      "tx": ledgerObjectUppercaseHex
+    }
+
+    return sendPostJSON(RESTUrl + '/txs', broadcastFormat);
+  }
+
+  getSignData(data: any, RESTUrl: string) {
+    const msgJson = JSON.stringify({type: "did/AddDid", value: data})
+    const msgUppercaseHex = new Buffer(msgJson).toString('hex').toUpperCase();
+
+    return sendGetJSON(RESTUrl + '/sign_data/0x' + msgUppercaseHex)
   }
 
   getDidDoc(did: string) {
