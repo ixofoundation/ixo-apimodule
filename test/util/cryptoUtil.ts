@@ -49,20 +49,26 @@ class CryptoUtil {
     return key.verify(payloadHash, derSignature);
   }
 
-  getSignatureForPayload(sovrinDid: ISovrinDidModel, payload: object) {
-    const payloadSig = sovrin.signMessage(JSON.stringify(payload), sovrinDid.secret.signKey, sovrinDid.verifyKey);
-
-    let signature = {
+  getSignatureFromSignatureValue(sovrinDid: ISovrinDidModel, signatureValue: any) {
+    return {
       type: 'ed25519-sha-256',
       created: new Date(),
       creator: `did:sov:${sovrinDid.did}`,
       publicKey: sovrinDid.encryptionPublicKey,
-      signatureValue: Buffer.from(payloadSig)
+      signatureValue: Buffer.from(signatureValue)
         .slice(0, 64)
         .toString('base64')
     };
+  }
 
-    return signature;
+  getSignatureForPayload(sovrinDid: ISovrinDidModel, payload: object) {
+    const payloadSig = sovrin.signMessage(JSON.stringify(payload), sovrinDid.secret.signKey, sovrinDid.verifyKey);
+    return this.getSignatureFromSignatureValue(sovrinDid, payloadSig)
+  }
+
+  getSignatureForSignBytes(sovrinDid: ISovrinDidModel, signBytes: string) {
+    const signBytesSig = sovrin.signMessage(signBytes, sovrinDid.secret.signKey, sovrinDid.verifyKey);
+    return this.getSignatureFromSignatureValue(sovrinDid, signBytesSig)
   }
 }
 
