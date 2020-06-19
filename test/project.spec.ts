@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import 'mocha';
 import {Ixo} from '../index';
-import {BLOCKSYNC_URL, PDSUrl, projectData, REST_URL, signature} from '../src/common/dummyData';
+import {BLOCKSYNC_URL, PDSUrl, projectData, REST_URL} from '../src/common/dummyData';
 import CryptoUtil from './util/cryptoUtil';
 import Utils from '../src/utils/utils';
 import {ISovrinDidModel} from '../src/common/models';
@@ -15,7 +15,6 @@ const ixo = new Ixo(BLOCKSYNC_URL);
 
 let cryptoUtil = new CryptoUtil();
 let utils = new Utils();
-const statusData = {projectDid: 'did:ixo:111', status: 'PENDING', txnId: '1111111'}
 
 const sovrinDid: ISovrinDidModel = {
   did: "did:ixo:U4tSpzzv91HHqWW1YmFkHJ",
@@ -35,6 +34,12 @@ const didPayload = {
     pubKey: sovrinDid.verifyKey,
     credentials: credentials
   }
+}
+
+const statusData = {
+  projectDid: 'did:ixo:111',  // Change to actual project !!!
+  status: 'PENDING',
+  txnId: '1111111'
 }
 
 describe('Project functions', () => {
@@ -65,7 +70,7 @@ describe('Project functions', () => {
 
   it('should create new project', () => {
     ixo.project
-      .createProject(JSON.parse(JSON.stringify(projectData)), cryptoUtil.getSignatureForPayload(sovrinDid, projectData), PDSUrl)
+      .createProject(projectData, cryptoUtil.getSignatureForPayload(sovrinDid, projectData), PDSUrl)
       .then((response: any) => {
         console.log('Project create response: ' + success(JSON.stringify(response, null, '\t')));
       })
@@ -88,7 +93,7 @@ describe('Project functions', () => {
 
   it('should update project status', () => {
     ixo.project
-      .updateProjectStatus(statusData, signature, PDSUrl)
+      .updateProjectStatus(statusData, cryptoUtil.getSignatureForPayload(sovrinDid, statusData), PDSUrl)
       .then((response: any) => {
         console.log('Project list: ' + success(JSON.stringify(response, null, '\t')));
         expect(response).to.not.equal(null);
