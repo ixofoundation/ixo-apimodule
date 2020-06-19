@@ -1,7 +1,7 @@
 import {Promise} from 'es6-promise';
 import {ICredentialProviderResult} from '../common/models';
 
-var loadjs = require('loadjs');
+const loadjs = require('loadjs');
 declare const Web3: any;
 
 export function getWeb3Instance(provider: any): Promise<ICredentialProviderResult> {
@@ -9,14 +9,15 @@ export function getWeb3Instance(provider: any): Promise<ICredentialProviderResul
     loadjs('https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.min.js', 'web3');
     loadjs.ready('web3', {
       success: function () {
+        let credentialProvider: ICredentialProviderResult;
         if (typeof provider !== 'undefined') {
-          var credentialProvider: ICredentialProviderResult = {
+          credentialProvider = {
             provider: provider,
             credentialProviderInstance: new Web3(provider)
           };
           resolve(credentialProvider);
         } else {
-          var credentialProvider: ICredentialProviderResult = {
+          credentialProvider = {
             provider: null,
             credentialProviderInstance: new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:9545'))
           };
@@ -28,8 +29,6 @@ export function getWeb3Instance(provider: any): Promise<ICredentialProviderResul
       }
     });
   });
-
-
 }
 
 
