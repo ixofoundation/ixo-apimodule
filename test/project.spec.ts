@@ -1,9 +1,11 @@
 import {expect} from 'chai';
 import 'mocha';
 import {Ixo} from '../index';
-import {BLOCKSYNC_URL, PDSUrl, projectData, signature} from '../src/common/dummyData';
+import {BLOCKSYNC_URL, PDSUrl, projectData, REST_URL, signature} from '../src/common/dummyData';
 import CryptoUtil from './util/cryptoUtil';
+import Utils from '../src/utils/utils';
 import {ISovrinDidModel} from '../src/common/models';
+import {fail} from "assert";
 
 const chalk = require('chalk');
 const success = chalk.bold.green;
@@ -12,39 +14,60 @@ const error = chalk.bold.red;
 const ixo = new Ixo(BLOCKSYNC_URL);
 
 let cryptoUtil = new CryptoUtil();
-let didDoc: ISovrinDidModel;
+let utils = new Utils();
 const statusData = {projectDid: 'did:ixo:111', status: 'PENDING', txnId: '1111111'}
+
+const sovrinDid: ISovrinDidModel = {
+  did: "did:ixo:U4tSpzzv91HHqWW1YmFkHJ",
+  verifyKey: "FkeDue5it82taeheMprdaPrctfK3DeVV9NnEPYDgwwRG",
+  encryptionPublicKey: "DtdGbZB2nSQvwhs6QoN5Cd8JTxWgfVRAGVKfxj8LA15i",
+  secret: {
+    seed: "6ef0002659d260a0bbad194d1aa28650ccea6c6862f994dfdbd48648e1a05c5e",
+    signKey: "8U474VrG2QiUFKfeNnS84CAsqHdmVRjEx4vQje122ycR",
+    encryptionPrivateKey: "8U474VrG2QiUFKfeNnS84CAsqHdmVRjEx4vQje122ycR"
+  }
+}
+
+const credentials: any[] = null;  // just to have explicit any[]
+const didPayload = {
+  didDoc: {
+    did: sovrinDid.did,
+    pubKey: sovrinDid.verifyKey,
+    credentials: credentials
+  }
+}
 
 describe('Project functions', () => {
   before(function (done) {
     this.timeout(10000)
-    didDoc = cryptoUtil.generateSovrinDID(cryptoUtil.generateMnemonic());
-    const credentials: any[] = null;  // just to have explicit any[]
-    let didPayload = {
-      didDoc: {
-        did: 'did:sov:' + didDoc.did,
-        pubKey: didDoc.verifyKey,
-        credentials: credentials,
+    utils.getSignData(didPayload, "did/AddDid", REST_URL).then((response: any) => {
+      if (response.sign_bytes && response.fee) {
+        const signature = cryptoUtil.getSignatureForSignBytes(sovrinDid, response.sign_bytes)
+        ixo.user.registerUserDidWithFee(didPayload, signature, response.fee)
+          .then((response: any) => {
+            if (JSON.stringify(response).includes('hash')) {
+              setTimeout(function () {
+                ixo.user.getDidDoc(didPayload.didDoc.did).then((response: any) => {
+                  console.log('RESPONSE DID: ' + JSON.stringify(response));
+                  return done()
+                });
+              }, 6000);
+            }
+          })
+          .catch((err) => {
+            return fail(err)
+          })
+      } else {
+        return fail(response)
       }
-    };
-    ixo.user.registerUserDid(didPayload, cryptoUtil.getSignatureForPayload(didDoc, didPayload)).then((response: any) => {
-      if (JSON.stringify(response).includes('hash')) {
-        setTimeout(function () {
-          ixo.user.getDidDoc(didPayload.didDoc.did).then((response: any) => {
-            console.log('RESPONSE DID: ' + JSON.stringify(response));
-            return done();
-          });
-        }, 6000);
-      }
-    });
+    })
   });
 
   it('should create new project', () => {
     ixo.project
-      .createProject(JSON.parse(JSON.stringify(projectData)), cryptoUtil.getSignatureForPayload(didDoc, projectData), PDSUrl)
+      .createProject(JSON.parse(JSON.stringify(projectData)), cryptoUtil.getSignatureForPayload(sovrinDid, projectData), PDSUrl)
       .then((response: any) => {
         console.log('Project create response: ' + success(JSON.stringify(response, null, '\t')));
-        expect(response.result).to.not.equal(null);
       })
       .catch((result: Error) => {
         console.log(error(result));
