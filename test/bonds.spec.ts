@@ -4,6 +4,7 @@ import {Ixo} from '../index';
 import {BLOCKSYNC_URL, REST_URL} from '../src/common/dummyData';
 import CryptoUtil from "./util/cryptoUtil";
 import {fail} from "assert";
+import Utils from "./util/utils";
 
 const chalk = require('chalk');
 const success = chalk.bold.green;
@@ -11,6 +12,7 @@ const error = chalk.bold.red;
 
 const ixo = new Ixo(BLOCKSYNC_URL);
 let cryptoUtil = new CryptoUtil()
+let utils = new Utils()
 
 const bondSovrinDid = {
   did: "did:ixo:U7GK8p8rVhJMKhBVRCJJ8c",
@@ -115,7 +117,7 @@ describe('Bonds functions', () => {
         credentials: credentials,
       }
     };
-    ixo.user.getSignData(didPayload, REST_URL).then((response: any) => {
+    utils.getSignData(didPayload, "did/AddDid", REST_URL).then((response: any) => {
       if (response.sign_bytes && response.fee) {
         const signature = cryptoUtil.getSignatureForSignBytes(userSovrinDid, response.sign_bytes)
         ixo.user.registerUserDidWithFee(didPayload, signature, response.fee)
