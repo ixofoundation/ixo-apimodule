@@ -65,13 +65,6 @@ class User {
     return sendPostJSON(RESTUrl + '/txs', broadcastFormat);
   }
 
-  getSignData(data: any, RESTUrl: string) {
-    const msgJson = JSON.stringify({type: "did/AddDid", value: data})
-    const msgUppercaseHex = new Buffer(msgJson).toString('hex').toUpperCase();
-
-    return sendGetJSON(RESTUrl + '/sign_data/0x' + msgUppercaseHex)
-  }
-
   getDidDoc(did: string) {
     return sendGetJSON(this.config.getBlockSyncUrl() + '/api/did/getByDid/' + did);
   }

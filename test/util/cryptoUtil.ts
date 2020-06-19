@@ -53,7 +53,7 @@ class CryptoUtil {
     return {
       type: 'ed25519-sha-256',
       created: new Date(),
-      creator: `did:sov:${sovrinDid.did}`,
+      creator: sovrinDid.did,
       publicKey: sovrinDid.encryptionPublicKey,
       signatureValue: Buffer.from(signatureValue)
         .slice(0, 64)

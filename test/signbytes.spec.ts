@@ -3,6 +3,7 @@ import {Ixo} from '../index';
 import {BLOCKSYNC_URL, CHAIN_URL, REST_URL} from '../src/common/dummyData';
 import CryptoUtil from "./util/cryptoUtil";
 import {fail, ok} from "assert";
+import Utils from "../src/utils/utils";
 
 const chalk = require('chalk');
 const success = chalk.bold.green;
@@ -10,6 +11,7 @@ const error = chalk.bold.red;
 
 const ixo = new Ixo(BLOCKSYNC_URL);
 let cryptoUtil = new CryptoUtil()
+let utils = new Utils()
 
 const sovrinDid = {
   did: "did:ixo:U4tSpzzv91HHqWW1YmFkHJ",
@@ -33,7 +35,7 @@ const didPayload = {
 
 describe('User functions', () => {
   it('should register user did with fee using blocksync', () => {
-    ixo.user.getSignData(didPayload, REST_URL).then((response: any) => {
+    utils.getSignData(didPayload, "did/AddDid", REST_URL).then((response: any) => {
       if (response.sign_bytes && response.fee) {
         const signature = cryptoUtil.getSignatureForSignBytes(sovrinDid, response.sign_bytes)
         ixo.user.registerUserDidWithFee(didPayload, signature, response.fee)
@@ -57,7 +59,7 @@ describe('User functions', () => {
   });
 
   it('should register user did with fee using REST API', () => {
-    ixo.user.getSignData(didPayload, REST_URL).then((response: any) => {
+    utils.getSignData(didPayload, "did/AddDid", REST_URL).then((response: any) => {
       if (response.sign_bytes && response.fee) {
         const signature = cryptoUtil.getSignatureForSignBytes(sovrinDid, response.sign_bytes)
         ixo.user.registerUserDidRestWithFee(didPayload, signature, REST_URL, response.fee)
@@ -81,7 +83,7 @@ describe('User functions', () => {
   });
 
   it('should register user did with fee using RPC', () => {
-    ixo.user.getSignData(didPayload, REST_URL).then((response: any) => {
+    utils.getSignData(didPayload, "did/AddDid", REST_URL).then((response: any) => {
       if (response.sign_bytes && response.fee) {
         const signature = cryptoUtil.getSignatureForSignBytes(sovrinDid, response.sign_bytes)
         ixo.user.registerUserDidRpcWithFee(didPayload, signature, CHAIN_URL, response.fee)
