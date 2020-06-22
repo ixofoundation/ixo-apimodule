@@ -10,7 +10,7 @@ const error = chalk.bold.red;
 
 const ixo = new Ixo(BLOCKSYNC_URL);
 
-const credentials: any[] = null;  // just to have explicit any[]
+const credentials: any[] = [];  // just to have explicit any[]
 const didPayload = {
   didDoc: {
     did: "did:sov:Eu7Aru9sH4VB5GqEaohnJe",
@@ -36,10 +36,20 @@ const signature: Signature = {
   publicKey: undefined, // encryptionPublicKey from above sovrinDid
 }
 
+const fee = {
+  "amount": [
+    {
+      "denom": "uixo",
+      "amount": "5000"
+    }
+  ],
+  "gas": "200000"
+}
+
 describe('User functions', () => {
   it('should register user did', () => {
     ixo.user
-      .registerUserDid(didPayload, signature)
+      .registerUserDid(didPayload, signature, fee)
       .then((response: string) => {
         console.log('User DID registration response: ' + success(JSON.stringify(response, null, '\t')));
         expect(response).to.not.equal(null);

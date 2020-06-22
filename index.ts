@@ -5,6 +5,7 @@ import Claim from './src/claim';
 import User from './src/user';
 import Stats from './src/stats';
 import Config from './src/config';
+import Utils from './src/utils/utils'
 
 export class Ixo {
   network: Network;
@@ -14,6 +15,7 @@ export class Ixo {
   user: User;
   stats: Stats;
   config: Config;
+  utils: Utils;
 
   constructor(BLOCK_SYNC_URL: string) {
     this.config = new Config(BLOCK_SYNC_URL);
@@ -23,5 +25,6 @@ export class Ixo {
     this.claim = new Claim();
     this.user = new User(this.config);
     this.stats = new Stats(this.config);
+    this.utils = new Utils(this.config);
   }
 }
