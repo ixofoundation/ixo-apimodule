@@ -1,6 +1,6 @@
 {
-  "name": "ixo-module",
-  "version": "2.1.5",
+  "name": "@ixo/ixo-apimodule",
+  "version": "1.0.0",
   "description": "This is a node module that defines the functions that can be performed by the ixo protocol.",
   "main": "dist/index.js",
   "scripts": {
@@ -21,7 +21,7 @@
   "homepage": "https://github.com/ixofoundation/ixo-module#readme",
   "dependencies": {
     "@types/es6-promise": "^3.3.0",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "base58": "1.0.1",
     "bip39": "2.4.0",
     "cross-fetch": "^2.2.1",
@@ -64,5 +64,8 @@
     "ts-node": "^4.1.0",
     "tsify": "^3.0.4",
     "typescript": "^2.6.2"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -3,7 +3,7 @@ import 'cross-fetch/polyfill';
 import {IDictionary} from '../common/models';
 import * as Immutable from 'immutable';
 
-/** Utility method for sending a POST request to the specified URL */
+/** Utility method for sending a GET request to the specified URL */
 export function sendPostJSON<T>(url: string, body: IDictionary<any>, extraHeaders?: IDictionary<string>): Promise<T> {
   return fetch(url, {
     method: 'POST',

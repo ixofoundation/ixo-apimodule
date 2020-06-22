@@ -65,6 +65,7 @@ typings/
 
 # User-specific stuff:
 .idea/**
+.vscode/**
 
 # Dist folder
 dist/**

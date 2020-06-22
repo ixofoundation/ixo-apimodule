@@ -15,23 +15,17 @@ This is a node module that defines the functions that can be performed by the ix
 ![](https://david-dm.org/ixofoundation/ixo-module/status.svg)
 ![](https://david-dm.org/ixofoundation/ixo-module/dev-status.svg)
 
-## Features
-
 
 ## Install
-
 `npm install --save ixo-module`
 
-
 ## Scripts
-
  - **npm run build** : `tsc`
  - **npm run test** : `mocha --timeout 5000 -r ts-node/register 'test/**/*.spec.ts'`
  - **npm run readme** : `node ./node_modules/.bin/node-readme`
  - **npm run prep-publish** : `rm -Rf node_modules/ package-lock.json dist/ && npm install && gulp`
 
 ## Dependencies
-
 Package | Version | Dev
 --- |:---:|:---:
 [@types/es6-promise](https://www.npmjs.com/package/@types/es6-promise) | ^3.3.0 | ✖
@@ -78,13 +72,10 @@ Package | Version | Dev
 
 
 ## Contributing
-
 Contributions welcome; Please submit all pull requests the against master branch. If your pull request contains JavaScript patches or features, you should include relevant unit tests. Please check the [Contributing Guidelines](contributng.md) for more details. Thanks!
 
 ## Author
-
 nicolaas.vercuiel73@gmail.com
 
 ## License
-
  - **MIT** : http://opensource.org/licenses/MIT
