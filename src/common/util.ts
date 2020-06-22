@@ -5,7 +5,7 @@ export function generateTxnId(): number {
 }
 
 export function generateJsonPayload(data: string, did: string, templateName?: string): string {
-  var response = {
+  const response = {
     did: did,
     data: data
   };
@@ -22,7 +22,7 @@ export function generateJsonPayload(data: string, did: string, templateName?: st
 }
 
 export function constructJsonSignRequest(method: string, templateName: string, signature?: Signature, data?: string): any {
-  var jsonRequest = {
+  let jsonRequest = {
     jsonrpc: '2.0',
     method: method,
     id: generateTxnId(),
@@ -61,7 +61,7 @@ export function constructJsonSignRequest(method: string, templateName: string, s
 }
 
 export function constructJsonPartialSignRequest(method: string, templateName: string, signature?: Signature, data?: string): any {
-  var jsonRequest = {
+  let jsonRequest = {
     jsonrpc: '2.0',
     method: method,
     id: generateTxnId(),
@@ -82,7 +82,7 @@ export function constructJsonPartialSignRequest(method: string, templateName: st
     jsonRequest = jsonRequestTemp;
   }
   if (signature) {
-    const jsonRequestTemp2 = {
+    const jsonRequestTemp = {
       ...jsonRequest,
       params: {
         ...jsonRequest.params,
@@ -92,7 +92,7 @@ export function constructJsonPartialSignRequest(method: string, templateName: st
         }
       }
     };
-    jsonRequest = jsonRequestTemp2;
+    jsonRequest = jsonRequestTemp;
   }
   return jsonRequest;
 }
