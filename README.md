@@ -1,14 +1,13 @@
 # ixo-apimodule
 
-![npm](https://img.shields.io/npm/v/ixo-apimodule.svg)
-![license](https://img.shields.io/npm/l/ixo-apimodule.svg)
+![npm](https://img.shields.io/npm/v/@ixo/ixo-apimodule.svg)
+![license](https://img.shields.io/npm/l/@ixo/ixo-apimodule.svg)
 ![github-issues](https://img.shields.io/github/issues/ixofoundation/ixo-apimodule.svg)
 
 This is a node module that defines the functions that can be performed by the ixo protocol.
 
-![nodei.co](https://nodei.co/npm/ixo-apimodule.png?downloads=true&downloadRank=true&stars=true)
+![nodei.co](https://nodei.co/npm/@ixo/ixo-apimodule.png?downloads=true&downloadRank=true&stars=true)
 
-![travis-status](https://img.shields.io/travis/ixofoundation/ixo-apimodule.svg)
 ![stars](https://img.shields.io/github/stars/ixofoundation/ixo-apimodule.svg)
 ![forks](https://img.shields.io/github/forks/ixofoundation/ixo-apimodule.svg)
 
