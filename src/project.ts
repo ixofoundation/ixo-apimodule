@@ -40,12 +40,11 @@ class Project {
   }
 
   createPublic(source: any, PDSUrl: string) {
-    let srcParts = source.split(',');
-    let data = srcParts[1];
-    let contentType = srcParts[0].split(';');
-    contentType = contentType[0].split(':')[1];
+    const srcParts = source.split(',');
+    const data = srcParts[1];
+    const contentType = srcParts[0].split(';')[0].split(':')[1];
 
-    let payload = {
+    const payload = {
       data: data,
       contentType: contentType
     };
@@ -55,7 +54,7 @@ class Project {
   }
 
   fetchPublic(key: any, PDSUrl: string) {
-    let payload = {
+    const payload = {
       key: key
     };
     return new Promise((resolve, reject) => {
@@ -63,7 +62,7 @@ class Project {
       sendPostJSON(PDSUrl + 'api/public', json)
         .then((response: any) => {
           if (response.result.data) {
-            let obj = {
+            const obj = {
               data: response.result.data,
               contentType: response.result.contentType
             };
