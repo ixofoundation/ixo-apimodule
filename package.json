@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ixofoundation/ixo-module.git"
+    "url": "git+https://github.com/ixofoundation/ixo-apimodule.git"
   },
   "author": "nicolaas.vercuiel73@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ixofoundation/ixo-module/issues"
+    "url": "https://github.com/ixofoundation/ixo-apimodule/issues"
   },
-  "homepage": "https://github.com/ixofoundation/ixo-module#readme",
+  "homepage": "https://github.com/ixofoundation/ixo-apimodule#readme",
   "dependencies": {
     "@types/es6-promise": "^3.3.0",
     "axios": "^0.18.1",
@@ -47,17 +47,17 @@
     "chai": "^4.1.2",
     "chalk": "^2.3.0",
     "crypto-js": "^3.1.9-1",
-    "dts-generator": "^2.1.0",
+    "dts-generator": "^3.0.0",
     "ethereumjs-util": "^5.1.4",
     "ethereumjs-wallet": "^0.6.0",
     "ethjs-provider-http": "^0.1.6",
     "ethjs-rpc": "^0.1.8",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-sequence": "^1.0.0",
-    "gulp-typescript": "^3.2.4",
+    "gulp-typescript": "^5.0.1",
     "gulp-uglify": "^3.0.0",
     "gulp-uglify-es": "^1.0.0",
-    "mocha": "^4.1.0",
+    "mocha": "^8.0.1",
     "node-noop": "^1.0.0",
     "node-readme": "^0.1.9",
     "pump": "^3.0.0",
