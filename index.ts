@@ -5,6 +5,8 @@ import Claim from './src/claim';
 import User from './src/user';
 import Stats from './src/stats';
 import Config from './src/config';
+import Treasury from "./src/treasury";
+import Bonds from "./src/bonds";
 
 export class Ixo {
   network: Network;
@@ -12,6 +14,8 @@ export class Ixo {
   agent: Agent;
   claim: Claim;
   user: User;
+  treasury: Treasury;
+  bonds: Bonds;
   stats: Stats;
   config: Config;
 
@@ -22,6 +26,8 @@ export class Ixo {
     this.agent = new Agent();
     this.claim = new Claim();
     this.user = new User(this.config);
+    this.treasury = new Treasury();
+    this.bonds = new Bonds();
     this.stats = new Stats(this.config);
   }
 }
