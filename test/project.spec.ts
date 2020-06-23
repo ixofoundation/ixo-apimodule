@@ -43,27 +43,31 @@ const statusData = {
 describe('Project functions', () => {
   before(function (done) {
     this.timeout(10000)
-    ixo.utils.getSignData(didPayload, "did/AddDid").then((response: any) => {
-      if (response.sign_bytes && response.fee) {
-        const signature = cryptoUtil.getSignatureForSignBytes(sovrinDid, response.sign_bytes)
-        ixo.user.registerUserDid(didPayload, signature, response.fee)
-          .then((response: any) => {
-            if (JSON.stringify(response).includes('hash')) {
-              setTimeout(function () {
-                ixo.user.getDidDoc(didPayload.didDoc.did).then((response: any) => {
-                  console.log('RESPONSE DID: ' + JSON.stringify(response));
-                  return done()
-                });
-              }, 6000);
-            }
-          })
-          .catch((err) => {
-            return fail(err)
-          })
-      } else {
-        return fail(response)
-      }
-    })
+    ixo.utils.getSignData(didPayload, "did/AddDid")
+      .then((response: any) => {
+        if (response.sign_bytes && response.fee) {
+          const signature = cryptoUtil.getSignatureForSignBytes(sovrinDid, response.sign_bytes)
+          ixo.user.registerUserDid(didPayload, signature, response.fee)
+            .then((response: any) => {
+              if (JSON.stringify(response).includes('hash')) {
+                setTimeout(function () {
+                  ixo.user.getDidDoc(didPayload.didDoc.did).then((response: any) => {
+                    console.log('RESPONSE DID: ' + JSON.stringify(response));
+                    return done()
+                  });
+                }, 6000);
+              }
+            })
+            .catch((err) => {
+              return fail(err)
+            })
+        } else {
+          return fail(response)
+        }
+      })
+      .catch((err) => {
+        return fail(err)
+      })
   });
 
   it('should create new project', () => {

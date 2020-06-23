@@ -1,4 +1,4 @@
-import {sendGetJSON} from "./http";
+import {sendPostJSON} from "./http";
 import Config from "../config";
 
 class Utils {
@@ -11,8 +11,9 @@ class Utils {
   getSignData(data: any, msgType: string) {
     const msgJson = JSON.stringify({type: msgType, value: data})
     const msgUppercaseHex = new Buffer(msgJson).toString('hex').toUpperCase();
+    const postFormat = {msg: msgUppercaseHex}
 
-    return sendGetJSON(this.config.getBlockSyncUrl() + '/api/sign_data/' + msgUppercaseHex)
+    return sendPostJSON(this.config.getBlockSyncUrl() + '/api/sign_data', postFormat)
   }
 }
 
