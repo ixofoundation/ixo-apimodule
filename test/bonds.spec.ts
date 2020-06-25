@@ -4,7 +4,7 @@ import {Ixo} from '../index';
 import {BLOCKSYNC_URL, REST_URL} from '../src/common/dummyData';
 import CryptoUtil from "./util/cryptoUtil";
 import {fail} from "assert";
-import Utils from "./util/utils";
+import Utils from "../src/utils/utils";
 
 const chalk = require('chalk');
 const success = chalk.bold.green;
