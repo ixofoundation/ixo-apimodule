@@ -43,7 +43,7 @@ const statusData = {
 describe('Project functions', () => {
   before(function (done) {
     this.timeout(10000)
-    ixo.utils.getSignData(didPayload, "did/AddDid")
+    ixo.utils.getSignData(didPayload, "did/AddDid", sovrinDid.verifyKey)
       .then((response: any) => {
         if (response.sign_bytes && response.fee) {
           const signature = cryptoUtil.getSignatureForSignBytes(sovrinDid, response.sign_bytes)
