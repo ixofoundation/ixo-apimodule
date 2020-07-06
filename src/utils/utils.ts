@@ -1,11 +1,19 @@
-import {sendGetJSON} from "./http";
+import {sendPostJSON} from "./http";
+import Config from "../config";
 
 class Utils {
-  getSignData(data: any, msgType: string, RESTUrl: string) {
+  config: Config;
+
+  constructor(config: Config) {
+    this.config = config;
+  }
+
+  getSignData(data: any, msgType: string, pubKey: string) {
     const msgJson = JSON.stringify({type: msgType, value: data})
     const msgUppercaseHex = new Buffer(msgJson).toString('hex').toUpperCase();
+    const postFormat = {msg: msgUppercaseHex, pub_key: pubKey}
 
-    return sendGetJSON(RESTUrl + '/sign_data/0x' + msgUppercaseHex)
+    return sendPostJSON(this.config.getBlockSyncUrl() + '/api/sign_data', postFormat)
   }
 }
 

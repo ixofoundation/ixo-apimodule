@@ -1,9 +1,8 @@
 import {expect} from 'chai';
 import 'mocha';
 import {Ixo} from '../index';
-import {BLOCKSYNC_URL, PDSUrl, projectData, REST_URL} from '../src/common/dummyData';
+import {BLOCKSYNC_URL, PDSUrl, projectData} from '../src/common/dummyData';
 import CryptoUtil from './util/cryptoUtil';
-import Utils from '../src/utils/utils';
 import {ISovrinDidModel} from '../src/common/models';
 import {fail} from "assert";
 
@@ -14,7 +13,6 @@ const error = chalk.bold.red;
 const ixo = new Ixo(BLOCKSYNC_URL);
 
 let cryptoUtil = new CryptoUtil();
-let utils = new Utils();
 
 const sovrinDid: ISovrinDidModel = {
   did: "did:ixo:U4tSpzzv91HHqWW1YmFkHJ",
@@ -27,7 +25,7 @@ const sovrinDid: ISovrinDidModel = {
   }
 }
 
-const credentials: any[] = null;  // just to have explicit any[]
+const credentials: any[] = [];  // just to have explicit any[]
 const didPayload = {
   didDoc: {
     did: sovrinDid.did,
@@ -45,27 +43,31 @@ const statusData = {
 describe('Project functions', () => {
   before(function (done) {
     this.timeout(10000)
-    utils.getSignData(didPayload, "did/AddDid", REST_URL).then((response: any) => {
-      if (response.sign_bytes && response.fee) {
-        const signature = cryptoUtil.getSignatureForSignBytes(sovrinDid, response.sign_bytes)
-        ixo.user.registerUserDidWithFee(didPayload, signature, response.fee)
-          .then((response: any) => {
-            if (JSON.stringify(response).includes('hash')) {
-              setTimeout(function () {
-                ixo.user.getDidDoc(didPayload.didDoc.did).then((response: any) => {
-                  console.log('RESPONSE DID: ' + JSON.stringify(response));
-                  return done()
-                });
-              }, 6000);
-            }
-          })
-          .catch((err) => {
-            return fail(err)
-          })
-      } else {
-        return fail(response)
-      }
-    })
+    ixo.utils.getSignData(didPayload, "did/AddDid", sovrinDid.verifyKey)
+      .then((response: any) => {
+        if (response.sign_bytes && response.fee) {
+          const signature = cryptoUtil.getSignatureForSignBytes(sovrinDid, response.sign_bytes)
+          ixo.user.registerUserDid(didPayload, signature, response.fee)
+            .then((response: any) => {
+              if (JSON.stringify(response).includes('hash')) {
+                setTimeout(function () {
+                  ixo.user.getDidDoc(didPayload.didDoc.did).then((response: any) => {
+                    console.log('RESPONSE DID: ' + JSON.stringify(response));
+                    return done()
+                  });
+                }, 6000);
+              }
+            })
+            .catch((err) => {
+              return fail(err)
+            })
+        } else {
+          return fail(response)
+        }
+      })
+      .catch((err) => {
+        return fail(err)
+      })
   });
 
   it('should create new project', () => {
