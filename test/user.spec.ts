@@ -10,13 +10,9 @@ const error = chalk.bold.red;
 
 const ixo = new Ixo(BLOCKSYNC_URL);
 
-const credentials: any[] = [];  // just to have explicit any[]
 const didPayload = {
-  didDoc: {
-    did: "did:sov:Eu7Aru9sH4VB5GqEaohnJe",
-    pubKey: "8aMcV6btrGHHrURQHjBEV7tmvLj18BnQhj3pAy1YxBR4",
-    credentials: credentials
-  }
+  did: "did:sov:Eu7Aru9sH4VB5GqEaohnJe",
+  pubKey: "8aMcV6btrGHHrURQHjBEV7tmvLj18BnQhj3pAy1YxBR4",
 }
 
 // const sovrinDid = {
@@ -60,7 +56,7 @@ describe('User functions', () => {
   });
   it('should return user did', () => {
     ixo.user
-      .getDidDoc(didPayload.didDoc.did)
+      .getDidDoc(didPayload.did)
       .then((response: any) => {
         console.log('User get DidDoc response: ' + success(JSON.stringify(response, null, '\t')));
         expect(response).to.not.equal(null);

@@ -4,6 +4,8 @@ import {constructJsonPartialSignRequest, constructJsonSignRequest, constructPubl
 import Config from './config';
 import {sendGetJSON, sendPostJSON} from './utils/http';
 
+const base58 = require('bs58')
+
 class Project {
   config: Config;
 
@@ -21,7 +23,8 @@ class Project {
 
   getProjectByUserDid(senderDid: any): Promise<any> {
     const payload = {senderDid: senderDid};
-    return sendPostJSON(this.config.getBlockSyncUrl() + '/api/project/', constructPublicJsonRequest('listProjectBySenderDid', payload));
+    const request = constructPublicJsonRequest('listProjectBySenderDid', payload)
+    return sendPostJSON(this.config.getBlockSyncUrl() + '/api/project/', request);
   }
 
   createProject(data: any, signature: Signature, PDSUrl: string): Promise<any> {
@@ -77,19 +80,28 @@ class Project {
     });
   }
 
-  generateWithdrawObjectJson = (data: any, signature: string, created: any) => {
-    return JSON.stringify({
-      payload: [{type: "project/WithdrawFunds", value: data}],
-      signatures: [{signatureValue: signature, created: created}]
-    });
+  generateWithdrawObjectJson = (data: any, signature: string, pubKey: string, fee: object) => {
+    return {
+      msg: [{type: "project/WithdrawFunds", value: data}],
+      fee,
+      signatures: [{
+        signature: signature,
+        pub_key: {
+          type: "tendermint/PubKeyEd25519",
+          value: base58.decode(pubKey).toString('base64'),
+        }
+      }]
+      // memo: "this is an optional memo",
+    };
   }
 
-  payOutToEthWallet(data: any, signature: Signature): Promise<any> {
-    const {signatureValue, created} = signature;
-    const withdrawObjectJson = this.generateWithdrawObjectJson(data, signatureValue, created);
-    const withdrawObjectUppercaseHex = new Buffer(withdrawObjectJson).toString('hex').toUpperCase();
-
-    return sendGetJSON(this.config.getBlockSyncUrl() + '/api/blockchain/0x' + withdrawObjectUppercaseHex);
+  payOutToEthWallet(data: any, signature: Signature, fee: object, mode?: string): Promise<any> {
+    const {signatureValue, publicKey} = signature;
+    const tx = this.generateWithdrawObjectJson(data, signatureValue, publicKey, fee);
+    return sendPostJSON(this.config.getBlockSyncUrl() + '/api/blockchain/txs', {
+      tx,
+      mode: mode || "block"
+    })
   }
 }
 

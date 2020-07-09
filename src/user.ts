@@ -1,6 +1,8 @@
 import {Signature} from './common/models';
 import Config from './config';
-import {sendGetJSON} from './utils/http';
+import {sendGetJSON, sendPostJSON} from './utils/http';
+
+const base58 = require('bs58')
 
 require('es6-promise');
 
@@ -11,21 +13,28 @@ class User {
     this.config = config;
   }
 
-  generateLedgerObjectJson = (didDoc: any, signature: string, created: any, fee: object) => {
-    return JSON.stringify({
-      payload: [{type: "did/AddDid", value: didDoc}],
+  generateLedgerObjectJson = (didDoc: any, signature: string, pubKey: string, fee: object) => {
+    return {
+      msg: [{type: "did/AddDid", value: didDoc}],
       fee,
-      signatures: [{signatureValue: signature, created: created}]
-      // memo: "this is a memo",
-    });
+      signatures: [{
+        signature: signature,
+        pub_key: {
+          type: "tendermint/PubKeyEd25519",
+          value: base58.decode(pubKey).toString('base64'),
+        }
+      }]
+      // memo: "this is an optional memo",
+    };
   }
 
-  registerUserDid(data: any, signature: Signature, fee: object): Promise<any> {
-    const {signatureValue, created} = signature;
-    const ledgerObjectJson = this.generateLedgerObjectJson(data, signatureValue, created, fee);
-    const ledgerObjectUppercaseHex = new Buffer(ledgerObjectJson).toString('hex').toUpperCase();
-
-    return sendGetJSON(this.config.getBlockSyncUrl() + '/api/blockchain/0x' + ledgerObjectUppercaseHex);
+  registerUserDid(data: any, signature: Signature, fee: object, mode?: string): Promise<any> {
+    const {signatureValue, publicKey} = signature;
+    const tx = this.generateLedgerObjectJson(data, signatureValue, publicKey, fee);
+    return sendPostJSON(this.config.getBlockSyncUrl() + '/api/blockchain/txs', {
+      tx,
+      mode: mode || "block"
+    })
   }
 
   getDidDoc(did: string) {
