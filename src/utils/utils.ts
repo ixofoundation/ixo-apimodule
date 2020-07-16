@@ -8,7 +8,7 @@ class Utils {
     this.config = config;
   }
 
-  getSignData(data: any, msgType: string, pubKey: string) {
+  getSignData(data: any, msgType: string, pubKey: string): Promise<any> {
     const msgJson = JSON.stringify({type: msgType, value: data})
     const msgUppercaseHex = new Buffer(msgJson).toString('hex').toUpperCase();
     const postFormat = {msg: msgUppercaseHex, pub_key: pubKey}

@@ -25,13 +25,9 @@ const sovrinDid: ISovrinDidModel = {
   }
 }
 
-const credentials: any[] = [];  // just to have explicit any[]
 const didPayload = {
-  didDoc: {
-    did: sovrinDid.did,
-    pubKey: sovrinDid.verifyKey,
-    credentials: credentials
-  }
+  did: sovrinDid.did,
+  pubKey: sovrinDid.verifyKey
 }
 
 const statusData = {
@@ -50,12 +46,10 @@ describe('Project functions', () => {
           ixo.user.registerUserDid(didPayload, signature, response.fee)
             .then((response: any) => {
               if (JSON.stringify(response).includes('hash')) {
-                setTimeout(function () {
-                  ixo.user.getDidDoc(didPayload.didDoc.did).then((response: any) => {
-                    console.log('RESPONSE DID: ' + JSON.stringify(response));
-                    return done()
-                  });
-                }, 6000);
+                ixo.user.getDidDoc(didPayload.did).then((response: any) => {
+                  console.log('RESPONSE DID: ' + JSON.stringify(response));
+                  return done()
+                });
               }
             })
             .catch((err) => {

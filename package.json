@@ -1,6 +1,6 @@
 {
   "name": "@ixo/ixo-apimodule",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "This is a node module that defines the functions that can be performed by the ixo protocol.",
   "main": "dist/index.js",
   "scripts": {
@@ -22,8 +22,8 @@
   "dependencies": {
     "@types/es6-promise": "^3.3.0",
     "axios": "^0.18.1",
-    "base58": "1.0.1",
     "bip39": "2.4.0",
+    "bs58": "^4.0.1",
     "cross-fetch": "^2.2.1",
     "elliptic": "^6.5.3",
     "ethjs-query": "^0.3.3",
