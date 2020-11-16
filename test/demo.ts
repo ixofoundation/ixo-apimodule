@@ -4,7 +4,7 @@ import {Ixo} from '../index';
 import {ixoDid1, ixoDid2, ixoDid3, projectData} from '../src/common/dummyData';
 import CryptoUtil from './util/cryptoUtil';
 import {ISovrinDidModel} from '../src/common/models';
-import {fail} from "assert";
+import {fail, ok} from "assert";
 
 const chalk = require('chalk');
 const success = chalk.bold.green;
@@ -24,16 +24,17 @@ const error = chalk.bold.red;
 //     - To get the token balance of this address, run query: <blockchainUrl>:1317/bank/balances/<address>
 //
 // DEMO INSTRUCTIONS
-// - TO change the Blocksync and PDS (Cellnode) URLs, refer to the *_URL variables below
+// - To change the Blocksync and PDS (Cellnode) URLs, refer to the *_URL variables below
+// - This demo is not meant to be run automatically all at once, but rather slowly and one step at a time
 // - Once the project has been created, the below constant should be updated with the proper project DID
-const projectDid = "did:ixo:Qg97mbjVJkMuZAqsmBJYNo" // TODO: set me to the project DID
+const projectDid = "" // TODO: set me to the project DID
 //
 // OTHER DEMO NOTES
 // - Query the project from the blockchain: <blockchainUrl>:1317/project/<projectDid>
 // - The process can be run multiple times, since a new project with a unique project DID will be created each time
 
-const CELLNODE_URL = 'http://localhost:5000/';
-const BLOCKSYNC_URL = 'http://localhost:80';
+const CELLNODE_URL = 'https://pds_pandora.ixo.world/';
+const BLOCKSYNC_URL = 'https://block_sync_pandora.ixo.world';
 const ixo = new Ixo(BLOCKSYNC_URL);
 let cryptoUtil = new CryptoUtil();
 
@@ -54,7 +55,7 @@ function status_updated_to(new_status: string) {
   }
 }
 
-function update_status_to(new_status: string) {
+function update_project_status_to(new_status: string) {
   return function () {
     const msgUpdateProjectStatus = {
       projectDid: projectDid,
@@ -149,6 +150,25 @@ function create_agent(agentIxoDid: ISovrinDidModel, role: string) {
   }
 }
 
+function update_agent_status_to(agentIxoDid: ISovrinDidModel, role: string) {
+  return function () {
+    const msgUpdateAgentStatus = {
+      role: role,
+      agentDid: agentIxoDid.did,
+      projectDid: projectDid,
+      status: "1"
+    }
+
+    // Sign and submit an agent creation request to Cellnode
+    const signature = cryptoUtil.getSignatureForPayload(agentIxoDid, msgUpdateAgentStatus)
+    ixo.agent.updateAgentStatus(msgUpdateAgentStatus, signature, CELLNODE_URL).then((response: any) => {
+      console.log(response)
+    }).catch((result: Error) => {
+      console.log(error(result));
+    });
+  }
+}
+
 const projectCreatorDid = ixoDid1;
 const agent1IxoDid = ixoDid1;
 const agent2IxoDid = ixoDid2;
@@ -191,8 +211,19 @@ describe('Demo', () => {
       });
   });
 
+  it('should expect that the project DID has been set', () => {
+    if (projectDid.length == 0) {
+      fail("project DID must be set to the DID of the created project")
+    } else {
+      ok("can proceed")
+    }
+  })
+
   it('should create agent 1', create_agent(agent1IxoDid, 'SA'));  // SA => claimer
+  it('should approve agent 1', update_agent_status_to(agent1IxoDid, 'SA')); // Only necessary if auto-approvals are off
+
   it('should create agent 2', create_agent(agent2IxoDid, 'EA'));  // EA => evaluator
+  it('should approve agent 2', update_agent_status_to(agent2IxoDid, 'SA')); // Only necessary if auto-approvals are off
 
   it('should confirm that the agents were created', () => {
     const listData = {projectDid: projectDid};
@@ -206,13 +237,13 @@ describe('Demo', () => {
     });
   })
 
-  it('should update project status to PENDING', update_status_to("PENDING"));
+  it('should update project status to PENDING', update_project_status_to("PENDING"));
   it('should return the project with status updated to PENDING', status_updated_to("PENDING"));
 
-  it('should update project status to FUNDED', update_status_to("FUNDED"));
+  it('should update project status to FUNDED', update_project_status_to("FUNDED"));
   it('should return the project with status updated to FUNDED', status_updated_to("FUNDED"));
 
-  it('should update project status to STARTED', update_status_to("STARTED"));
+  it('should update project status to STARTED', update_project_status_to("STARTED"));
   it('should return the project with status updated to STARTED', status_updated_to("STARTED"));
 
   // NB: if fees were set up for the project (by default no), the project should be appropriately funded for claims
@@ -247,11 +278,11 @@ describe('Demo', () => {
     });
   });
 
-  it('should update project status to STOPPED', update_status_to("STOPPED"));
+  it('should update project status to STOPPED', update_project_status_to("STOPPED"));
   it('should return the project with status updated to STOPPED', status_updated_to("STOPPED"));
 
   // TODO: need to fix bug (?) which does not allow us to go to PAIDOUT if there are zero funds
 
-  it('should update project status to PAIDOUT', update_status_to("PAIDOUT"));
+  it('should update project status to PAIDOUT', update_project_status_to("PAIDOUT"));
   it('should return the project with status updated to PAIDOUT', status_updated_to("PAIDOUT"));
 });
