@@ -179,7 +179,7 @@ function createAgent(agentIxoDid: ISovrinDidModel, agentRole: string) {
   }
 }
 
-function updateAgentStatusTo(agentIxoDid: ISovrinDidModel, agentRole: string) {
+function updateAgentStatusTo(agentIxoDid: ISovrinDidModel, projectCreatorDid: ISovrinDidModel, agentRole: string) {
   return function () {
     const msgUpdateAgentStatus = {
       role: agentRole,
@@ -189,7 +189,7 @@ function updateAgentStatusTo(agentIxoDid: ISovrinDidModel, agentRole: string) {
     }
 
     // Sign and submit an agent creation request to Cellnode
-    const signature = cryptoUtil.getSignatureForPayload(agentIxoDid, msgUpdateAgentStatus)
+    const signature = cryptoUtil.getSignatureForPayload(projectCreatorDid, msgUpdateAgentStatus)
     ixo.agent.updateAgentStatus(msgUpdateAgentStatus, signature, CELLNODE_URL).then((response: any) => {
       console.log(response)
     }).catch((result: Error) => {
@@ -263,10 +263,10 @@ describe('Demo', () => {
   })
 
   it('should create agent 1', createAgent(agent1IxoDid, 'SA'));  // SA => claimer
-  it('should approve agent 1', updateAgentStatusTo(agent1IxoDid, 'SA')); // Only necessary if auto-approvals are off
+  it('should approve agent 1', updateAgentStatusTo(agent1IxoDid, projectCreatorDid, 'SA')); // Only necessary if auto-approvals are off
 
   it('should create agent 2', createAgent(agent2IxoDid, 'EA'));  // EA => evaluator
-  it('should approve agent 2', updateAgentStatusTo(agent2IxoDid, 'SA')); // Only necessary if auto-approvals are off
+  it('should approve agent 2', updateAgentStatusTo(agent2IxoDid, projectCreatorDid, 'EA')); // Only necessary if auto-approvals are off
 
   it('should confirm that the agents were created', agentsCreatedAndApproved)
 
