@@ -273,6 +273,24 @@ describe('Demo', () => {
   it('should update project status to PENDING', updateProjectStatusTo("PENDING"));
   it('should return the project with status updated to PENDING', projectStatusUpdatedTo("PENDING"));
 
+  // NOTE: at this point, the project address should be funded with enough tokens
+  //
+  //   - To get this address, run query: <blockchainUrl>:1317/projectAccounts/<projectDid>, where <blockchainUrl> is
+  //     the IP (or equivalent) of the blockchain, and <projectDid> is the project's DID. The project address will be
+  //     the value for which the key is equivalent to the project DID.
+  //
+  //     Example:
+  //        If the response is:
+  //          { ...
+  //            "ValidatingNodeSetFees":          "ixo19uuhfqv4uee68fzjk2fm9hl2c85p7asmgxh8n3",
+  //            "did:ixo:4XJLBfGtWSGKSz4BeRxdun": "ixo1wdcltsruc7r5xqvgyc9xakdaex238gvt3j4pjj",
+  //            "did:ixo:6KtX69oXh8qumxdEx4W94i": "ixo1ta373wz94lqx5sjzzfjas6v0y5htvnr5mfyyak",
+  //          ... }
+  //        If the project DID is did:ixo:4XJLBfGtWSGKSz4BeRxdun, then the address is the second address.
+  //
+  //   - To get the token balance of the project address, run query: <blockchainUrl>:1317/projectParams and look for
+  //     the project_minimum_initial_funding value, which will indicate the minimum funding, typically in uixo tokens.
+
   it('should update project status to FUNDED', updateProjectStatusTo("FUNDED"));
   it('should return the project with status updated to FUNDED', projectStatusUpdatedTo("FUNDED"));
 
