@@ -28,6 +28,8 @@ const error = chalk.bold.red;
 // - This demo is not meant to be run automatically all at once, but rather slowly and one step at a time
 // - Once the project has been created, the below constant should be updated with the proper project DID
 const projectDid = "" // TODO: set me to the project DID
+// - Once a claim has been created, the below constant should be updated with the proper claim ID
+const claimId = "" // TODO: set me to the claim ID
 //
 // OTHER DEMO NOTES
 // - Query the project from the blockchain: <blockchainUrl>:1317/project/<projectDid>
@@ -222,10 +224,22 @@ function createClaim() {
   });
 }
 
+function claimCreated() {
+  const listData = {projectDid: projectDid};
+
+  const signature = cryptoUtil.getSignatureForPayload(projectCreatorDid, listData)
+  ixo.claim.listClaimsForProject(listData, signature, CELLNODE_URL).then((response: any) => {
+    console.log('Claim list for Project: ' + success(JSON.stringify(response, null, '\t')));
+    expect(response.result).to.not.equal(null);
+  }).catch((result: Error) => {
+    console.log(error(result));
+  });
+}
+
 function evaluateClaim() {
   // Note: only status and projectDid are required. Other values (name, weight, claimid, ...) can be string/object/array/
   const msgEvaluateClaim = {
-    claimId: "94519f45e2c4c82cf67b62416414341b8e2dded1e55056bfb82075b169f536cd",
+    claimId: claimId,
     status: '1',
     projectDid: projectDid
   };
@@ -254,6 +268,8 @@ describe('Demo', () => {
 
   it('should return list of projects and confirm that the project was created', projectCreated);
 
+  // At this point, you should set the project DID constant to the created project's DID
+  // This can be obtained by searching for the last project from the list of projects (above step)
   it('should expect that the project DID has been set', () => {
     if (projectDid.length == 0) {
       fail("project DID must be set to the DID of the created project")
@@ -299,6 +315,19 @@ describe('Demo', () => {
 
   // NB: if fees were set up for the project (by default no), the project should be appropriately funded for claims
   it('should create new claim', createClaim);
+
+  it('should return list of claims and confirm that the claim was created', claimCreated);
+
+  // At this point, you should set the claim ID constant to the created claim's ID
+  // This can be obtained by searching for the last claim in the list of claims (above step)
+  // N.B: the claim ID is actually the txHash value!
+  it('should expect that the claim ID has been set', () => {
+    if (claimId.length == 0) {
+      fail("claim ID must be set to the ID of the created claim")
+    } else {
+      ok("can proceed")
+    }
+  })
 
   // NB: if fees were set up for the project (by default no), the project should be appropriately funded for evaluations
   it('should evaluate claim', evaluateClaim);
