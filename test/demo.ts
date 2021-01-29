@@ -242,6 +242,18 @@ function claimCreated() {
   });
 }
 
+function claimByTemplateIdCreated() {
+  const listData = {projectDid: projectDid, claimTemplateId: 'templateA'};
+
+  const signature = cryptoUtil.getSignatureForPayload(projectCreatorDid, listData)
+  ixo.claim.listClaimsForProjectByTemplateId(listData, signature, CELLNODE_URL).then((response: any) => {
+    console.log('Claim list for Project: ' + success(JSON.stringify(response, null, '\t')));
+    expect(response.result).to.not.equal(null);
+  }).catch((result: Error) => {
+    console.log(error(result));
+  });
+}
+
 function evaluateClaim() {
   // Note: only status and projectDid are required. Other values (name, weight, claimid, ...) can be string/object/array/
   const msgEvaluateClaim = {
@@ -323,6 +335,8 @@ describe('Demo', () => {
   it('should create new claim', createClaim);
 
   it('should return list of claims and confirm that the claim was created', claimCreated);
+
+  it('should return list of claims by template ID and confirm that the claim was created', claimByTemplateIdCreated);
 
   // At this point, you should set the claim ID constant to the created claim's ID
   // This can be obtained by searching for the last claim in the list of claims (above step)

@@ -17,6 +17,11 @@ class Claim {
     const json = constructJsonSignRequest('listClaims', 'list_claim', signature, data);
     return sendPostJSON(PDSUrl + 'api/request', json);
   }
+
+  listClaimsForProjectByTemplateId(data: any, signature: Signature, PDSUrl: string): Promise<any> {
+    const json = constructJsonSignRequest('listClaimsByTemplateId', 'list_claim', signature, data);
+    return sendPostJSON(PDSUrl + 'api/request', json);
+  }
 }
 
 export default Claim;
