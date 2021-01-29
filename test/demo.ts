@@ -217,7 +217,7 @@ function createClaim() {
   const msgCreateClaim = {
     name: 'doggy bag',
     weight: '2kg',
-    claimid: "123",
+    claimId: "123",
     claimTemplateId: "templateA",
     projectDid: projectDid
   };
