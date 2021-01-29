@@ -322,8 +322,10 @@ describe('Demo', () => {
   //          ... }
   //        If the project DID is did:ixo:4XJLBfGtWSGKSz4BeRxdun, then the address is the second address.
   //
-  //   - To get the token balance of the project address, run query: <blockchainUrl>:1317/projectParams and look for
-  //     the project_minimum_initial_funding value, which will indicate the minimum funding, typically in uixo tokens.
+  //   - To get the token balance of the project address, run query: <blockchainUrl>:1317/auth/accounts/<projectAddr>
+  //     and check the list of coins. If it is empty (i.e. []) then the project has a zero balance.
+  //   - To check how many tokens you should send to the project address, run query: <blockchainUrl>:1317/projectParams
+  //     and look for the project_minimum_initial_funding value, which will indicate the minimum funding in uixo tokens.
 
   it('should update project status to FUNDED', updateProjectStatusTo("FUNDED"));
   it('should return the project with status updated to FUNDED', projectStatusUpdatedTo("FUNDED"));
