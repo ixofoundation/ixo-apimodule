@@ -214,7 +214,13 @@ function agentsCreatedAndApproved() {
 
 function createClaim() {
   // Note: only projectDid is required. Other values (name, weight, claimid, ...) can be string/object/array/
-  const msgCreateClaim = {name: 'doggy bag', weight: '2kg', claimid: "123", projectDid: projectDid};
+  const msgCreateClaim = {
+    name: 'doggy bag',
+    weight: '2kg',
+    claimid: "123",
+    claimTemplateId: "templateA",
+    projectDid: projectDid
+  };
 
   const signature = cryptoUtil.getSignatureForPayload(claimerIxoDid, msgCreateClaim)
   ixo.claim.createClaim(msgCreateClaim, signature, CELLNODE_URL).then((response: any) => {
