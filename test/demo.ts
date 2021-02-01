@@ -230,28 +230,32 @@ function createClaim() {
   });
 }
 
-function claimCreated() {
-  const listData = {projectDid: projectDid};
+function claimCreated(signerDid: ISovrinDidModel) {
+  return function () {
+    const listData = {projectDid: projectDid};
 
-  const signature = cryptoUtil.getSignatureForPayload(projectCreatorDid, listData)
-  ixo.claim.listClaimsForProject(listData, signature, CELLNODE_URL).then((response: any) => {
-    console.log('Claim list for Project: ' + success(JSON.stringify(response, null, '\t')));
-    expect(response.result).to.not.equal(null);
-  }).catch((result: Error) => {
-    console.log(error(result));
-  });
+    const signature = cryptoUtil.getSignatureForPayload(signerDid, listData)
+    ixo.claim.listClaimsForProject(listData, signature, CELLNODE_URL).then((response: any) => {
+      console.log('Claim list for Project: ' + success(JSON.stringify(response, null, '\t')));
+      expect(response.result).to.not.equal(null);
+    }).catch((result: Error) => {
+      console.log(error(result));
+    });
+  }
 }
 
-function claimByTemplateIdCreated() {
-  const listData = {projectDid: projectDid, claimTemplateId: 'templateA'};
+function claimByTemplateIdCreated(signerDid: ISovrinDidModel) {
+  return function () {
+    const listData = {projectDid: projectDid, claimTemplateId: 'templateA'};
 
-  const signature = cryptoUtil.getSignatureForPayload(projectCreatorDid, listData)
-  ixo.claim.listClaimsForProjectByTemplateId(listData, signature, CELLNODE_URL).then((response: any) => {
-    console.log('Claim list for Project: ' + success(JSON.stringify(response, null, '\t')));
-    expect(response.result).to.not.equal(null);
-  }).catch((result: Error) => {
-    console.log(error(result));
-  });
+    const signature = cryptoUtil.getSignatureForPayload(signerDid, listData)
+    ixo.claim.listClaimsForProjectByTemplateId(listData, signature, CELLNODE_URL).then((response: any) => {
+      console.log('Claim list for Project: ' + success(JSON.stringify(response, null, '\t')));
+      expect(response.result).to.not.equal(null);
+    }).catch((result: Error) => {
+      console.log(error(result));
+    });
+  }
 }
 
 function evaluateClaim() {
@@ -273,6 +277,7 @@ function evaluateClaim() {
 const projectCreatorDid = ixoDid1;
 const agent1IxoDid = ixoDid1;
 const agent2IxoDid = ixoDid2;
+const agent3IxoDid = ixoDid3;
 const claimerIxoDid = ixoDid1;
 const evaluatorIxoDid = ixoDid2;
 
@@ -301,6 +306,9 @@ describe('Demo', () => {
 
   it('should create agent 2', createAgent(agent2IxoDid, 'EA'));  // EA => evaluator
   it('should approve agent 2', updateAgentStatusTo(agent2IxoDid, projectCreatorDid, 'EA')); // Only necessary if auto-approvals are off
+
+  it('should create agent 3', createAgent(agent3IxoDid, 'SA'));  // SA => claimer
+  it('should approve agent 3', updateAgentStatusTo(agent3IxoDid, projectCreatorDid, 'SA')); // Only necessary if auto-approvals are off
 
   it('should confirm that the agents were created', agentsCreatedAndApproved)
 
@@ -336,9 +344,9 @@ describe('Demo', () => {
   // NB: if fees were set up for the project (by default no), the project should be appropriately funded for claims
   it('should create new claim', createClaim);
 
-  it('should return list of claims and confirm that the claim was created', claimCreated);
+  it('should return list of claims and confirm that the claim was created', claimCreated(agent2IxoDid));
 
-  it('should return list of claims by template ID and confirm that the claim was created', claimByTemplateIdCreated);
+  it('should return list of claims by template ID and confirm that the claim was created', claimByTemplateIdCreated(agent2IxoDid));
 
   // At this point, you should set the claim ID constant to the created claim's ID
   // This can be obtained by searching for the last claim in the list of claims (above step)
