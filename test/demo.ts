@@ -344,9 +344,9 @@ describe('Demo', () => {
   // NB: if fees were set up for the project (by default no), the project should be appropriately funded for claims
   it('should create new claim', createClaim);
 
-  // NB: next we list the claims (without then with claim template ID filtering) using agent 2. We use agent 2 and not
-  // the other agents because only agent 2, as an evaluator (EA) has the capabilities to list claims. An exception to
-  // this is agent 1 (SA) since agent 1 also happens to be the project creator DID, which does have the capabilities.
+  // NB: next, we list the claims (once without claim template ID filtering, and once with the filtering using agent 2.
+  // We use agent 2 and not other agents because only agent 2 as an evaluator (EA) has the capabilities to list claims.
+  // An exception is agent 1 (SA), since agent 1 also happens to be the project creator DID, which can list claims.
   it('should return list of claims and confirm that the claim was created', claimCreated(agent2IxoDid));
   it('should return list of claims by template ID and confirm that the claim was created', claimByTemplateIdCreated(agent2IxoDid));
 
