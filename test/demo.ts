@@ -212,28 +212,52 @@ function agentsCreatedAndApproved() {
   });
 }
 
-function createClaim() {
-  // Note: only projectDid is required. Other values (name, weight, claimid, ...) can be string/object/array/
-  const msgCreateClaim = {name: 'doggy bag', weight: '2kg', claimid: "123", projectDid: projectDid};
+function createClaim(creatorDid: ISovrinDidModel) {
+  return function () {
+    // Note: only projectDid is required. Other values (name, weight, claimid, ...) can be string/object/array/
+    const msgCreateClaim = {
+      name: 'doggy bag',
+      weight: '2kg',
+      claimId: "123",  // Note that this is not the actual claim ID that cellnode assigns to this claim
+      claimTemplateId: "templateA",
+      projectDid: projectDid
+    };
 
-  const signature = cryptoUtil.getSignatureForPayload(claimerIxoDid, msgCreateClaim)
-  ixo.claim.createClaim(msgCreateClaim, signature, CELLNODE_URL).then((response: any) => {
-    console.log('Claim create response: ' + success(JSON.stringify(response, null, '\t')));
-  }).catch((result: Error) => {
-    console.log(error(result));
-  });
+    const signature = cryptoUtil.getSignatureForPayload(creatorDid, msgCreateClaim)
+    ixo.claim.createClaim(msgCreateClaim, signature, CELLNODE_URL).then((response: any) => {
+      console.log('Claim create response: ' + success(JSON.stringify(response, null, '\t')));
+    }).catch((result: Error) => {
+      console.log(error(result));
+    });
+  }
 }
 
-function claimCreated() {
-  const listData = {projectDid: projectDid};
+function listClaims(signerDid: ISovrinDidModel) {
+  return function () {
+    const listData = {projectDid: projectDid};
 
-  const signature = cryptoUtil.getSignatureForPayload(projectCreatorDid, listData)
-  ixo.claim.listClaimsForProject(listData, signature, CELLNODE_URL).then((response: any) => {
-    console.log('Claim list for Project: ' + success(JSON.stringify(response, null, '\t')));
-    expect(response.result).to.not.equal(null);
-  }).catch((result: Error) => {
-    console.log(error(result));
-  });
+    const signature = cryptoUtil.getSignatureForPayload(signerDid, listData)
+    ixo.claim.listClaimsForProject(listData, signature, CELLNODE_URL).then((response: any) => {
+      console.log('Claim list for Project: ' + success(JSON.stringify(response, null, '\t')));
+      expect(response.result).to.not.equal(null);
+    }).catch((result: Error) => {
+      console.log(error(result));
+    });
+  }
+}
+
+function listClaimsByTemplateId(signerDid: ISovrinDidModel) {
+  return function () {
+    const listData = {projectDid: projectDid, claimTemplateId: 'templateA'};
+
+    const signature = cryptoUtil.getSignatureForPayload(signerDid, listData)
+    ixo.claim.listClaimsForProjectByTemplateId(listData, signature, CELLNODE_URL).then((response: any) => {
+      console.log('Claim list for Project: ' + success(JSON.stringify(response, null, '\t')));
+      expect(response.result).to.not.equal(null);
+    }).catch((result: Error) => {
+      console.log(error(result));
+    });
+  }
 }
 
 function evaluateClaim() {
@@ -255,7 +279,7 @@ function evaluateClaim() {
 const projectCreatorDid = ixoDid1;
 const agent1IxoDid = ixoDid1;
 const agent2IxoDid = ixoDid2;
-const claimerIxoDid = ixoDid1;
+const agent3IxoDid = ixoDid3;
 const evaluatorIxoDid = ixoDid2;
 
 describe('Demo', () => {
@@ -283,6 +307,9 @@ describe('Demo', () => {
 
   it('should create agent 2', createAgent(agent2IxoDid, 'EA'));  // EA => evaluator
   it('should approve agent 2', updateAgentStatusTo(agent2IxoDid, projectCreatorDid, 'EA')); // Only necessary if auto-approvals are off
+
+  it('should create agent 3', createAgent(agent3IxoDid, 'SA'));  // SA => claimer
+  it('should approve agent 3', updateAgentStatusTo(agent3IxoDid, projectCreatorDid, 'SA')); // Only necessary if auto-approvals are off
 
   it('should confirm that the agents were created', agentsCreatedAndApproved)
 
@@ -316,9 +343,18 @@ describe('Demo', () => {
   it('should return the project with status updated to STARTED', projectStatusUpdatedTo("STARTED"));
 
   // NB: if fees were set up for the project (by default no), the project should be appropriately funded for claims
-  it('should create new claim', createClaim);
+  it('should create new claim', createClaim(agent1IxoDid));  // Create claim from agent 1
+  it('should create new claim', createClaim(agent3IxoDid));  // Create claim from agent 3
 
-  it('should return list of claims and confirm that the claim was created', claimCreated);
+  // NB: next, we list the claims, once without claim template ID filtering, and once with template ID filtering. We do
+  // this from all three agents. Agents 1 and 3 [both SA agents] can only list claims that they created themselves. On
+  // the other hand, agent 2 [EA agent] can list all claims created for the project.
+  it('should list claims from agent 1', listClaims(agent1IxoDid));
+  it('should list claims from agent 1 by template ID', listClaimsByTemplateId(agent1IxoDid));
+  it('should list claims from agent 2', listClaims(agent2IxoDid));
+  it('should list claims from agent 2 by template ID', listClaimsByTemplateId(agent2IxoDid));
+  it('should list claims from agent 3', listClaims(agent3IxoDid));
+  it('should list claims from agent 3 by template ID', listClaimsByTemplateId(agent3IxoDid));
 
   // At this point, you should set the claim ID constant to the created claim's ID
   // This can be obtained by searching for the last claim in the list of claims (above step)

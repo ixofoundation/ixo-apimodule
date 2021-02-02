@@ -14,6 +14,7 @@ let claimData = {name: 'doggy bag', weight: '2kg', claimid: 123};
 let agentUpdate;
 let evaluationData = {claimId: 123, status: 'evaulated'};
 let listData = {projectDid: 'did:ixo:111'}
+let listDataByTemplateId = {projectDid: 'did:ixo:111', claimTemplateId: 'templateA'}
 
 describe('Claim functions', () => {
 
@@ -37,8 +38,15 @@ describe('Claim functions', () => {
 
   it('list all claims', () => {
     ixo.claim.listClaimsForProject(listData, signature, PDSUrl).then((response: any) => {
-      console.log('Claim evaluate response: ' + success(JSON.stringify(response, null, '\t')));
-      // expect(response.error.message).to.be.equal('Only the Evaluation agents on project can evaluate claims');
+      console.log('Claim list response: ' + success(JSON.stringify(response, null, '\t')));
+    }).catch((result: Error) => {
+      console.log(error(result));
+    });
+  });
+
+  it('list all claims by template ID', () => {
+    ixo.claim.listClaimsForProjectByTemplateId(listDataByTemplateId, signature, PDSUrl).then((response: any) => {
+      console.log('Claim list by template ID response: ' + success(JSON.stringify(response, null, '\t')));
     }).catch((result: Error) => {
       console.log(error(result));
     });
