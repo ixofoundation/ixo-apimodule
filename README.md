@@ -23,6 +23,9 @@ This is a node module that defines the functions that can be performed by the ix
  - **npm run readme** : `node ./node_modules/.bin/node-readme`
  - **npm run prep-publish** : `rm -Rf node_modules/ package-lock.json dist/ && npm install && gulp`
 
+## Documentation and Usage
+Refer to the [`demo.ts`](https://github.com/ixofoundation/ixo-apimodule/blob/master/test/demo.ts) file, which aims to run through the entire project lifecycle and more in one sequence of steps. Some documentation and context around these steps is also provided inline.
+
 ## Dependencies
 Package | Version | Dev
 --- |:---:|:---:
