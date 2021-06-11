@@ -27,16 +27,16 @@ const error = chalk.bold.red;
 // - To change the Blocksync and PDS (Cellnode) URLs, refer to the *_URL variables below
 // - This demo is not meant to be run automatically all at once, but rather slowly and one step at a time
 // - Once the project has been created, the below constant should be updated with the proper project DID
-const projectDid = "" // TODO: set me to the project DID
+const projectDid = "did:ixo:3qrCATNkC22wDTHPgvNJ1E" // TODO: set me to the project DID
 // - Once a claim has been created, the below constant should be updated with the proper claim ID
-const claimId = "" // TODO: set me to the claim ID
+const claimId = "c93d9cd78db0dcf22d87a5efe48259b4ac5bdbc604ebef76ac397d4d3bb55a02" // TODO: set me to the claim ID
 //
 // OTHER DEMO NOTES
 // - Query the project from the blockchain: <blockchainUrl>:1317/project/<projectDid>
 // - The process can be run multiple times, since a new project with a unique project DID will be created each time
 
-const CELLNODE_URL = 'https://pds_pandora.ixo.world/';
-const BLOCKSYNC_URL = 'https://block_sync_pandora.ixo.world';
+const CELLNODE_URL = 'http://172.16.10.53:5000/';
+const BLOCKSYNC_URL = 'http://172.16.10.53:8080';
 const ixo = new Ixo(BLOCKSYNC_URL);
 let cryptoUtil = new CryptoUtil();
 
@@ -276,6 +276,50 @@ function evaluateClaim() {
   });
 }
 
+function withdrawFunds(userIxoDid: ISovrinDidModel, projectDid: string) {
+  return function () {
+    const msgWithdrawFunds = {
+      senderDid: userIxoDid.did,
+      data: {
+        projectDid,
+        recipientDid: userIxoDid.did,
+        amount: "10000",
+        isRefund: true,
+      }
+    }
+
+    // Get signature data for did/AddDid
+    ixo.utils.getSignData(msgWithdrawFunds, "project/WithdrawFunds", userIxoDid.verifyKey)
+      .then((response: any) => {
+
+        // If the response contains the signature bytes and the fee proceed
+        if (response.sign_bytes && response.fee) {
+
+          // Sign the signature bytes using the ixoDid and submit using registerUserDid
+          const signature = cryptoUtil.getSignatureForSignBytes(userIxoDid, response.sign_bytes)
+          ixo.project.withdrawFunds(msgWithdrawFunds, signature, response.fee)
+            .then((response: any) => {
+
+              // If the response does not contain any error code, then no error occurred and the withdraw went through
+              if (!response.code) {
+                return success()
+              } else {
+                return fail(response)
+              }
+            })
+            .catch((err) => {
+              return fail(err)
+            })
+        } else {
+          return fail(response)
+        }
+      })
+      .catch((err) => {
+        return fail(err)
+      })
+  }
+}
+
 const projectCreatorDid = ixoDid1;
 const agent1IxoDid = ixoDid1;
 const agent2IxoDid = ixoDid2;
@@ -373,8 +417,10 @@ describe('Demo', () => {
   it('should update project status to STOPPED', updateProjectStatusTo("STOPPED"));
   it('should return the project with status updated to STOPPED', projectStatusUpdatedTo("STOPPED"));
 
-  // TODO: need to fix bug (?) which does not allow us to go to PAIDOUT if there are zero funds
-
   it('should update project status to PAIDOUT', updateProjectStatusTo("PAIDOUT"));
   it('should return the project with status updated to PAIDOUT', projectStatusUpdatedTo("PAIDOUT"));
+
+  // Withdraw funds from the project, as the owner
+  // Note that if we had rewards set up for claims and evaluations, we would be able to withdraw funds as the agents
+  it('should withdraw funds', withdrawFunds(projectCreatorDid, projectDid))
 });

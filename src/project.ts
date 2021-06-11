@@ -95,7 +95,7 @@ class Project {
     };
   }
 
-  payOutToEthWallet(data: any, signature: Signature, fee: object, mode?: string): Promise<any> {
+  withdrawFunds(data: any, signature: Signature, fee: object, mode?: string): Promise<any> {
     const {signatureValue, publicKey} = signature;
     const tx = this.generateWithdrawObjectJson(data, signatureValue, publicKey, fee);
     return sendPostJSON(this.config.getBlockSyncUrl() + '/api/blockchain/txs', {
