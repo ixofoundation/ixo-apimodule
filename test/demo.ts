@@ -27,16 +27,16 @@ const error = chalk.bold.red;
 // - To change the Blocksync and PDS (Cellnode) URLs, refer to the *_URL variables below
 // - This demo is not meant to be run automatically all at once, but rather slowly and one step at a time
 // - Once the project has been created, the below constant should be updated with the proper project DID
-const projectDid = "did:ixo:3qrCATNkC22wDTHPgvNJ1E" // TODO: set me to the project DID
+const projectDid = "" // TODO: set me to the project DID
 // - Once a claim has been created, the below constant should be updated with the proper claim ID
-const claimId = "c93d9cd78db0dcf22d87a5efe48259b4ac5bdbc604ebef76ac397d4d3bb55a02" // TODO: set me to the claim ID
+const claimId = "" // TODO: set me to the claim ID
 //
 // OTHER DEMO NOTES
 // - Query the project from the blockchain: <blockchainUrl>:1317/project/<projectDid>
 // - The process can be run multiple times, since a new project with a unique project DID will be created each time
 
-const CELLNODE_URL = 'http://172.16.10.53:5000/';
-const BLOCKSYNC_URL = 'http://172.16.10.53:8080';
+const CELLNODE_URL = 'https://pds_pandora.ixo.world/';
+const BLOCKSYNC_URL = 'https://block_sync_pandora.ixo.world';
 const ixo = new Ixo(BLOCKSYNC_URL);
 let cryptoUtil = new CryptoUtil();
 
