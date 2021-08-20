@@ -36,7 +36,7 @@ const claimId = "" // TODO: set me to the claim ID
 // - The process can be run multiple times, since a new project with a unique project DID will be created each time
 
 const CELLNODE_URL = 'https://cellnode-pandora.ixo.world/1/';
-const BLOCKSYNC_URL = 'https://block_sync_pandora.ixo.world';
+const BLOCKSYNC_URL = 'https://blocksync-pandora.ixo.world';
 const ixo = new Ixo(BLOCKSYNC_URL);
 let cryptoUtil = new CryptoUtil();
 
