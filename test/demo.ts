@@ -346,6 +346,10 @@ describe('Demo', () => {
     }
   })
 
+  // NOTE: only run these two steps if the project's status was for some reason not automatically set to CREATED
+  it('should update project status to CREATED', updateProjectStatusTo("CREATED"));
+  it('should return the project with status updated to CREATED', projectStatusUpdatedTo("CREATED"));
+
   it('should create agent 1', createAgent(agent1IxoDid, 'SA'));  // SA => claimer
   it('should approve agent 1', updateAgentStatusTo(agent1IxoDid, projectCreatorDid, 'SA')); // Only necessary if auto-approvals are off
 
