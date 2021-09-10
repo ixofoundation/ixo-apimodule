@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import 'mocha';
 import {Ixo} from '../index';
-import {ixoDid1, ixoDid2, ixoDid3, projectData} from '../src/common/dummyData';
+import {ixoDid1, ixoDid2, ixoDid3, projectData, projectDataNew} from '../src/common/dummyData';
 import CryptoUtil from './util/cryptoUtil';
 import {ISovrinDidModel} from '../src/common/models';
 import {fail, ok} from "assert";
@@ -119,6 +119,26 @@ function projectCreated() {
     .catch((result: Error) => {
       console.log(error(result));
     });
+}
+
+function updateProjectDoc() {
+  const msgUpdateProjectDoc = {
+    projectDid: projectDid,
+    data: projectDataNew
+  }
+
+  // Sign and submit an update project doc request to Cellnode
+  const signature = cryptoUtil.getSignatureForPayload(ixoDid1, msgUpdateProjectDoc)
+  ixo.project.updateProjectDoc(msgUpdateProjectDoc, signature, CELLNODE_URL)
+  .then((response: any) => {
+
+    // At this stage, we cannot know for sure whether or not the project was updated, but we can get an idea (error => definitely not created)
+    console.log('Project doc update response: ' + success(JSON.stringify(response, null, '\t')));
+    expect(response).to.not.equal(null);
+  })
+  .catch((result: Error) => {
+    console.log(error(result));
+  });
 }
 
 function updateProjectStatusTo(newStatus: string) {
@@ -335,6 +355,8 @@ describe('Demo', () => {
   it('should create new project', createProject);
 
   it('should return list of projects and confirm that the project was created', projectCreated);
+
+  it('should update project doc', updateProjectDoc);
 
   // At this point, you should set the project DID constant to the created project's DID
   // This can be obtained by searching for the last project from the list of projects (above step)
