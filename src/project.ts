@@ -37,6 +37,11 @@ class Project {
     return sendPostJSON(PDSUrl + 'api/request', json);
   }
 
+  updateProjectDoc(data: any, signature: Signature, PDSUrl: string): Promise<any> {
+    const json = constructJsonSignRequest('updateProjectDoc', 'project_doc', signature, data);
+    return sendPostJSON(PDSUrl + 'api/request', json);
+  }
+
   fundProject(data: any, signature: Signature, PDSUrl: string): Promise<any> {
     const json = constructJsonPartialSignRequest('fundProject', 'fund_project', signature, data);
     return sendPostJSON(PDSUrl + 'api/request', json);
