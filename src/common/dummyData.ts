@@ -145,7 +145,7 @@ export const projectData = {
     //   "@type": "RentalFee",
     //   id: "payment:template:1234567890" // NOTE: payment template has to exist, so we leave it out in this example to not have to create it
     // }]
-    items: []
+    items: [] as any[]
   },
   stake: {
     "@context": "https://schema.ixo.world/staking/ipfs3r08webu2eou",
@@ -351,7 +351,7 @@ export const projectDataNew = {
     //   "@type": "RentalFee",
     //   id: "payment:template:1234567890" // NOTE: payment template has to exist, so we leave it out in this example to not have to create it
     // }]
-    items: []
+    items: [] as any[]
   },
   stake: {
     "@context": "https://schema.ixo.world/staking/ipfs3r08webu2eou",

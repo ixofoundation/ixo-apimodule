@@ -1,6 +1,6 @@
 {
   "name": "@ixo/ixo-apimodule",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "This is a node module that defines the functions that can be performed by the ixo protocol.",
   "main": "dist/index.js",
   "scripts": {
@@ -63,7 +63,7 @@
     "pump": "^3.0.0",
     "ts-node": "^4.1.0",
     "tsify": "^3.0.4",
-    "typescript": "^2.6.2"
+    "typescript": "^3.5.1"
   },
   "publishConfig": {
     "access": "public"
