@@ -79,4 +79,5 @@ Contributions welcome; Please submit all pull requests the against master branch
 nicolaas.vercuiel73@gmail.com
 
 ## License
- - **MIT** : http://opensource.org/licenses/MIT
+
+[Apache License 2.0](https://choosealicense.com/licenses/apache-2.0/)

@@ -14,7 +14,7 @@
     "url": "git+https://github.com/ixofoundation/ixo-apimodule.git"
   },
   "author": "nicolaas.vercuiel73@gmail.com",
-  "license": "MIT",
+	"license": "Apache 2",
   "bugs": {
     "url": "https://github.com/ixofoundation/ixo-apimodule/issues"
   },
